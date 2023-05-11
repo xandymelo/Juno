@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:juno/colors.dart';
 import 'package:juno/widgets/textInput.dart';
+
+import 'widgets/bottomNavigatorBar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,51 +18,43 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        fontFamily: GoogleFonts.poppins().fontFamily,
+        fontFamily: 'Poppins',
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Caronas e Companhias'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   final TextEditingController _destino = TextEditingController();
   final TextEditingController _pontoDeEncontro = TextEditingController();
   final TextEditingController _horarioDeSaida = TextEditingController();
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFFD1193E),
+          backgroundColor: AppColors.orange,
           elevation: 0,
-          title: Center(
+          title: const Center(
               child: Text(
-            widget.title,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            "Caronas e Companhias",
+            style: TextStyle(fontWeight: FontWeight.bold),
           )),
         ),
         body: Column(
           children: [menu(), caronasPerfeitas()],
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+          // This trailing comma makes auto-formatting nicer for build methods.
+        ),
+        bottomNavigationBar: MyBottomNavigationBar());
   }
 
   Widget caronasPerfeitas() {
@@ -76,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 32,
-                  color: AppColors.red),
+                  color: AppColors.orange),
               textAlign: TextAlign.center,
             ),
           ),
@@ -142,10 +135,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   'Caronas Perfeitas',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                SvgPicture.asset(
-                  '../assets/star-juno.svg',
-                  width: 20,
-                  height: 20,
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: SvgPicture.asset(
+                    'assets/star-juno.svg',
+                    width: 20,
+                    height: 20,
+                    color: AppColors.purple,
+                  ),
                 ),
               ],
             ),
