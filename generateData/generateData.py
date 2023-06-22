@@ -115,10 +115,8 @@ def generateVeiculoData(QTD_DADOS, QTD_DADOS_USUARIO):
     dfVeiculos = pd.DataFrame(dataVeiculos)
     dfVeiculos.to_csv('TabelaVeiculos.csv', index=False)
 
-def generateDeslocamentosData(QTD_DADOS, QTD_DADOS_ENDERECO, QTD_DADOS_USUARIO, QTD_DADOS_VEICULO):
+def generateDeslocamentosData(QTD_DADOS, QTD_DADOS_ENDERECO, QTD_DADOS_VEICULO):
     id = list(range(1, QTD_DADOS + 1))
-    usuarioIds = list(range(1, QTD_DADOS_USUARIO + 1))
-    usuarioID = [random.choice(usuarioIds) for _ in range(QTD_DADOS)]
     veiculoIds = list(range(1, QTD_DADOS_VEICULO+ 1))
     veiculoID = [random.choice(veiculoIds) for _ in range(QTD_DADOS)]
     horaSaida = [f'{random.randint(0, 24)}:{random.randint(0, 60)}:00' for _ in range(QTD_DADOS)]
@@ -129,7 +127,6 @@ def generateDeslocamentosData(QTD_DADOS, QTD_DADOS_ENDERECO, QTD_DADOS_USUARIO, 
     vagasDisponiveis = [random.randint(0,4) for _ in range(QTD_DADOS)]
     dataDeslocamento = {
         "id": id,
-        "UsuarioID": usuarioID,
         "VeiculoID": veiculoID,
         "HoraSaida": horaSaida,
         "Origem": origem,
@@ -146,10 +143,12 @@ def generatePassageirosData(QTD_DADOS, QTD_DADOS_USUARIO, QTD_DADOS_DESLOCAMENTO
     usuarioId = [random.choice(usuarioIds) for _ in range(QTD_DADOS)]
     deslocamentoIds = list(range(1, QTD_DADOS_DESLOCAMENTOS + 1))
     deslocamentoId = [random.choice(deslocamentoIds) for _ in range(QTD_DADOS)]
+    tipo = [random.randint(1,2) for _ in range(QTD_DADOS)]
     dataPassageiros = {
         'id': id,
         'usuarioId': usuarioId,
-        'deslocamentoId': deslocamentoId
+        'deslocamentoId': deslocamentoId,
+        'tipo': tipo
     }
     dfPassageiros = pd.DataFrame(dataPassageiros)
     dfPassageiros.to_csv('TabelaPassageiros.csv', index=False)
@@ -166,5 +165,5 @@ if __name__ == '__main__':
     generateSigaaData(qtd_dados_usuario)
     generateUsuarioData(qtd_dados_usuario, qtd_dados_endereco)
     generateVeiculoData(QTD_DADOS=qtd_dados_veiculos, QTD_DADOS_USUARIO=qtd_dados_usuario)
-    generateDeslocamentosData(QTD_DADOS=qtd_dados_deslocamento, QTD_DADOS_ENDERECO=qtd_dados_endereco, QTD_DADOS_USUARIO=qtd_dados_usuario, QTD_DADOS_VEICULO=qtd_dados_veiculos)
+    generateDeslocamentosData(QTD_DADOS=qtd_dados_deslocamento, QTD_DADOS_ENDERECO=qtd_dados_endereco, QTD_DADOS_VEICULO=qtd_dados_veiculos)
     generatePassageirosData(QTD_DADOS=qtd_dados_deslocamento, QTD_DADOS_USUARIO= qtd_dados_usuario, QTD_DADOS_DESLOCAMENTOS=qtd_dados_deslocamento)
