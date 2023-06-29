@@ -2,11 +2,13 @@ class PassageirosDeslocamento {
   int id;
   int usuarioId;
   int deslocamentoId;
+  int tipo;
 
   PassageirosDeslocamento({
     required this.id,
     required this.usuarioId,
     required this.deslocamentoId,
+    required this.tipo,
   });
 
   factory PassageirosDeslocamento.fromJson(Map<String, dynamic> json) {
@@ -14,6 +16,7 @@ class PassageirosDeslocamento {
       id: json['Id'],
       usuarioId: json['UsuarioID'],
       deslocamentoId: json['DeslocamentoId'],
+      tipo: json['Tipo'],
     );
   }
 
@@ -22,11 +25,12 @@ class PassageirosDeslocamento {
       'Id': id,
       'UsuarioID': usuarioId,
       'DeslocamentoId': deslocamentoId,
+      'Tipo': tipo,
     };
   }
 
   @override
   String toString() {
-    return 'PassageirosDeslocamento(id: $id, UsuarioID: $usuarioId, DeslocamentoId: $deslocamentoId)';
+    return 'PassageirosDeslocamento(id: $id, UsuarioID: $usuarioId, DeslocamentoId: $deslocamentoId), Tipo: $tipo)';
   }
 }

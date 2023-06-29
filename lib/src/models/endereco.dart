@@ -1,10 +1,10 @@
 class Endereco {
-  int id;
-  String municipio;
-  String bairro;
-  String rua;
-  int numero;
-  String complemento;
+  final int id;
+  final String municipio;
+  final String bairro;
+  final String rua;
+  final int numero;
+  final String complemento;
 
   Endereco({
     required this.id,
