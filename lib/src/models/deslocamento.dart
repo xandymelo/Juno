@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class Deslocamento {
   int id;
-  int usuarioId;
   int veiculoId;
   TimeOfDay horaSaida;
   int origemId;
@@ -12,7 +11,6 @@ class Deslocamento {
 
   Deslocamento({
     required this.id,
-    required this.usuarioId,
     required this.veiculoId,
     required this.horaSaida,
     required this.origemId,
@@ -24,7 +22,6 @@ class Deslocamento {
   factory Deslocamento.fromJson(Map<String, dynamic> json) {
     return Deslocamento(
       id: json['Id'],
-      usuarioId: json['UsuarioID'],
       veiculoId: json['VeiculoID'],
       horaSaida: json['HoraSaida'],
       origemId: json['Origemid'],
@@ -37,7 +34,6 @@ class Deslocamento {
   Map<String, dynamic> toJson() {
     return {
       'Id': id,
-      'UsuarioID': usuarioId,
       'VeiculoID': veiculoId,
       'HoraSaida': horaSaida,
       'Origemid': origemId,
@@ -49,6 +45,6 @@ class Deslocamento {
 
   @override
   String toString() {
-    return 'Deslocamento(id: $id, UsuarioID: $usuarioId, VeiculoID: $veiculoId, HoraSaida: $horaSaida, Origemid: $origemId, DestinoId: $destinoId, Status: $status, VagasDisponiveis: $vagasDisponiveis)';
+    return 'Deslocamento(id: $id, VeiculoID: $veiculoId, HoraSaida: $horaSaida, Origemid: $origemId, DestinoId: $destinoId, Status: $status, VagasDisponiveis: $vagasDisponiveis)';
   }
 }

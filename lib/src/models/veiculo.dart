@@ -6,7 +6,7 @@ class Veiculo {
   String marca;
   String modelo;
   String cor;
-  int passageiros;
+  int qtdPassageiros;
 
   Veiculo({
     required this.id,
@@ -16,7 +16,7 @@ class Veiculo {
     required this.marca,
     required this.modelo,
     required this.cor,
-    required this.passageiros,
+    required this.qtdPassageiros,
   });
 
   factory Veiculo.fromJson(Map<String, dynamic> json) {
@@ -28,7 +28,7 @@ class Veiculo {
       marca: json['Marca'],
       modelo: json['Modelo'],
       cor: json['Cor'],
-      passageiros: json['Passageiros'],
+      qtdPassageiros: json['Passageiros'],
     );
   }
 
@@ -41,12 +41,12 @@ class Veiculo {
       'Marca': marca,
       'Modelo': modelo,
       'Cor': cor,
-      'Passageiros': passageiros,
+      'Passageiros': qtdPassageiros,
     };
   }
 
   @override
   String toString() {
-    return 'Veiculo(id: $id, UsuarioID: $usuarioId, Tipo: $tipo, Placa: $placa, Marca: $marca, Modelo: $modelo, Cor: $cor, Passageiros: $passageiros)';
+    return 'Veiculo(id: $id, UsuarioID: $usuarioId, Tipo: $tipo, Placa: $placa, Marca: $marca, Modelo: $modelo, Cor: $cor, Passageiros: $qtdPassageiros)';
   }
 }
