@@ -36,7 +36,7 @@ class PerfectDisplacementsScreen extends StatelessWidget {
         ),
         const Divider(),
         Padding(
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.all(33),
           child: ElevatedButton(
             onPressed: () {
               controller.setCurrentPageIndex(0);
