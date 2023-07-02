@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:juno/src/screens/rides_and_companies/ui/perfect_displacements_screen.dart';
+import 'package:juno/src/screens/rides_and_companies/ui/new_ride_form_screen.dart';
 
 import '../../../app/theme/colors.dart';
-import '../../../utils/state_manager.dart';
-import '../../../widgets/app_bottom_navigation_bar.dart';
-import '../controllers/rides_and_companies_controller.dart';
-import 'general_tabview.dart';
-import 'perfect_displacement_tabview.dart';
+import '../../../widgets/alert_dialogs.dart';
 
 class NewDisplacementScreen extends StatelessWidget {
   const NewDisplacementScreen({super.key});
@@ -47,7 +43,8 @@ class NewDisplacementScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(33),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  //onPressed: () {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Oi')));},
+                  onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const NewRideFormScreen()));},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.purple,
                     foregroundColor: AppColors.white,
@@ -73,7 +70,7 @@ class NewDisplacementScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(33),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {showAlertDialog(context);},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.purple,
                     foregroundColor: AppColors.white,
