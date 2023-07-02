@@ -43,7 +43,6 @@ class NewDisplacementScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(33),
                 child: ElevatedButton(
-                  //onPressed: () {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Oi')));},
                   onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const NewRideFormScreen()));},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.purple,
