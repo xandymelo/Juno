@@ -67,24 +67,24 @@ class WelcomeScreen extends StatelessWidget {
                     color: Colors.grey,
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 4),
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 4),
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey,
-                  ),
-                ),
+                // Container(
+                //   margin: EdgeInsets.symmetric(horizontal: 4),
+                //   width: 8,
+                //   height: 8,
+                //   decoration: BoxDecoration(
+                //     shape: BoxShape.circle,
+                //     color: Colors.grey,
+                //   ),
+                // ),
+                // Container(
+                //   margin: EdgeInsets.symmetric(horizontal: 4),
+                //   width: 8,
+                //   height: 8,
+                //   decoration: BoxDecoration(
+                //     shape: BoxShape.circle,
+                //     color: Colors.grey,
+                //   ),
+                // ),
               ],
             ),
           ),

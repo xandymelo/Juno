@@ -84,26 +84,26 @@ class CaronasCompanhiaScreen extends StatelessWidget {
                         .red, // Altere a cor de acordo com a lógica do seu identificador
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 4),
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors
-                        .grey, // Altere a cor de acordo com a lógica do seu identificador
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 4),
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors
-                        .grey, // Altere a cor de acordo com a lógica do seu identificador
-                  ),
-                ),
+                // Container(
+                //   margin: EdgeInsets.symmetric(horizontal: 4),
+                //   width: 8,
+                //   height: 8,
+                //   decoration: BoxDecoration(
+                //     shape: BoxShape.circle,
+                //     color: Colors
+                //         .grey, // Altere a cor de acordo com a lógica do seu identificador
+                //   ),
+                // ),
+                // Container(
+                //   margin: EdgeInsets.symmetric(horizontal: 4),
+                //   width: 8,
+                //   height: 8,
+                //   decoration: BoxDecoration(
+                //     shape: BoxShape.circle,
+                //     color: Colors
+                //         .grey, // Altere a cor de acordo com a lógica do seu identificador
+                //   ),
+                // ),
               ],
             ),
           ),
