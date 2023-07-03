@@ -12,6 +12,7 @@ import 'dao/veiculo_dao.dart';
 
 Future<Database> createDatabase() async {
   final String dbPath = join(await getDatabasesPath(), 'juno.db');
+  print(await getDatabasesPath());
   return openDatabase(
     dbPath,
     onCreate: (db, version) {
