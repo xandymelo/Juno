@@ -5,11 +5,10 @@ import '../app_database.dart';
 class PassageirosDeslocamentoDAO {
   static const createTable = '''
     CREATE TABLE `PassageirosDeslocamento` (
-      `Id` INTEGER NOT NULL AUTO_INCREMENT,
+      `Id` INTEGER PRIMARY KEY AUTOINCREMENT,
       `UsuarioID` INTEGER NOT NULL,
       `DeslocamentoId` INTEGER NOT NULL,
       `Tipo` INTEGER NOT NULL,
-      PRIMARY KEY (`Id`),
       FOREIGN KEY (`UsuarioID`) REFERENCES `user` (`Id`),
       FOREIGN KEY (`DeslocamentoId`) REFERENCES `deslocamento` (`Id`)
     )

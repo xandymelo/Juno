@@ -27,3 +27,12 @@ Future<Database> createDatabase() async {
     // onDowngrade: onDatabaseDowngradeDelete,
   );
 }
+
+Future<void> deleteDatabaseFile() async {
+  // Obtém o diretório de aplicativos
+  String appDir = join(await getDatabasesPath(), 'juno.db');
+  // Local do arquivo do banco de dados
+  String dbPath = appDir;
+  // Exclui o arquivo do banco de dados
+  await deleteDatabase(dbPath);
+}
