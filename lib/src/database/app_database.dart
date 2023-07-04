@@ -12,7 +12,6 @@ import 'dao/veiculo_dao.dart';
 
 Future<Database> createDatabase() async {
   final String dbPath = join(await getDatabasesPath(), 'juno.db');
-  print(await getDatabasesPath());
   return openDatabase(
     dbPath,
     onCreate: (db, version) {
@@ -27,4 +26,13 @@ Future<Database> createDatabase() async {
     version: 1,
     // onDowngrade: onDatabaseDowngradeDelete,
   );
+}
+
+Future<void> deleteDatabaseFile() async {
+  // Obtém o diretório de aplicativos
+  String appDir = join(await getDatabasesPath(), 'juno.db');
+  // Local do arquivo do banco de dados
+  String dbPath = appDir;
+  // Exclui o arquivo do banco de dados
+  await deleteDatabase(dbPath);
 }
