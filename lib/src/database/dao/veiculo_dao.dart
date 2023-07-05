@@ -43,6 +43,32 @@ class VeiculoDAO {
     return db.insert(_tablename, veiculoMap);
   }
 
+  static Future<Veiculo?> findById(int id) async {
+    final Database db = await createDatabase();
+    final List<Map<String, dynamic>> result = await db.query(
+      _tablename,
+      where: '$_id = ?',
+      whereArgs: [id],
+    );
+
+    if (result.isNotEmpty) {
+      final Map<String, dynamic> row = result.first;
+      final Veiculo veiculo = Veiculo(
+        id: row[_id],
+        usuarioId: row[_usuarioId],
+        tipo: row[_tipo],
+        placa: row[_placa],
+        marca: row[_marca],
+        modelo: row[_modelo],
+        cor: row[_cor],
+        qtdPassageiros: row[_qtdPassageiros],
+      );
+      return veiculo;
+    } else {
+      return null; // Retorna null se não encontrar um veículo com o ID fornecido
+    }
+  }
+
   static Future<List<Veiculo>> findAll() async {
     final Database db = await createDatabase();
     final List<Map<String, dynamic>> result = await db.query(_tablename);
