@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:juno/src/database/app_database.dart';
-import 'package:juno/src/database/dao/cursos_dao.dart';
 import 'package:juno/src/database/dao/endereco_dao.dart';
-import 'package:juno/src/models/cursos.dart';
 import 'package:juno/src/models/endereco.dart';
 
 import 'src/app/app_initialization.dart';
