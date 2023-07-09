@@ -23,6 +23,14 @@ class _NewRideFormState extends State<NewRideFormScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.darkOrange,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.arrow_back_ios, color: AppColors.white),
+                onPressed: () => Navigator.of(context).pop(),
+              );
+            },
+          ),
           centerTitle: true,
           title: Text(
             'CRIAR CARONA'.toUpperCase(),
@@ -111,9 +119,7 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                                   color: AppColors.white,
                                 ),
                               ),
-                              Container(
-                                width: 10,
-                              ),
+                              const SizedBox(width: 10),
                               Text(
                                 'Moto',
                                 style: TextStyle(
@@ -141,9 +147,7 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                       },
                     ),
                   ),
-                  Container(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   Container(
                     height: 14,
                     width: 360,
@@ -171,9 +175,7 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   Container(
                     height: 14,
                     width: 360,
@@ -201,9 +203,7 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   Container(
                     height: 14,
                     width: 360,
@@ -231,9 +231,7 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   Container(
                     height: 14,
                     width: 360,
@@ -261,9 +259,7 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   Container(
                     height: 14,
                     width: 360,
@@ -291,9 +287,7 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   Container(
                     height: 14,
                     width: 360,
@@ -321,9 +315,7 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   Container(
                     height: 14,
                     width: 360,
@@ -351,9 +343,7 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15),
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: ElevatedButton(
