@@ -1,13 +1,24 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:juno/src/app/theme/colors.dart';
+import 'package:juno/src/screens/rides_and_companies/ui/rides_and_companies_screen.dart';
 
 import '../../database/dao/user_dao.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  const Login({super.key});
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final TextEditingController _usernameController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
 
-  Login({super.key});
+  late bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +64,23 @@ class Login extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   TextFormField(
                     controller: _passwordController,
-                    decoration: const InputDecoration(
+                    obscureText:
+                        _obscurePassword, // Define se a senha está oculta ou não
+                    decoration: InputDecoration(
                       labelText: 'Senha',
                       hintText: '*********',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
+                      ),
                     ),
                   ),
                   Align(
@@ -87,22 +112,28 @@ class Login extends StatelessWidget {
                       onPressed: () async {
                         String enteredUsername = _usernameController.text;
                         String enteredPassword = _passwordController.text;
-                        var userExists = UserDAO.verifyCpfAndPasswordExists(
-                            enteredUsername, enteredPassword);
+                        var userExists =
+                            await UserDAO.verifyCpfAndPasswordExists(
+                                enteredUsername, enteredPassword);
                         if (userExists == true) {
-                          // Continuar com o código normal aqui, se necessário
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const RidesAndCompaniesScreen()),
+                          );
                         } else {
                           // Mostrar mensagem de erro informando que o nome de usuário ou senha estão incorretos
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('Erro'),
-                                content: Text(
+                                title: const Text('Erro'),
+                                content: const Text(
                                     'Nome de usuário ou senha incorretos.'),
                                 actions: [
                                   TextButton(
-                                    child: Text('OK'),
+                                    child: const Text('OK'),
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
