@@ -89,6 +89,29 @@ class Login extends StatelessWidget {
                         String enteredPassword = _passwordController.text;
                         var userExists = UserDAO.verifyCpfAndPasswordExists(
                             enteredUsername, enteredPassword);
+                        if (userExists == true) {
+                          // Continuar com o código normal aqui, se necessário
+                        } else {
+                          // Mostrar mensagem de erro informando que o nome de usuário ou senha estão incorretos
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Erro'),
+                                content: Text(
+                                    'Nome de usuário ou senha incorretos.'),
+                                actions: [
+                                  TextButton(
+                                    child: Text('OK'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       },
                       child: const Padding(
                         padding: EdgeInsets.only(
