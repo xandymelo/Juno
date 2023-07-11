@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:juno/src/app/theme/colors.dart';
 
+import '../../database/dao/user_dao.dart';
+
 class Login extends StatelessWidget {
-  const Login({super.key});
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  Login({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +44,7 @@ class Login extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   TextFormField(
+                    controller: _usernameController,
                     decoration: const InputDecoration(
                       labelText: 'CPF',
                       hintText: '000.000.000-00',
@@ -46,6 +52,7 @@ class Login extends StatelessWidget {
                   ),
                   const SizedBox(height: 20.0),
                   TextFormField(
+                    controller: _passwordController,
                     decoration: const InputDecoration(
                       labelText: 'Senha',
                       hintText: '*********',
@@ -77,8 +84,11 @@ class Login extends StatelessWidget {
                             .red, // Define a cor de fundo como vermelho
                         elevation: 0, // Remove a sombra
                       ),
-                      onPressed: () {
-                        // Lógica de autenticação do login
+                      onPressed: () async {
+                        String enteredUsername = _usernameController.text;
+                        String enteredPassword = _passwordController.text;
+                        var userExists = UserDAO.verifyCpfAndPasswordExists(
+                            enteredUsername, enteredPassword);
                       },
                       child: const Padding(
                         padding: EdgeInsets.only(
