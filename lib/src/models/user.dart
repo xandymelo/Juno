@@ -6,9 +6,9 @@ class User {
   String sobrenome;
   String cpf;
   String senha;
-  int telefone;
+  String telefone;
   String email;
-  DateTime dataNascimento;
+  String? dataNascimento;
 
   User({
     required this.id,
@@ -20,7 +20,7 @@ class User {
     required this.senha,
     required this.telefone,
     required this.email,
-    required this.dataNascimento,
+    this.dataNascimento,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -34,7 +34,7 @@ class User {
       senha: json['Senha'],
       telefone: json['Telefone'],
       email: json['Email'],
-      dataNascimento: DateTime.parse(json['Data de Nascimento']),
+      dataNascimento: json['Data de Nascimento'],
     );
   }
 
@@ -49,7 +49,7 @@ class User {
       'Senha': senha,
       'Telefone': telefone,
       'Email': email,
-      'Data de Nascimento': dataNascimento.toIso8601String(),
+      'DataDeNascimento': dataNascimento,
     };
   }
 

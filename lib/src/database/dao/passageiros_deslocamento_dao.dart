@@ -31,6 +31,29 @@ class PassageirosDeslocamentoDAO {
     return db.insert(_tablename, passageirosDeslocamentoMap);
   }
 
+  static Future<PassageirosDeslocamento?> findByDeslocamentoId(
+      int deslocamentoId) async {
+    final Database db = await createDatabase();
+    final List<Map<String, dynamic>> result = await db.query(
+      _tablename,
+      where: '$_deslocamentoId = ? AND $_tipo = ?',
+      whereArgs: [deslocamentoId, 1],
+    );
+    if (result.isNotEmpty) {
+      final Map<String, dynamic> row = result.first;
+      final PassageirosDeslocamento passageirosDeslocamento =
+          PassageirosDeslocamento(
+        id: row[_id],
+        usuarioId: row[_usuarioId],
+        deslocamentoId: row[_deslocamentoId],
+        tipo: row[_tipo],
+      );
+      return passageirosDeslocamento;
+    } else {
+      return null;
+    }
+  }
+
   static Future<List<PassageirosDeslocamento>> findAll() async {
     final Database db = await createDatabase();
     final List<Map<String, dynamic>> result = await db.query(_tablename);
