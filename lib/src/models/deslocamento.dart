@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Deslocamento {
   int id;
   int veiculoId;
-  TimeOfDay horaSaida;
+  String horaSaida;
   int origemId;
   int destinoId;
   int status;
@@ -47,4 +47,9 @@ class Deslocamento {
   String toString() {
     return 'Deslocamento(id: $id, VeiculoID: $veiculoId, HoraSaida: $horaSaida, Origemid: $origemId, DestinoId: $destinoId, Status: $status, VagasDisponiveis: $vagasDisponiveis)';
   }
+}
+
+enum PassageiroType {
+  passageiro,
+  motorista,
 }

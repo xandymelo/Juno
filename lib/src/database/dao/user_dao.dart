@@ -14,7 +14,7 @@ class UserDAO {
       `Senha` TEXT NOT NULL,
       `Telefone` TEXT NOT NULL,
       `Email` TEXT NOT NULL,
-      `Data de Nascimento` TEXT NOT NULL,
+      `DataDeNascimento` TEXT,
       PRIMARY KEY (`Id`),
       FOREIGN KEY (`SigaaID`) REFERENCES `sigaa` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
       FOREIGN KEY (`EnderecoId`) REFERENCES `endereco` (`id`)
@@ -31,7 +31,7 @@ class UserDAO {
   static const _senha = 'Senha';
   static const _telefone = 'Telefone';
   static const _email = 'Email';
-  static const _dataNascimento = 'Data de Nascimento';
+  static const _dataDeNascimento = 'DataDeNascimento';
 
   static Future<int> save(User user) async {
     final Database db = await createDatabase();
@@ -45,9 +45,45 @@ class UserDAO {
       _senha: user.senha,
       _telefone: user.telefone,
       _email: user.email,
-      _dataNascimento: user.dataNascimento.toIso8601String(),
+      _dataDeNascimento: user.dataNascimento,
     };
     return db.insert(_tablename, userMap);
+  }
+
+  static Future<User> getUserById(int userId) async {
+    final Database db = await createDatabase();
+    final List<Map<String, dynamic>> result = await db.query(
+      _tablename,
+      where: '$_id = ?',
+      whereArgs: [userId],
+    );
+    if (result.isNotEmpty) {
+      final Map<String, dynamic> row = result.first;
+      final User user = User(
+        id: row[_id],
+        sigaaId: row[_sigaaId],
+        enderecoId: row[_enderecoId],
+        nome: row[_nome],
+        sobrenome: row[_sobrenome],
+        cpf: row[_cpf],
+        senha: row[_senha],
+        telefone: row[_telefone],
+        email: row[_email],
+        dataNascimento: row[_dataDeNascimento],
+      );
+      return user;
+    } else {
+      return User(
+          cpf: 'notFound',
+          email: 'notFound',
+          enderecoId: -1,
+          id: -1,
+          nome: 'Not Found',
+          senha: 'not Found',
+          sigaaId: -1,
+          sobrenome: 'not Found',
+          telefone: 'not Found');
+    }
   }
 
   static Future<bool> verifyCpfAndPasswordExists(
@@ -78,7 +114,7 @@ class UserDAO {
         senha: row[_senha],
         telefone: row[_telefone],
         email: row[_email],
-        dataNascimento: DateTime.parse(row[_dataNascimento]),
+        dataNascimento: row[_dataDeNascimento],
       );
       users.add(user);
     }
