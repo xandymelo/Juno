@@ -14,6 +14,7 @@ class EmConstrucaoScreen extends StatelessWidget {
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
                 child: Container(
+                  
                   color: Colors.transparent,
                 ),
               ),
