@@ -13,10 +13,9 @@ class CaronasCompanhiaScreen extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              BemVinda(
-                svgPath: 'assets/Bem-Vinda.svg',
+              Caronas(
+                svgPath: 'assets/CaronasImagem.svg',
                 size: 200,
-                color: Color.fromRGBO(62, 0, 71, 0.984),
               ),
               Text(
                 'Caronas e',
@@ -36,26 +35,15 @@ class CaronasCompanhiaScreen extends StatelessWidget {
               ),
               SizedBox(height: 16),
               Text(
-                softWrap: true,
                 'Organize e participe de grupos de locomoção, além de oferecer e pegar carona.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 25,
+                  fontFamily: 'Poppins',
+                  fontSize: 23,
                   fontWeight: FontWeight.normal,
                   color: Color.fromRGBO(62, 0, 71, 0.984),
                 ),
               ),
-              // SizedBox(height: 16),
-              // Text(
-              //   // 'Let\'s get started!',
-              //   style: TextStyle(
-              //     fontSize: 16,
-              //     fontWeight: FontWeight.normal,
-              //     color: Color.fromRGBO(62, 0, 71, 0.984),
-              //   ),
-              // ),
-              SizedBox(height: 16),
-              CircularProgressIndicator(),
             ],
           ),
           Positioned(
@@ -70,8 +58,7 @@ class CaronasCompanhiaScreen extends StatelessWidget {
                   height: 8,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors
-                        .grey, // Altere a cor de acordo com a lógica do seu identificador
+                    color: Colors.grey, // Altere a cor de acordo com a lógica do seu identificador
                   ),
                 ),
                 Container(
@@ -80,35 +67,14 @@ class CaronasCompanhiaScreen extends StatelessWidget {
                   height: 8,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors
-                        .red, // Altere a cor de acordo com a lógica do seu identificador
+                    color: Colors.red, // Altere a cor de acordo com a lógica do seu identificador
                   ),
                 ),
-                // Container(
-                //   margin: EdgeInsets.symmetric(horizontal: 4),
-                //   width: 8,
-                //   height: 8,
-                //   decoration: BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     color: Colors
-                //         .grey, // Altere a cor de acordo com a lógica do seu identificador
-                //   ),
-                // ),
-                // Container(
-                //   margin: EdgeInsets.symmetric(horizontal: 4),
-                //   width: 8,
-                //   height: 8,
-                //   decoration: BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     color: Colors
-                //         .grey, // Altere a cor de acordo com a lógica do seu identificador
-                //   ),
-                // ),
               ],
             ),
           ),
           Positioned(
-            bottom: 72,
+            bottom: 55,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/VamosComecarScreen');
@@ -121,10 +87,8 @@ class CaronasCompanhiaScreen extends StatelessWidget {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                primary: Colors
-                    .red, // Altere a cor do botão de acordo com sua preferência
-                onPrimary: Colors
-                    .white, // Altere a cor do texto do botão de acordo com sua preferência
+                primary: Colors.red, // Altere a cor do botão de acordo com sua preferência
+                onPrimary: Colors.white, // Altere a cor do texto do botão de acordo com sua preferência
                 padding: EdgeInsets.symmetric(horizontal: 48, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(32),
@@ -138,15 +102,13 @@ class CaronasCompanhiaScreen extends StatelessWidget {
   }
 }
 
-class BemVinda extends StatelessWidget {
+class Caronas extends StatelessWidget {
   final String svgPath;
   final double size;
-  final Color color;
 
-  const BemVinda({
+  const Caronas({
     required this.svgPath,
     required this.size,
-    required this.color,
   });
 
   @override
@@ -155,7 +117,6 @@ class BemVinda extends StatelessWidget {
       svgPath,
       width: size,
       height: size,
-      color: color,
     );
   }
 }

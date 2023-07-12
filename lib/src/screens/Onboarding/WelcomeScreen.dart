@@ -14,15 +14,15 @@ class WelcomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               BemVinda(
-                svgPath: 'assets/OnBoarding/forum_unselected.svg',
+                svgPath: 'assets/Bem-Vinda.svg',
                 size: 200,
-                color: Color.fromRGBO(62, 0, 71, 0.984),
               ),
               Text(
                 'Bem-Vinda!',
                 style: TextStyle(
                   fontSize: 60,
                   fontWeight: FontWeight.bold,
+                  fontFamily: 'Poppins',
                   color: Color.fromRGBO(193, 8, 20, 0.976),
                 ),
               ),
@@ -33,14 +33,12 @@ class WelcomeScreen extends StatelessWidget {
                 'Um espaço colaborativo criado para as mulheres da Universidade Federal Rural de Pernambuco',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 23,
                   fontWeight: FontWeight.normal,
+                  fontFamily: 'Poppins',
                   color: Color.fromRGBO(62, 0, 71, 0.984),
                 ),
               ),
-              //
-              SizedBox(height: 16),
-              CircularProgressIndicator(),
             ],
           ),
           Positioned(
@@ -67,24 +65,6 @@ class WelcomeScreen extends StatelessWidget {
                     color: Colors.grey,
                   ),
                 ),
-                // Container(
-                //   margin: EdgeInsets.symmetric(horizontal: 4),
-                //   width: 8,
-                //   height: 8,
-                //   decoration: BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     color: Colors.grey,
-                //   ),
-                // ),
-                // Container(
-                //   margin: EdgeInsets.symmetric(horizontal: 4),
-                //   width: 8,
-                //   height: 8,
-                //   decoration: BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     color: Colors.grey,
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -120,12 +100,10 @@ class WelcomeScreen extends StatelessWidget {
 class BemVinda extends StatelessWidget {
   final String svgPath;
   final double size;
-  final Color color;
 
   const BemVinda({
     required this.svgPath,
     required this.size,
-    required this.color,
   });
 
   @override
@@ -134,7 +112,6 @@ class BemVinda extends StatelessWidget {
       svgPath,
       width: size,
       height: size,
-      color: color,
     );
   }
 }

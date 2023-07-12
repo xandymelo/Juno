@@ -4,6 +4,7 @@ import 'package:juno/src/screens/Onboarding/VamosComecarScreen.dart';
 import "package:juno/src/screens/Onboarding/WelcomeScreen.dart";
 import "package:juno/src/screens/Login/LoginScreen.dart";
 import 'package:juno/src/screens/Onboarding/CaronasCompanhiaScreen.dart';
+import 'package:juno/src/screens/EmConstrucao/EmConstrucaoScreen.dart';
 
 import 'src/app/app_initialization.dart';
 import 'src/app/app_widget.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         '/VamosComecarScreen': (context) => VamosComecarScreen(),
         '/LoginScreen': (context) => LoginScreen(),
         '/CaronasCompanhiaScreen': (context) => CaronasCompanhiaScreen(),
+        '/EmConstrucaoScreen': (context) => EmConstrucaoScreen(),
       },
     );
   }

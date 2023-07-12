@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../Onboarding/LogoScreen.dart';
 
@@ -12,10 +13,9 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            PeacockLogo(
-              svgPath: 'assets/peacock.svg',
+            VamosComecar(
+              svgPath: 'assets/CaronasImagem.svg',
               size: 200,
-              color: Color.fromRGBO(62, 0, 71, 0.984),
             ),
             SizedBox(height: 16),
             Text(
@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
-                color: Color.fromRGBO(62, 0, 71, 0.984),
+                color: Colors.purple,
               ),
             ),
             SizedBox(height: 16),
@@ -56,6 +56,26 @@ class LoginScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+
+class VamosComecar extends StatelessWidget {
+  final String svgPath;
+  final double size;
+
+  const VamosComecar(
+      {required this.svgPath, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: SvgPicture.asset(
+        svgPath,
+        height: size,
+        width: size,
       ),
     );
   }

@@ -11,14 +11,15 @@ class _LogoScreenState extends State<LogoScreen> {
   void initState() {
     super.initState();
     // Lógica de redirecionamento para a tela WelcomeScreen
-    Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/WelcomeScreen');
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(context, '/EmConstrucaoScreen');
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(255, 237, 237, 1),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -26,9 +27,8 @@ class _LogoScreenState extends State<LogoScreen> {
             PeacockLogo(
               svgPath: 'assets/peacock.svg',
               size: 200,
-              color: Color.fromRGBO(62, 0, 71, 0.984),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 20),
             CircularProgressIndicator(),
           ],
         ),
@@ -40,10 +40,9 @@ class _LogoScreenState extends State<LogoScreen> {
 class PeacockLogo extends StatelessWidget {
   final String svgPath;
   final double size;
-  final Color color;
 
   const PeacockLogo(
-      {required this.svgPath, required this.size, required this.color});
+      {required this.svgPath, required this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +50,6 @@ class PeacockLogo extends StatelessWidget {
       svgPath,
       width: size,
       height: size,
-      color: color,
     );
   }
 }

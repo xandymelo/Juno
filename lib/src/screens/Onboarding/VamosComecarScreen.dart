@@ -11,14 +11,15 @@ class VamosComecarScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Comecar(
-              svgPath: 'assets/group_selected.svg',
-              size: 200,
-              color: Color.fromRGBO(62, 0, 71, 0.984),
+              svgPath: 'assets/VamosComecarImagem.svg',
+              size: 205,
+              // color: Color.fromRGBO(62, 0, 71, 0.984),
             ),
             const Text(
               'Vamos',
               style: TextStyle(
-                fontSize: 40,
+                fontFamily: 'Poppins',
+                fontSize: 38,
                 fontWeight: FontWeight.bold,
                 color: Color.fromRGBO(193, 8, 20, 0.976),
               ),
@@ -26,7 +27,8 @@ class VamosComecarScreen extends StatelessWidget {
             const Text(
               'começar',
               style: TextStyle(
-                fontSize: 40,
+                fontFamily: 'Poppins',
+                fontSize: 38,
                 fontWeight: FontWeight.bold,
                 color: Color.fromRGBO(193, 8, 20, 0.976),
               ),
@@ -36,12 +38,13 @@ class VamosComecarScreen extends StatelessWidget {
               'O que você deseja fazer?',
               textAlign: TextAlign.center,
               style: TextStyle(
+                fontFamily: 'Poppins',
                 fontSize: 20,
                 fontWeight: FontWeight.normal,
                 color: Color.fromRGBO(62, 0, 71, 0.984),
               ),
             ),
-            const SizedBox(height: 60), // Ajuste a altura conforme necessário
+            const SizedBox(height: 25), // Ajuste a altura conforme necessário
             ElevatedButton(
               onPressed: () {
                 // Ação do botão de login
@@ -49,6 +52,7 @@ class VamosComecarScreen extends StatelessWidget {
               child: const Text(
                 'Login',
                 style: TextStyle(
+                  fontFamily: 'Poppins',
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -63,7 +67,7 @@ class VamosComecarScreen extends StatelessWidget {
                 minimumSize: const Size(200, 50),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
             ElevatedButton(
               onPressed: () {
                 // Ação do botão de cadastro
@@ -71,6 +75,7 @@ class VamosComecarScreen extends StatelessWidget {
               child: const Text(
                 'Cadastro',
                 style: TextStyle(
+                  fontFamily: 'Poppins',
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -96,12 +101,10 @@ class VamosComecarScreen extends StatelessWidget {
 class Comecar extends StatelessWidget {
   final String svgPath;
   final double size;
-  final Color color;
 
   const Comecar({
     required this.svgPath,
     required this.size,
-    required this.color,
   });
 
   @override
@@ -110,7 +113,6 @@ class Comecar extends StatelessWidget {
       svgPath,
       width: size,
       height: size,
-      color: color,
     );
   }
 }
