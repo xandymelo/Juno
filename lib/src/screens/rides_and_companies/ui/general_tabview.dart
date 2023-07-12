@@ -10,6 +10,9 @@ class GeneralTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    String carRide = "Carro";
+
     return Column(
       children: [
         Padding(
@@ -38,12 +41,95 @@ class GeneralTabView extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.filter_list,
-                  size: 32,
+              PopupMenuButton(
+                offset: const Offset(0, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20.0),
+                  ),
                 ),
+                child: Icon(Icons.filter_list),
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    onTap: () {
+                    },
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: AppColors.yellow,
+                          child: Icon(
+                            size: 18,
+                            Icons.directions_car,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text('Carro'),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {
+                      
+                    },
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: AppColors.darkOrange,
+                          child: Icon(
+                            size: 18,
+                            Icons.motorcycle,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text('Moto'),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {
+                      
+                    },
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: AppColors.red,
+                          child: Icon(
+                            size: 18,
+                            Icons.explore,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text('Companhia'),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {
+                      
+                    },
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: AppColors.purple,
+                          child: Icon(
+                            size: 18,
+                            Icons.bookmark_added_rounded,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text('Meus Deslocamentos'),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
