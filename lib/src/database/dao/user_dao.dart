@@ -86,6 +86,19 @@ class UserDAO {
     }
   }
 
+  static Future<bool> verifyCpfAndPasswordExists(
+      String cpf, String password) async {
+    final Database db = await createDatabase();
+
+    final List<Map<String, dynamic>> result = await db.query(
+      _tablename,
+      where: '$_cpf = ? AND $_senha = ?',
+      whereArgs: [cpf, password],
+    );
+
+    return result.isNotEmpty;
+  }
+
   static Future<List<User>> findAll() async {
     final Database db = await createDatabase();
     final List<Map<String, dynamic>> result = await db.query(_tablename);
