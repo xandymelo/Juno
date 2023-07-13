@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'package:flutter_svg/flutter_svg.dart';
 
-class EmConstrucaoScreen extends StatelessWidget {
+import '../../app/theme/colors.dart';
+import '../../widgets/app_bottom_navigation_bar.dart';
+
+class EmConstrucaoScreen extends StatefulWidget {
+  const EmConstrucaoScreen({super.key});
+
+  @override
+  State<EmConstrucaoScreen> createState() => _EmConstrucaoScreenState();
+}
+
+class _EmConstrucaoScreenState extends State<EmConstrucaoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 237, 237, 1),
+      bottomNavigationBar: const AppBottomNavigationBar(),
+      backgroundColor: AppColors.white,
       body: Center(
         child: Stack(
           children: [
@@ -14,7 +24,6 @@ class EmConstrucaoScreen extends StatelessWidget {
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
                 child: Container(
-                  
                   color: Colors.transparent,
                 ),
               ),
@@ -25,28 +34,28 @@ class EmConstrucaoScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Padding(
-                padding: EdgeInsets.all(24),
+                padding: const EdgeInsets.all(24),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.construction,
                       size: 100,
-                      color: Colors.orange,
+                      color: AppColors.lightOrange,
                     ),
-                    SizedBox(height: 16),
-                    Text(
+                    const SizedBox(height: 16),
+                    const Text(
                       'Em construção',
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 34,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(62, 0, 71, 0.984),
+                        color: AppColors.purple,
                       ),
                     ),
-                    SizedBox(height: 16),
-                    Text(
+                    const SizedBox(height: 16),
+                    const Text(
                       'Desculpe-nos pelo transtorno.\nEstamos trabalhando nesta Funcionalidade.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -55,21 +64,21 @@ class EmConstrucaoScreen extends StatelessWidget {
                         color: Color.fromRGBO(62, 0, 71, 0.984),
                       ),
                     ),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Voltar'),
                       style: ElevatedButton.styleFrom(
-                        primary: Color.fromRGBO(62, 0, 71, 0.984),
+                        primary: AppColors.purple,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
-                          side: BorderSide(
-                            color: Colors.purple,
+                          side: const BorderSide(
+                            color: AppColors.lightPurple,
                           ),
                         ),
                       ),
+                      child: const Text('Voltar'),
                     ),
                   ],
                 ),

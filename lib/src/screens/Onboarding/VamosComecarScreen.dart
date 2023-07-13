@@ -44,19 +44,11 @@ class VamosComecarScreen extends StatelessWidget {
                 color: Color.fromRGBO(62, 0, 71, 0.984),
               ),
             ),
-            const SizedBox(height: 25), // Ajuste a altura conforme necessário
+            const SizedBox(height: 25),
             ElevatedButton(
               onPressed: () {
-                // Ação do botão de login
+                Navigator.pushNamed(context, '/Login');
               },
-              child: const Text(
-                'Login',
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               style: ElevatedButton.styleFrom(
                 primary: Colors.red,
                 padding:
@@ -65,6 +57,14 @@ class VamosComecarScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(32),
                 ),
                 minimumSize: const Size(200, 50),
+              ),
+              child: const Text(
+                'Login',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const SizedBox(height: 14),

@@ -6,12 +6,9 @@ import '../../../app/theme/colors.dart';
 import '../../../database/dao/deslocamentos_dao.dart';
 import '../../../database/dao/endereco_dao.dart';
 import '../../../database/dao/user_dao.dart';
-import '../../../database/dao/veiculo_dao.dart';
 import '../../../models/deslocamento.dart';
 import '../../../models/endereco.dart';
 import '../../../models/user.dart';
-import '../../../models/veiculo.dart';
-import '../mock/general_displacements_mock.dart';
 import '../models/displacement_model.dart';
 import 'widgets/displacement_tile.dart';
 

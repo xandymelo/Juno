@@ -8,7 +8,8 @@ import '../controllers/rides_and_companies_controller.dart';
 import 'general_tabview.dart';
 import 'perfect_displacement_tabview.dart';
 
-class RidesAndCompaniesScreen extends StateManagerView<RidesAndCompaniesController> {
+class RidesAndCompaniesScreen
+    extends StateManagerView<RidesAndCompaniesController> {
   const RidesAndCompaniesScreen({super.key});
 
   @override

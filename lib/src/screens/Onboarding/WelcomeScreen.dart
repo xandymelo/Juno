@@ -72,7 +72,7 @@ class WelcomeScreen extends StatelessWidget {
             bottom: 72,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/CaronasCompanhiaScreen');
+                Navigator.pushNamed(context, '/CaronasCompanhiaOnBoarding');
               },
               child: const Text(
                 "Próximo",

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:juno/src/app/theme/colors.dart';
 import 'package:juno/src/screens/rides_and_companies/ui/rides_and_companies_screen.dart';
@@ -35,7 +33,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(
                       fontSize: 40.0,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.red, // Cor predefinida do Flutter
+                      color: AppColors.red,
                     ),
                   ),
                   Text(
@@ -43,7 +41,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.purple, // Cor predefinida do Flutter
+                      color: AppColors.purple,
                     ),
                   ),
                 ],

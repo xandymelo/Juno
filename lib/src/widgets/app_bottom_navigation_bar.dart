@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app/theme/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppBottomNavigationBar extends StatefulWidget {
   const AppBottomNavigationBar({Key? key}) : super(key: key);
@@ -10,11 +11,37 @@ class AppBottomNavigationBar extends StatefulWidget {
 }
 
 class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedIndex();
+  }
+
+  Future<void> _loadSelectedIndex() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _selectedIndex = prefs.getInt('selectedIndex') ?? 2;
+    });
+  }
+
+  Future<void> _saveSelectedIndex(int index) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('selectedIndex', index);
+  }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      _saveSelectedIndex(index);
+      if (index == 0) {
+        Navigator.pushNamed(context, '/EmConstrucao');
+      } else if (index == 1) {
+        Navigator.pushNamed(context, '/EmConstrucao');
+      } else if (index == 2) {
+        Navigator.pushNamed(context, '/CaronasCompanhia');
+      }
     });
   }
 

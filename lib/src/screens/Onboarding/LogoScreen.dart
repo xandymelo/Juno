@@ -14,7 +14,7 @@ class _LogoScreenState extends State<LogoScreen> {
     super.initState();
     // Lógica de redirecionamento para a tela WelcomeScreen
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, '/WelcomeScreen');
+      Navigator.pushReplacementNamed(context, '/Welcome');
     });
   }
 
