@@ -6,11 +6,11 @@ class CaronasCompanhiaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 237, 237, 1),
+      backgroundColor: const Color.fromRGBO(255, 237, 237, 1),
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          Column(
+          const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Caronas(
@@ -56,18 +56,20 @@ class CaronasCompanhiaScreen extends StatelessWidget {
                   margin: EdgeInsets.symmetric(horizontal: 4),
                   width: 8,
                   height: 8,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.grey, // Altere a cor de acordo com a lógica do seu identificador
+                    color: Colors
+                        .grey, // Altere a cor de acordo com a lógica do seu identificador
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 4),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
                   width: 8,
                   height: 8,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.red, // Altere a cor de acordo com a lógica do seu identificador
+                    color: Colors
+                        .red, // Altere a cor de acordo com a lógica do seu identificador
                   ),
                 ),
               ],
@@ -79,7 +81,7 @@ class CaronasCompanhiaScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, '/VamosComecarScreen');
               },
-              child: Text(
+              child: const Text(
                 "Começar",
                 style: TextStyle(
                   fontSize: 20,
@@ -87,8 +89,10 @@ class CaronasCompanhiaScreen extends StatelessWidget {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                primary: Colors.red, // Altere a cor do botão de acordo com sua preferência
-                onPrimary: Colors.white, // Altere a cor do texto do botão de acordo com sua preferência
+                primary: Colors
+                    .red, // Altere a cor do botão de acordo com sua preferência
+                onPrimary: Colors
+                    .white, // Altere a cor do texto do botão de acordo com sua preferência
                 padding: EdgeInsets.symmetric(horizontal: 48, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(32),
@@ -107,6 +111,7 @@ class Caronas extends StatelessWidget {
   final double size;
 
   const Caronas({
+    super.key,
     required this.svgPath,
     required this.size,
   });

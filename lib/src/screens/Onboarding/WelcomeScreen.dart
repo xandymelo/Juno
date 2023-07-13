@@ -6,11 +6,11 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 237, 237, 1),
+      backgroundColor: const Color.fromRGBO(255, 237, 237, 1),
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          Column(
+          const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               BemVinda(
@@ -48,19 +48,19 @@ class WelcomeScreen extends StatelessWidget {
               children: [
                 // Identificador de tela
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 4),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
                   width: 8,
                   height: 8,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.red,
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 4),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
                   width: 8,
                   height: 8,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey,
                   ),
@@ -74,7 +74,7 @@ class WelcomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, '/CaronasCompanhiaScreen');
               },
-              child: Text(
+              child: const Text(
                 "Próximo",
                 style: TextStyle(
                   fontSize: 20,
@@ -102,6 +102,7 @@ class BemVinda extends StatelessWidget {
   final double size;
 
   const BemVinda({
+    super.key,
     required this.svgPath,
     required this.size,
   });

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LogoScreen extends StatefulWidget {
+  const LogoScreen({super.key});
+
   @override
   _LogoScreenState createState() => _LogoScreenState();
 }
@@ -12,7 +14,7 @@ class _LogoScreenState extends State<LogoScreen> {
     super.initState();
     // Lógica de redirecionamento para a tela WelcomeScreen
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, '/EmConstrucaoScreen');
+      Navigator.pushReplacementNamed(context, '/WelcomeScreen');
     });
   }
 
@@ -41,8 +43,7 @@ class PeacockLogo extends StatelessWidget {
   final String svgPath;
   final double size;
 
-  const PeacockLogo(
-      {required this.svgPath, required this.size});
+  const PeacockLogo({required this.svgPath, required this.size});
 
   @override
   Widget build(BuildContext context) {
