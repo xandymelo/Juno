@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:juno/src/screens/rides_and_companies/ui/perfect_displacements_screen.dart';
-
 import '../../../app/theme/colors.dart';
 import '../../../utils/state_manager.dart';
-import '../../../widgets/app_bottom_navigation_bar.dart';
 import '../controllers/rides_and_companies_controller.dart';
 import 'general_tabview.dart';
 import 'perfect_displacement_tabview.dart';
 
-class RidesAndCompaniesScreen extends StateManagerView<RidesAndCompaniesController> {
+class RidesAndCompaniesScreen
+    extends StateManagerView<RidesAndCompaniesController> {
   const RidesAndCompaniesScreen({super.key});
 
   @override
@@ -16,7 +15,7 @@ class RidesAndCompaniesScreen extends StateManagerView<RidesAndCompaniesControll
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        bottomNavigationBar: const AppBottomNavigationBar(),
+        // bottomNavigationBar: const AppBottomNavigationBar(),
         appBar: AppBar(
           backgroundColor: AppColors.darkOrange,
           centerTitle: true,

@@ -14,8 +14,16 @@ import 'package:juno/src/models/passageiros_deslocamento.dart';
 import 'package:juno/src/models/sigaa.dart';
 import 'package:juno/src/models/user.dart';
 import 'package:juno/src/models/veiculo.dart';
+import 'package:juno/src/screens/Login/login.dart';
+import 'package:juno/src/screens/Onboarding/LogoScreen.dart';
+import 'package:juno/src/screens/Onboarding/VamosComecarScreen.dart';
+import "package:juno/src/screens/Onboarding/WelcomeScreen.dart";
+import 'package:juno/src/screens/Onboarding/CaronasCompanhiaScreen.dart';
+import 'package:juno/src/screens/EmConstrucao/EmConstrucaoScreen.dart';
+import 'package:juno/src/screens/navigation/ui/navigation_screen.dart';
+import 'package:juno/src/screens/rides_and_companies/ui/rides_and_companies_screen.dart';
+
 import 'src/app/app_initialization.dart';
-import 'src/app/app_widget.dart';
 
 void main() async {
   AppInitialization.init();
@@ -23,7 +31,14 @@ void main() async {
   await createDatabase();
   await createDefaultData();
 
-  runApp(const MyApp());
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: WelcomeScreen());
+  }
 }
 
 Future<void> createDefaultData() async {
