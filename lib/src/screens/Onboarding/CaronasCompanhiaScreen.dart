@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:juno/src/screens/Onboarding/VamosComecarScreen.dart';
 
 class CaronasCompanhiaScreen extends StatelessWidget {
   @override
@@ -78,7 +79,10 @@ class CaronasCompanhiaScreen extends StatelessWidget {
             bottom: 55,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/VamosComecar');
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => VamosComecarScreen()),
+                );
               },
               child: const Text(
                 "Começar",

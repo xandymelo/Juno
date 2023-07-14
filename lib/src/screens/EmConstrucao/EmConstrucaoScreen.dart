@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 
 import '../../app/theme/colors.dart';
-import '../../widgets/app_bottom_navigation_bar.dart';
 
 class EmConstrucaoScreen extends StatefulWidget {
   const EmConstrucaoScreen({super.key});
@@ -15,7 +14,7 @@ class _EmConstrucaoScreenState extends State<EmConstrucaoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const AppBottomNavigationBar(),
+      // bottomNavigationBar: const AppBottomNavigationBar(),
       backgroundColor: AppColors.white,
       body: Center(
         child: Stack(
@@ -33,19 +32,19 @@ class _EmConstrucaoScreenState extends State<EmConstrucaoScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(24),
+              child: const Padding(
+                padding: EdgeInsets.all(24),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.construction,
                       size: 100,
                       color: AppColors.lightOrange,
                     ),
-                    const SizedBox(height: 16),
-                    const Text(
+                    SizedBox(height: 16),
+                    Text(
                       'Em construção',
                       style: TextStyle(
                         fontFamily: 'Poppins',
@@ -54,8 +53,8 @@ class _EmConstrucaoScreenState extends State<EmConstrucaoScreen> {
                         color: AppColors.purple,
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    const Text(
+                    SizedBox(height: 16),
+                    Text(
                       'Desculpe-nos pelo transtorno.\nEstamos trabalhando nesta Funcionalidade.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -63,22 +62,6 @@ class _EmConstrucaoScreenState extends State<EmConstrucaoScreen> {
                         fontSize: 23,
                         color: Color.fromRGBO(62, 0, 71, 0.984),
                       ),
-                    ),
-                    const SizedBox(height: 24),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: AppColors.purple,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          side: const BorderSide(
-                            color: AppColors.lightPurple,
-                          ),
-                        ),
-                      ),
-                      child: const Text('Voltar'),
                     ),
                   ],
                 ),

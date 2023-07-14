@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:juno/src/app/theme/colors.dart';
+import 'package:juno/src/screens/navigation/ui/navigation_screen.dart';
 import 'package:juno/src/screens/rides_and_companies/ui/rides_and_companies_screen.dart';
 
 import '../../database/dao/user_dao.dart';
@@ -117,8 +118,7 @@ class _LoginState extends State<Login> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    const RidesAndCompaniesScreen()),
+                                builder: (context) => const NavigationScreen()),
                           );
                         } else {
                           // Mostrar mensagem de erro informando que o nome de usuário ou senha estão incorretos

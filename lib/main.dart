@@ -20,6 +20,7 @@ import 'package:juno/src/screens/Onboarding/VamosComecarScreen.dart';
 import "package:juno/src/screens/Onboarding/WelcomeScreen.dart";
 import 'package:juno/src/screens/Onboarding/CaronasCompanhiaScreen.dart';
 import 'package:juno/src/screens/EmConstrucao/EmConstrucaoScreen.dart';
+import 'package:juno/src/screens/navigation/ui/navigation_screen.dart';
 import 'package:juno/src/screens/rides_and_companies/ui/rides_and_companies_screen.dart';
 
 import 'src/app/app_initialization.dart';
@@ -36,18 +37,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const LogoScreen(),
-        '/Welcome': (context) => WelcomeScreen(),
-        '/VamosComecar': (context) => VamosComecarScreen(),
-        '/Login': (context) => const Login(),
-        '/CaronasCompanhiaOnBoarding': (context) => CaronasCompanhiaScreen(),
-        '/EmConstrucao': (context) => EmConstrucaoScreen(),
-        '/CaronasCompanhia': (context) => const RidesAndCompaniesScreen(),
-      },
-    );
+    return MaterialApp(home: WelcomeScreen());
   }
 }
 
