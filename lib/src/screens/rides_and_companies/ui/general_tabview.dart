@@ -17,39 +17,162 @@ class GeneralTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Deslocamento>>(
-      initialData: const [],
-      future: DeslocamentoDAO.findAll(),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-            // TODO: Handle this case.
-            break;
-          case ConnectionState.waiting:
-            return const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(),
-                  Text('Loading'),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: AppColors.black,
+                      size: 24,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: AppColors.purple,
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: AppColors.purple,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              PopupMenuButton(
+                offset: const Offset(0, 50),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20.0),
+                  ),
+                ),
+                child: const Icon(Icons.filter_list),
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    onTap: () {},
+                    child: const Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: AppColors.yellow,
+                          child: Icon(
+                            size: 18,
+                            Icons.directions_car,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text('Carro'),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {},
+                    child: const Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: AppColors.darkOrange,
+                          child: Icon(
+                            size: 18,
+                            Icons.motorcycle,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text('Moto'),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {},
+                    child: const Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: AppColors.red,
+                          child: Icon(
+                            size: 18,
+                            Icons.explore,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text('Companhia'),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {},
+                    child: const Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: AppColors.purple,
+                          child: Icon(
+                            size: 18,
+                            Icons.bookmark_added_rounded,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text('Meus Deslocamentos'),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            );
-          case ConnectionState.active:
-            // TODO: Handle this case.
-            break;
-          case ConnectionState.done:
-            final contacts = snapshot.data as List<Deslocamento>;
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                return _DeslocamentoItem(contacts[index]);
-              },
-              itemCount: contacts.length,
-            );
-        }
-        return const Text('Unknown Error 404');
-      },
+            ],
+          ),
+        ),
+        Expanded(
+          child: FutureBuilder<List<Deslocamento>>(
+            initialData: const [],
+            future: DeslocamentoDAO.findAll(),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  // TODO: Handle this case.
+                  break;
+                case ConnectionState.waiting:
+                  return const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(),
+                        Text('Loading'),
+                      ],
+                    ),
+                  );
+                case ConnectionState.active:
+                  // TODO: Handle this case.
+                  break;
+                case ConnectionState.done:
+                  final contacts = snapshot.data as List<Deslocamento>;
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      return _DeslocamentoItem(contacts[index]);
+                    },
+                    itemCount: contacts.length,
+                  );
+              }
+              return const Text('Unknown Error 404');
+            },
+          ),
+        ),
+      ],
     );
   }
 }

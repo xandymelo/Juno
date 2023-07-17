@@ -3,6 +3,7 @@ import 'package:juno/src/models/endereco.dart';
 import 'package:juno/src/screens/rides_and_companies/models/displacement_model.dart';
 
 import '../../../../app/theme/colors.dart';
+import '../displacement_details_screen.dart';
 
 enum ActionType {
   manage,
@@ -115,13 +116,17 @@ class DisplacementTile extends StatelessWidget {
           Column(
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: 
+                  displacementModel.actionType != ActionType.details
+                    ? () {}
+                    : () {Navigator.push(context, MaterialPageRoute(builder: (context) => const DisplacementDetailsScreen()));},
                 style: ElevatedButton.styleFrom(
                   foregroundColor: AppColors.white,
                   backgroundColor:
                       displacementModel.actionType != ActionType.details
                           ? AppColors.lightPurple
                           : AppColors.purple,
+                  
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   minimumSize: const Size(100, 35),
                 ),

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:juno/src/screens/rides_and_companies/ui/perfect_displacements_screen.dart';
+import 'package:juno/src/screens/rides_and_companies/ui/new_displacement_screen.dart';
+import 'perfect_displacement_tabview.dart';
 import '../../../app/theme/colors.dart';
 import '../../../utils/state_manager.dart';
 import '../controllers/rides_and_companies_controller.dart';
 import 'general_tabview.dart';
-import 'perfect_displacement_tabview.dart';
 
 class RidesAndCompaniesScreen
     extends StateManagerView<RidesAndCompaniesController> {
@@ -20,7 +21,7 @@ class RidesAndCompaniesScreen
           backgroundColor: AppColors.darkOrange,
           centerTitle: true,
           title: Text(
-            'Caronas e Companhias'.toUpperCase(),
+            'CARONAS E COMPANHIAS'.toUpperCase(),
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -79,6 +80,18 @@ class RidesAndCompaniesScreen
               ),
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NewDisplacementScreen()));
+          },
+          shape: const CircleBorder(),
+          backgroundColor: AppColors.purple,
+          foregroundColor: AppColors.white,
+          child: const Icon(Icons.add),
         ),
       ),
     );
