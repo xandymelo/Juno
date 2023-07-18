@@ -19,114 +19,122 @@ class GeneralTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: AppColors.purple,
-                      width: 2,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: AppColors.black,
+                      size: 24,
                     ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: AppColors.purple,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: AppColors.purple,
+                        width: 2,
+                      ),
                     ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: AppColors.purple,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                 ),
               ),
-            ),
-            const SizedBox(width: 10),
-            PopupMenuButton(
-              offset: const Offset(0, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20.0),
+              const SizedBox(width: 10),
+              PopupMenuButton(
+                offset: const Offset(0, 50),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20.0),
+                  ),
                 ),
+                child: const Icon(Icons.filter_list),
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    onTap: () {},
+                    child: const Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: AppColors.yellow,
+                          child: Icon(
+                            size: 18,
+                            Icons.directions_car,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text('Carro'),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {},
+                    child: const Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: AppColors.darkOrange,
+                          child: Icon(
+                            size: 18,
+                            Icons.motorcycle,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text('Moto'),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {},
+                    child: const Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: AppColors.red,
+                          child: Icon(
+                            size: 18,
+                            Icons.explore,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text('Companhia'),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {},
+                    child: const Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: AppColors.purple,
+                          child: Icon(
+                            size: 18,
+                            Icons.bookmark_added_rounded,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text('Meus Deslocamentos'),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              child: Icon(Icons.filter_list),
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  onTap: () {},
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 14,
-                        backgroundColor: AppColors.yellow,
-                        child: Icon(
-                          size: 18,
-                          Icons.directions_car,
-                          color: AppColors.white,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text('Carro'),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  onTap: () {},
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 14,
-                        backgroundColor: AppColors.darkOrange,
-                        child: Icon(
-                          size: 18,
-                          Icons.motorcycle,
-                          color: AppColors.white,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text('Moto'),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  onTap: () {},
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 14,
-                        backgroundColor: AppColors.red,
-                        child: Icon(
-                          size: 18,
-                          Icons.explore,
-                          color: AppColors.white,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text('Companhia'),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  onTap: () {},
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 14,
-                        backgroundColor: AppColors.purple,
-                        child: Icon(
-                          size: 18,
-                          Icons.bookmark_added_rounded,
-                          color: AppColors.white,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text('Meus Deslocamentos'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
         Expanded(
           child: FutureBuilder<List<Deslocamento>>(
