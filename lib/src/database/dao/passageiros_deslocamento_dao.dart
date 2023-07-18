@@ -5,11 +5,10 @@ import '../app_database.dart';
 class PassageirosDeslocamentoDAO {
   static const createTable = '''
     CREATE TABLE `PassageirosDeslocamento` (
-      `Id` INTEGER NOT NULL AUTO_INCREMENT,
+      `Id` INTEGER PRIMARY KEY AUTOINCREMENT,
       `UsuarioID` INTEGER NOT NULL,
       `DeslocamentoId` INTEGER NOT NULL,
       `Tipo` INTEGER NOT NULL,
-      PRIMARY KEY (`Id`),
       FOREIGN KEY (`UsuarioID`) REFERENCES `user` (`Id`),
       FOREIGN KEY (`DeslocamentoId`) REFERENCES `deslocamento` (`Id`)
     )
@@ -30,6 +29,29 @@ class PassageirosDeslocamentoDAO {
       _tipo: passageirosDeslocamento.tipo,
     };
     return db.insert(_tablename, passageirosDeslocamentoMap);
+  }
+
+  static Future<PassageirosDeslocamento?> findByDeslocamentoId(
+      int deslocamentoId) async {
+    final Database db = await createDatabase();
+    final List<Map<String, dynamic>> result = await db.query(
+      _tablename,
+      where: '$_deslocamentoId = ? AND $_tipo = ?',
+      whereArgs: [deslocamentoId, 1],
+    );
+    if (result.isNotEmpty) {
+      final Map<String, dynamic> row = result.first;
+      final PassageirosDeslocamento passageirosDeslocamento =
+          PassageirosDeslocamento(
+        id: row[_id],
+        usuarioId: row[_usuarioId],
+        deslocamentoId: row[_deslocamentoId],
+        tipo: row[_tipo],
+      );
+      return passageirosDeslocamento;
+    } else {
+      return null;
+    }
   }
 
   static Future<List<PassageirosDeslocamento>> findAll() async {

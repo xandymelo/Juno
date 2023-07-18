@@ -25,7 +25,8 @@ class PerfectDisplacementsScreen extends StatelessWidget {
               displacementModel: DisplacementModel(
                 locationName: perfectDisplacementsMock[index].locationName,
                 personName: perfectDisplacementsMock[index].personName,
-                personAvatarUrl: perfectDisplacementsMock[index].personAvatarUrl,
+                personAvatarUrl:
+                    perfectDisplacementsMock[index].personAvatarUrl,
                 hour: perfectDisplacementsMock[index].hour,
                 vacancies: perfectDisplacementsMock[index].vacancies,
                 actionType: perfectDisplacementsMock[index].actionType,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juno/src/models/endereco.dart';
 import 'package:juno/src/screens/rides_and_companies/models/displacement_model.dart';
 
 import '../../../../app/theme/colors.dart';
