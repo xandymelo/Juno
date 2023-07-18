@@ -93,7 +93,6 @@ class RidesAndCompaniesScreen
           foregroundColor: AppColors.white,
           child: const Icon(Icons.add),
         ),
-        bottomNavigationBar: const AppBottomNavigationBar(),
       ),
     );
   }
