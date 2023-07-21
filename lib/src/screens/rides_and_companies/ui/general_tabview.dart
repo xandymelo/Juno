@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:juno/src/database/dao/passageiros_deslocamento_dao.dart';
+import 'package:juno/src/database/dao/veiculo_dao.dart';
 import 'package:juno/src/models/passageiros_deslocamento.dart';
 
 import '../../../app/theme/colors.dart';
@@ -9,12 +10,19 @@ import '../../../database/dao/user_dao.dart';
 import '../../../models/deslocamento.dart';
 import '../../../models/endereco.dart';
 import '../../../models/user.dart';
+import '../../../models/veiculo.dart';
 import '../models/displacement_model.dart';
 import 'widgets/displacement_tile.dart';
 
-class GeneralTabView extends StatelessWidget {
+class GeneralTabView extends StatefulWidget {
   const GeneralTabView({Key? key}) : super(key: key);
 
+  @override
+  State<GeneralTabView> createState() => _GeneralTabViewState();
+}
+
+class _GeneralTabViewState extends State<GeneralTabView> {
+  List<int> filter = [0, 1, 2];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -60,7 +68,11 @@ class GeneralTabView extends StatelessWidget {
                 child: const Icon(Icons.filter_list),
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        filter = [0];
+                      });
+                    },
                     child: const Row(
                       children: [
                         CircleAvatar(
@@ -78,7 +90,11 @@ class GeneralTabView extends StatelessWidget {
                     ),
                   ),
                   PopupMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        filter = [1];
+                      });
+                    },
                     child: const Row(
                       children: [
                         CircleAvatar(
@@ -139,7 +155,7 @@ class GeneralTabView extends StatelessWidget {
         Expanded(
           child: FutureBuilder<List<Deslocamento>>(
             initialData: const [],
-            future: DeslocamentoDAO.findAll(),
+            future: DeslocamentoDAO.findDeslocamentosByVehicle(filter),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
@@ -188,12 +204,14 @@ class _DeslocamentoItem extends StatelessWidget {
       future: Future.wait([
         EnderecoDAO.findByIndex(deslocamento.origemId),
         PassageirosDeslocamentoDAO.findByDeslocamentoId(deslocamento.id),
+        VeiculoDAO.findById(deslocamento.veiculoId),
       ]),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.hasData) {
           final List<dynamic> results = snapshot.data as List<dynamic>;
           final Endereco enderecoOrigem = results[0];
           final PassageirosDeslocamento passageiroDeslocamento = results[1];
+          final Veiculo veiculo = results[2];
 
           return FutureBuilder<User>(
             future:
@@ -215,10 +233,14 @@ class _DeslocamentoItem extends StatelessWidget {
                     personName: user?.nome ?? "deu errado",
                     personAvatarUrl:
                         "https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/myfoto.png",
-                    hour: "12:00",
+                    hour: deslocamento.horaSaida,
                     vacancies: deslocamento.vagasDisponiveis,
-                    actionType: ActionType.manage,
-                    vehicleType: VehicleType.car,
+                    actionType: passageiroDeslocamento.tipo == 0
+                        ? ActionType.manage
+                        : ActionType.edit,
+                    vehicleType: veiculo.tipo == 0
+                        ? VehicleType.car
+                        : VehicleType.motorcycle,
                   ),
                 );
               } else {

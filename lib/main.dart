@@ -91,5 +91,27 @@ Future<void> createDefaultData() async {
   final passageirosDeslocamento =
       PassageirosDeslocamento(id: 1, usuarioId: 1, deslocamentoId: 1, tipo: 1);
   PassageirosDeslocamentoDAO.save(passageirosDeslocamento);
-  // PassageirosDeslocamentoDAO.findAll().then((value) => print(value));
+  final segundoVeiculo = Veiculo(
+      id: 2,
+      cor: 'preto',
+      marca: 'SHINERAY',
+      modelo: 'jet50',
+      placa: 'PCM9F01',
+      qtdPassageiros: 1,
+      tipo: 1,
+      usuarioId: 1);
+  await VeiculoDAO.save(segundoVeiculo);
+
+  final segundoDeslocamento = Deslocamento(
+      destinoId: 1,
+      horaSaida: "14:00",
+      id: 2,
+      origemId: 1,
+      status: 0,
+      vagasDisponiveis: 1,
+      veiculoId: 2);
+  DeslocamentoDAO.save(segundoDeslocamento);
+  final segundoPassageirosDeslocamento =
+      PassageirosDeslocamento(id: 2, usuarioId: 1, deslocamentoId: 2, tipo: 1);
+  PassageirosDeslocamentoDAO.save(segundoPassageirosDeslocamento);
 }

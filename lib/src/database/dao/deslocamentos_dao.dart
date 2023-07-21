@@ -1,5 +1,8 @@
+import 'package:juno/src/database/dao/veiculo_dao.dart';
+import 'package:juno/src/screens/rides_and_companies/ui/widgets/displacement_tile.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../models/deslocamento.dart';
+import '../../models/veiculo.dart';
 import '../app_database.dart';
 
 class DeslocamentoDAO {
@@ -40,6 +43,32 @@ class DeslocamentoDAO {
       _vagasDisponiveis: deslocamento.vagasDisponiveis,
     };
     return db.insert(_tablename, deslocamentoMap);
+  }
+
+  static Future<List<Deslocamento>> findDeslocamentosByVehicle(
+      List<int> tipoVeiculos) async {
+    final Database db = await createDatabase();
+    final List<Map<String, dynamic>> result = await db.query(_tablename);
+
+    final List<Deslocamento> deslocamentos = [];
+    for (Map<String, dynamic> row in result) {
+      final Veiculo? veiculo = await VeiculoDAO.findById(row[_veiculoId]);
+      // print(veiculo);
+      if (veiculo != null && tipoVeiculos.contains(veiculo.tipo)) {
+        // print("entrou no if");
+        final Deslocamento deslocamento = Deslocamento(
+          id: row[_id],
+          veiculoId: row[_veiculoId],
+          horaSaida: row[_horaSaida],
+          origemId: row[_origemId],
+          destinoId: row[_destinoId],
+          status: row[_status],
+          vagasDisponiveis: row[_vagasDisponiveis],
+        );
+        deslocamentos.add(deslocamento);
+      }
+    }
+    return deslocamentos;
   }
 
   static Future<List<Deslocamento>> findAll() async {
