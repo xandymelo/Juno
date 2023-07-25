@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:juno/src/app/theme/colors.dart';
 import 'package:juno/src/screens/navigation/ui/navigation_screen.dart';
-import 'package:juno/src/screens/rides_and_companies/ui/rides_and_companies_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../database/dao/user_dao.dart';
 
@@ -18,6 +18,12 @@ class _LoginState extends State<Login> {
   final TextEditingController _passwordController = TextEditingController();
 
   late bool _obscurePassword = true;
+
+  void saveUserData(int userId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('userId', userId);
+    // prefs.setString('username', username);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +121,11 @@ class _LoginState extends State<Login> {
                             await UserDAO.verifyCpfAndPasswordExists(
                                 enteredUsername, enteredPassword);
                         if (userExists == true) {
+                          int? userId =
+                              await UserDAO.getUserIdByCPF(enteredUsername);
+                          if (userId != null) {
+                            saveUserData(userId);
+                          }
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

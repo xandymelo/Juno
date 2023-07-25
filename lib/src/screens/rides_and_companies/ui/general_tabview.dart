@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:juno/src/database/dao/passageiros_deslocamento_dao.dart';
+import 'package:juno/src/database/dao/veiculo_dao.dart';
 import 'package:juno/src/models/passageiros_deslocamento.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../app/theme/colors.dart';
 import '../../../database/dao/deslocamentos_dao.dart';
@@ -9,11 +11,38 @@ import '../../../database/dao/user_dao.dart';
 import '../../../models/deslocamento.dart';
 import '../../../models/endereco.dart';
 import '../../../models/user.dart';
+import '../../../models/veiculo.dart';
 import '../models/displacement_model.dart';
 import 'widgets/displacement_tile.dart';
 
-class GeneralTabView extends StatelessWidget {
+class GeneralTabView extends StatefulWidget {
   const GeneralTabView({Key? key}) : super(key: key);
+
+  @override
+  State<GeneralTabView> createState() => _GeneralTabViewState();
+}
+
+class _GeneralTabViewState extends State<GeneralTabView> {
+  List<int> filter = [0, 1, 2];
+  bool meusDeslocamentos = false;
+  int userId = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  void loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? savedUserId = prefs.getInt('userId');
+    if (savedUserId != null) {
+      setState(() {
+        userId = savedUserId;
+        // print(userId);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +89,11 @@ class GeneralTabView extends StatelessWidget {
                 child: const Icon(Icons.filter_list),
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        filter = [0];
+                      });
+                    },
                     child: const Row(
                       children: [
                         CircleAvatar(
@@ -78,7 +111,12 @@ class GeneralTabView extends StatelessWidget {
                     ),
                   ),
                   PopupMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        filter = [1];
+                        meusDeslocamentos = false;
+                      });
+                    },
                     child: const Row(
                       children: [
                         CircleAvatar(
@@ -96,7 +134,12 @@ class GeneralTabView extends StatelessWidget {
                     ),
                   ),
                   PopupMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        filter = [2];
+                        meusDeslocamentos = false;
+                      });
+                    },
                     child: const Row(
                       children: [
                         CircleAvatar(
@@ -114,7 +157,12 @@ class GeneralTabView extends StatelessWidget {
                     ),
                   ),
                   PopupMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        filter = [0, 1, 2];
+                        meusDeslocamentos = true;
+                      });
+                    },
                     child: const Row(
                       children: [
                         CircleAvatar(
@@ -131,6 +179,29 @@ class GeneralTabView extends StatelessWidget {
                       ],
                     ),
                   ),
+                  PopupMenuItem(
+                    onTap: () {
+                      setState(() {
+                        filter = [0, 1, 2];
+                        meusDeslocamentos = false;
+                      });
+                    },
+                    child: const Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14,
+                          backgroundColor: AppColors.purple,
+                          child: Icon(
+                            size: 18,
+                            Icons.all_inbox,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text('Todos'),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -139,7 +210,8 @@ class GeneralTabView extends StatelessWidget {
         Expanded(
           child: FutureBuilder<List<Deslocamento>>(
             initialData: const [],
-            future: DeslocamentoDAO.findAll(),
+            future: DeslocamentoDAO.findDeslocamentosByFilters(
+                filter, userId, meusDeslocamentos),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
@@ -182,18 +254,28 @@ class _DeslocamentoItem extends StatelessWidget {
   Endereco? enderecoOrigem;
   _DeslocamentoItem(this.deslocamento);
 
+  Future<List<dynamic>> _getData() async {
+    var endereco = await EnderecoDAO.findByIndex(deslocamento.origemId);
+    var passageiros =
+        await PassageirosDeslocamentoDAO.findByDeslocamentoId(deslocamento.id);
+    // print(deslocamento.veiculoId);
+    var veiculo = deslocamento.veiculoId == null
+        ? null
+        : await VeiculoDAO.findById(deslocamento.veiculoId);
+
+    return [endereco, passageiros, veiculo];
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<dynamic>>(
-      future: Future.wait([
-        EnderecoDAO.findByIndex(deslocamento.origemId),
-        PassageirosDeslocamentoDAO.findByDeslocamentoId(deslocamento.id),
-      ]),
+      future: _getData(),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.hasData) {
           final List<dynamic> results = snapshot.data as List<dynamic>;
           final Endereco enderecoOrigem = results[0];
           final PassageirosDeslocamento passageiroDeslocamento = results[1];
+          final Veiculo? veiculo = results[2];
 
           return FutureBuilder<User>(
             future:
@@ -208,17 +290,22 @@ class _DeslocamentoItem extends StatelessWidget {
                     locationName.length > maxLength
                         ? "${locationName.substring(0, maxLength)}..."
                         : locationName;
-
                 return DisplacementTile(
                   displacementModel: DisplacementModel(
                     locationName: truncatedLocationName,
                     personName: user?.nome ?? "deu errado",
                     personAvatarUrl:
                         "https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/myfoto.png",
-                    hour: "12:00",
+                    hour: deslocamento.horaSaida,
                     vacancies: deslocamento.vagasDisponiveis,
-                    actionType: ActionType.manage,
-                    vehicleType: VehicleType.car,
+                    actionType: passageiroDeslocamento.tipo == 0
+                        ? ActionType.manage
+                        : ActionType.edit,
+                    vehicleType: veiculo == null
+                        ? VehicleType.explore
+                        : veiculo.tipo == 0
+                            ? VehicleType.car
+                            : VehicleType.motorcycle,
                   ),
                 );
               } else {
@@ -233,64 +320,3 @@ class _DeslocamentoItem extends StatelessWidget {
     );
   }
 }
-
-// Column(
-//       children: [
-//         Padding(
-//           padding: const EdgeInsets.all(8.0),
-//           child: Row(
-//             children: [
-//               Expanded(
-//                 child: TextField(
-//                   decoration: InputDecoration(
-//                     border: const OutlineInputBorder(),
-//                     focusedBorder: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(10),
-//                       borderSide: const BorderSide(
-//                         color: AppColors.purple,
-//                         width: 2,
-//                       ),
-//                     ),
-//                     enabledBorder: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(10),
-//                       borderSide: const BorderSide(
-//                         color: AppColors.purple,
-//                       ),
-//                     ),
-//                     contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(width: 10),
-//               IconButton(
-//                 onPressed: () {},
-//                 icon: const Icon(
-//                   Icons.filter_list,
-//                   size: 32,
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//         const Divider(),
-//         Flexible(
-//           child: ListView.separated(
-//             shrinkWrap: true,
-//             itemCount: generalDisplacementsMock.length,
-//             separatorBuilder: (context, index) => const Divider(),
-//             itemBuilder: (context, index) => DisplacementTile(
-//               displacementModel: DisplacementModel(
-//                 locationName: generalDisplacementsMock[index].locationName,
-//                 personName: generalDisplacementsMock[index].personName,
-//                 personAvatarUrl: generalDisplacementsMock[index].personAvatarUrl,
-//                 hour: generalDisplacementsMock[index].hour,
-//                 vacancies: generalDisplacementsMock[index].vacancies,
-//                 actionType: generalDisplacementsMock[index].actionType,
-//                 vehicleType: generalDisplacementsMock[index].vehicleType,
-//               ),
-//             ),
-//           ),
-//         ),
-//         const Divider(),
-//       ],
-//     );

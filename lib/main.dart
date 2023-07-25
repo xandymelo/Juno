@@ -66,6 +66,18 @@ Future<void> createDefaultData() async {
       telefone: '81997570531',
       dataNascimento: '1998-03-30');
   await UserDAO.save(usuario);
+  final segundoUsuario = User(
+      cpf: '09788296468',
+      id: 2,
+      nome: 'Eliza',
+      sigaaId: 1,
+      enderecoId: 1,
+      email: 'mariaeliza@outlook.com.br',
+      senha: 'teste123',
+      sobrenome: 'Melo',
+      telefone: '81997570531',
+      dataNascimento: '1998-03-30');
+  await UserDAO.save(segundoUsuario);
   // UserDAO.findAll().then((value) => print(value));
   final veiculo = Veiculo(
       id: 1,
@@ -91,5 +103,41 @@ Future<void> createDefaultData() async {
   final passageirosDeslocamento =
       PassageirosDeslocamento(id: 1, usuarioId: 1, deslocamentoId: 1, tipo: 1);
   PassageirosDeslocamentoDAO.save(passageirosDeslocamento);
+  final segundoVeiculo = Veiculo(
+      id: 2,
+      cor: 'preto',
+      marca: 'SHINERAY',
+      modelo: 'jet50',
+      placa: 'PCM9F01',
+      qtdPassageiros: 1,
+      tipo: 1,
+      usuarioId: 1);
+  await VeiculoDAO.save(segundoVeiculo);
+
+  final segundoDeslocamento = Deslocamento(
+      destinoId: 1,
+      horaSaida: "14:00",
+      id: 2,
+      origemId: 1,
+      status: 0,
+      vagasDisponiveis: 1,
+      veiculoId: 2);
+  DeslocamentoDAO.save(segundoDeslocamento);
+  final segundoPassageirosDeslocamento =
+      PassageirosDeslocamento(id: 2, usuarioId: 1, deslocamentoId: 2, tipo: 1);
+  PassageirosDeslocamentoDAO.save(segundoPassageirosDeslocamento);
+  final terceiroDeslocamento = Deslocamento(
+      destinoId: 1,
+      horaSaida: "14:00",
+      id: 3,
+      origemId: 1,
+      status: 0,
+      vagasDisponiveis: 10,
+      veiculoId: null);
+  DeslocamentoDAO.save(terceiroDeslocamento);
+  final terceiroPassageirosDeslocamento =
+      PassageirosDeslocamento(id: 3, usuarioId: 2, deslocamentoId: 3, tipo: 1);
+  PassageirosDeslocamentoDAO.save(terceiroPassageirosDeslocamento);
+  // DeslocamentoDAO.findAll().then((value) => print(value));
   // PassageirosDeslocamentoDAO.findAll().then((value) => print(value));
 }
