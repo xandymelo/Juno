@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:juno/src/screens/rides_and_companies/ui/perfect_displacements_screen.dart';
-import 'package:juno/src/screens/rides_and_companies/ui/new_displacement_screen.dart';
-import 'general_tabview.dart';
-import 'perfect_displacement_tabview.dart';
+import 'package:juno/src/screens/rides_and_companies/ui/widgets/displacement_tile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../database/dao/veiculo_dao.dart';
+import '../../../models/veiculo.dart';
 
 import '../../../app/theme/colors.dart';
 
@@ -18,12 +18,31 @@ class _NewRideFormState extends State<NewRideFormScreen> {
   final TextEditingController _licensePlateController = TextEditingController();
   final TextEditingController _vehicleModelController = TextEditingController();
   final TextEditingController _vehicleColorController = TextEditingController();
+  final TextEditingController _vehicleBrandController = TextEditingController();
   final TextEditingController _meetingPointController = TextEditingController();
   final TextEditingController _destinationController = TextEditingController();
   final TextEditingController _departureTimeController =
       TextEditingController();
   final TextEditingController _availableSeatsController =
       TextEditingController();
+  int userId = 0;
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  void loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? savedUserId = prefs.getInt('userId');
+    if (savedUserId != null) {
+      setState(() {
+        userId = savedUserId;
+        // print(userId);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -231,6 +250,35 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                     height: 40,
                     width: 360,
                     child: TextField(
+                      controller: _vehicleBrandController,
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.zero,
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColors.black,
+                            width: 3,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Container(
+                    height: 14,
+                    width: 360,
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      'MARCA DO VEÍCULO',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: AppColors.grey,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 40,
+                    width: 360,
+                    child: TextField(
                       controller: _vehicleColorController,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.zero,
@@ -363,19 +411,32 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         String licensePlate = _licensePlateController.text;
                         String vehicleModel = _vehicleModelController.text;
                         String vehicleColor = _vehicleColorController.text;
+                        String vehicleBrand = _vehicleBrandController.text;
                         String meetingPoint = _meetingPointController.text;
                         String destination = _destinationController.text;
                         String departureTime = _departureTimeController.text;
                         String availableSeats = _availableSeatsController.text;
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const NewRideFormScreen()));
+                        int vehicleType = isSelected[0] ? 0 : 1;
+                        VeiculoDAO.findAll().then((value) => print(value));
+                        Veiculo veiculo = Veiculo(
+                            cor: vehicleColor,
+                            modelo: vehicleModel,
+                            placa: licensePlate,
+                            marca: vehicleBrand,
+                            qtdPassageiros: int.parse(availableSeats),
+                            tipo: vehicleType,
+                            usuarioId: userId);
+                        await VeiculoDAO.save(veiculo);
+                        VeiculoDAO.findAll().then((value) => print(value));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             const NewRideFormScreen()));
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.purple,
