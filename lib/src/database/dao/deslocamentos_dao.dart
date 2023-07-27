@@ -9,14 +9,13 @@ import '../app_database.dart';
 class DeslocamentoDAO {
   static const createTable = '''
     CREATE TABLE `deslocamento` (
-      `Id` INTEGER NOT NULL,
+      `Id` INTEGER PRIMARY KEY AUTOINCREMENT,
       `VeiculoID` INTEGER DEFAULT NULL,
       `HoraSaida` TEXT DEFAULT NULL,
       `Origemid` INTEGER NOT NULL,
       `DestinoId` INTEGER NOT NULL,
       `Status` INTEGER NOT NULL,
       `VagasDisponiveis` INTEGER DEFAULT NULL,
-      PRIMARY KEY (`Id`),
       FOREIGN KEY (`VeiculoID`) REFERENCES `veiculo` (`Id`),
       FOREIGN KEY (`DestinoId`) REFERENCES `endereco` (`id`),
       FOREIGN KEY (`Origemid`) REFERENCES `endereco` (`id`)
@@ -35,7 +34,6 @@ class DeslocamentoDAO {
   static Future<int> save(Deslocamento deslocamento) async {
     final Database db = await createDatabase();
     final Map<String, dynamic> deslocamentoMap = {
-      _id: deslocamento.id,
       _veiculoId: deslocamento.veiculoId,
       _horaSaida: deslocamento.horaSaida,
       _origemId: deslocamento.origemId,
@@ -44,6 +42,31 @@ class DeslocamentoDAO {
       _vagasDisponiveis: deslocamento.vagasDisponiveis,
     };
     return db.insert(_tablename, deslocamentoMap);
+  }
+
+  static Future<int?> getDeslocamentoId(Deslocamento deslocamento) async {
+    final Database db = await createDatabase();
+    final List<Map<String, dynamic>> result = await db.query(
+      _tablename,
+      where: '$_veiculoId = ? AND $_horaSaida = ? AND $_origemId = ? AND $_destinoId = ? AND $_status = ? AND $_vagasDisponiveis = ?',
+      whereArgs: [
+        deslocamento.veiculoId,
+        deslocamento.horaSaida,
+        deslocamento.origemId,
+        deslocamento.destinoId,
+        deslocamento.status,
+        deslocamento.vagasDisponiveis,
+      ],
+      limit: 1,
+    );
+
+    if (result.isNotEmpty) {
+      final Map<String, dynamic> row = result.first;
+      final int id = row[_id];
+      return id;
+    }
+
+    return null;
   }
 
   static Future<List<Deslocamento>> findDeslocamentosByFilters(List<int> tipoVeiculos, int usuarioId, bool meusDeslocamentos) async {
@@ -64,7 +87,7 @@ class DeslocamentoDAO {
         );
 
         if (meusDeslocamentos) {
-          final PassageirosDeslocamento? passageiroDeslocamento = await PassageirosDeslocamentoDAO.findByDeslocamentoIdAndUserId(deslocamento.id, usuarioId);
+          final PassageirosDeslocamento? passageiroDeslocamento = await PassageirosDeslocamentoDAO.findByDeslocamentoIdAndUserId(deslocamento.id ?? 0, usuarioId);
           if (passageiroDeslocamento == null) {
             continue;
           }

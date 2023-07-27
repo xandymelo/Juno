@@ -1,11 +1,11 @@
 class PassageirosDeslocamento {
-  int id;
+  int? id;
   int usuarioId;
   int deslocamentoId;
   int tipo;
 
   PassageirosDeslocamento({
-    required this.id,
+    this.id,
     required this.usuarioId,
     required this.deslocamentoId,
     required this.tipo,

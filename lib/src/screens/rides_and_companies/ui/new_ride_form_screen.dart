@@ -1,9 +1,13 @@
-import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:juno/src/database/dao/endereco_dao.dart';
+import 'package:juno/src/database/dao/passageiros_deslocamento_dao.dart';
 import 'package:juno/src/models/endereco.dart';
+import 'package:juno/src/models/passageiros_deslocamento.dart';
+import 'package:juno/src/screens/rides_and_companies/ui/rides_and_companies_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../database/dao/deslocamentos_dao.dart';
 import '../../../database/dao/veiculo_dao.dart';
+import '../../../models/deslocamento.dart';
 import '../../../models/veiculo.dart';
 
 import '../../../app/theme/colors.dart';
@@ -324,7 +328,6 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                             Veiculo(cor: vehicleColor, modelo: vehicleModel, placa: licensePlate, marca: vehicleBrand, qtdPassageiros: int.parse(availableSeats), tipo: vehicleType, usuarioId: userId);
                         await VeiculoDAO.save(veiculo);
                         int? veiculoId = await VeiculoDAO.getVeiculoId(veiculo.placa);
-                        EnderecoDAO.findAll().then((value) => print(value));
                         Endereco enderecoOrigem = Endereco(
                             municipio: _meetingPointCountyController.text,
                             bairro: _meetingPointNeighborhoodController.text,
@@ -332,20 +335,28 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                             numero: int.tryParse(_meetingPointNumberController.text) ?? 0,
                             complemento: _meetingPointComplementController.text);
                         await EnderecoDAO.save(enderecoOrigem);
-                        Endereco enderecoPartida = Endereco(
+                        var origemId = await EnderecoDAO.getEnderecoId(enderecoOrigem);
+                        Endereco enderecoDestino = Endereco(
                             municipio: _destinationCountyController.text,
                             bairro: _destinationNeighborhoodController.text,
                             rua: _destinationRoadController.text,
                             numero: int.tryParse(_destinationNumberController.text) ?? 0,
                             complemento: _destinationComplementController.text);
-                        await EnderecoDAO.save(enderecoPartida);
-                        EnderecoDAO.findAll().then((value) => print(value));
-
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) =>
-                        //             const NewRideFormScreen()));
+                        await EnderecoDAO.save(enderecoDestino);
+                        var destinoId = await EnderecoDAO.getEnderecoId(enderecoDestino);
+                        if (origemId != null && destinoId != null) {
+                          Deslocamento deslocamento = Deslocamento(
+                              destinoId: destinoId, origemId: origemId, vagasDisponiveis: int.parse(availableSeats), veiculoId: veiculoId, horaSaida: _departureTimeController.text, status: 0);
+                          await DeslocamentoDAO.save(deslocamento);
+                          var deslocamentoId = await DeslocamentoDAO.getDeslocamentoId(deslocamento);
+                          if (deslocamentoId != null) {
+                            PassageirosDeslocamentoDAO.findAll().then((value) => print(value));
+                            PassageirosDeslocamento passageiroDeslocamento = PassageirosDeslocamento(usuarioId: userId, deslocamentoId: deslocamentoId, tipo: 1);
+                            PassageirosDeslocamentoDAO.save(passageiroDeslocamento);
+                            PassageirosDeslocamentoDAO.findAll().then((value) => print(value));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const RidesAndCompaniesScreen()));
+                          }
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.purple,
