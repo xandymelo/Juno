@@ -1,3 +1,4 @@
+import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:juno/src/app/theme/colors.dart';
 import 'package:juno/src/screens/navigation/ui/navigation_screen.dart';
@@ -60,6 +61,7 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   TextFormField(
+                    inputFormatters: [TextInputMask(mask: '999.999.999-99')],
                     controller: _usernameController,
                     decoration: const InputDecoration(
                       labelText: 'CPF',
@@ -69,16 +71,13 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 20.0),
                   TextFormField(
                     controller: _passwordController,
-                    obscureText:
-                        _obscurePassword, // Define se a senha está oculta ou não
+                    obscureText: _obscurePassword, // Define se a senha está oculta ou não
                     decoration: InputDecoration(
                       labelText: 'Senha',
                       hintText: '*********',
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscurePassword
-                              ? Icons.visibility_off
-                              : Icons.visibility,
+                          _obscurePassword ? Icons.visibility_off : Icons.visibility,
                         ),
                         onPressed: () {
                           setState(() {
@@ -110,26 +109,21 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.only(bottom: 20.0),
                     child: TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: AppColors
-                            .red, // Define a cor de fundo como vermelho
+                        backgroundColor: AppColors.red, // Define a cor de fundo como vermelho
                         elevation: 0, // Remove a sombra
                       ),
                       onPressed: () async {
                         String enteredUsername = _usernameController.text;
                         String enteredPassword = _passwordController.text;
-                        var userExists =
-                            await UserDAO.verifyCpfAndPasswordExists(
-                                enteredUsername, enteredPassword);
+                        var userExists = await UserDAO.verifyCpfAndPasswordExists(enteredUsername, enteredPassword);
                         if (userExists == true) {
-                          int? userId =
-                              await UserDAO.getUserIdByCPF(enteredUsername);
+                          int? userId = await UserDAO.getUserIdByCPF(enteredUsername);
                           if (userId != null) {
                             saveUserData(userId);
                           }
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const NavigationScreen()),
+                            MaterialPageRoute(builder: (context) => const NavigationScreen()),
                           );
                         } else {
                           // Mostrar mensagem de erro informando que o nome de usuário ou senha estão incorretos
@@ -138,8 +132,7 @@ class _LoginState extends State<Login> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: const Text('Erro'),
-                                content: const Text(
-                                    'Nome de usuário ou senha incorretos.'),
+                                content: const Text('Nome de usuário ou senha incorretos.'),
                                 actions: [
                                   TextButton(
                                     child: const Text('OK'),
@@ -154,15 +147,10 @@ class _LoginState extends State<Login> {
                         }
                       },
                       child: const Padding(
-                        padding: EdgeInsets.only(
-                            top: 8, bottom: 8, left: 35, right: 35),
+                        padding: EdgeInsets.only(top: 8, bottom: 8, left: 35, right: 35),
                         child: Text(
                           'Entrar',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight
-                                  .bold), // Define a cor do texto como branco
+                          style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold), // Define a cor do texto como branco
                         ),
                       ),
                     ),

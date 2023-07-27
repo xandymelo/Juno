@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:juno/src/screens/Onboarding/CaronasCompanhiaScreen.dart';
-import 'package:juno/src/screens/Onboarding/VamosComecarScreen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -75,8 +74,7 @@ class WelcomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => CaronasCompanhiaScreen()),
+                  MaterialPageRoute(builder: (context) => CaronasCompanhiaScreen()),
                 );
               },
               child: const Text(

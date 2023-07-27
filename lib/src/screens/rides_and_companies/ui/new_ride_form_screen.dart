@@ -1,5 +1,7 @@
+import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
-import 'package:juno/src/screens/rides_and_companies/ui/widgets/displacement_tile.dart';
+import 'package:juno/src/database/dao/endereco_dao.dart';
+import 'package:juno/src/models/endereco.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../database/dao/veiculo_dao.dart';
 import '../../../models/veiculo.dart';
@@ -13,22 +15,104 @@ class NewRideFormScreen extends StatefulWidget {
 }
 
 class _NewRideFormState extends State<NewRideFormScreen> {
-  List<bool> isSelected = [false, false];
+  List<bool> isSelected = [true, false];
   // Controladores para os campos de texto
   final TextEditingController _licensePlateController = TextEditingController();
   final TextEditingController _vehicleModelController = TextEditingController();
   final TextEditingController _vehicleColorController = TextEditingController();
   final TextEditingController _vehicleBrandController = TextEditingController();
-  final TextEditingController _meetingPointController = TextEditingController();
-  final TextEditingController _destinationController = TextEditingController();
-  final TextEditingController _departureTimeController =
-      TextEditingController();
-  final TextEditingController _availableSeatsController =
-      TextEditingController();
+  final TextEditingController _destinationCountyController = TextEditingController();
+  final TextEditingController _destinationNeighborhoodController = TextEditingController();
+  final TextEditingController _destinationRoadController = TextEditingController();
+  final TextEditingController _destinationNumberController = TextEditingController();
+  final TextEditingController _destinationComplementController = TextEditingController();
+  final TextEditingController _meetingPointCountyController = TextEditingController();
+  final TextEditingController _meetingPointNeighborhoodController = TextEditingController();
+  final TextEditingController _meetingPointRoadController = TextEditingController();
+  final TextEditingController _meetingPointNumberController = TextEditingController();
+  final TextEditingController _meetingPointComplementController = TextEditingController();
+  final TextEditingController _departureTimeController = TextEditingController();
+  final TextEditingController _availableSeatsController = TextEditingController();
+  late List<Map<String, dynamic>> inputFields;
   int userId = 0;
   @override
   void initState() {
     super.initState();
+    inputFields = [
+      {'label': 'PLACA DO VEÍCULO', 'controller': _licensePlateController, 'inputType': TextInputType.text},
+      {
+        'label': 'MODELO DO VEÍCULO',
+        'controller': _vehicleModelController,
+        'inputType': TextInputType.text,
+      },
+      {
+        'label': 'COR DO VEÍCULO',
+        'controller': _vehicleColorController,
+        'inputType': TextInputType.text,
+      },
+      {
+        'label': 'MARCA DO VEÍCULO',
+        'controller': _vehicleBrandController,
+        'inputType': TextInputType.text,
+      },
+      {
+        'label': 'QUANTIDADE DE VAGAS DISPONÍVEIS',
+        'controller': _availableSeatsController,
+        'inputType': TextInputType.number,
+      },
+      {
+        'label': 'MUNICIPIO DE DESTINO',
+        'controller': _destinationCountyController,
+        'inputType': TextInputType.text,
+      },
+      {
+        'label': 'BAIRRO DE DESTINO',
+        'controller': _destinationNeighborhoodController,
+        'inputType': TextInputType.text,
+      },
+      {
+        'label': 'RUA DE DESTINO',
+        'controller': _destinationRoadController,
+        'inputType': TextInputType.text,
+      },
+      {
+        'label': 'NUMERO DE DESTINO',
+        'controller': _destinationNumberController,
+        'inputType': TextInputType.number,
+      },
+      {
+        'label': 'COMPLEMENTO DE DESTINO',
+        'controller': _destinationComplementController,
+        'inputType': TextInputType.text,
+      },
+      {
+        'label': 'MUNICIPIO DE PARTIDA',
+        'controller': _meetingPointCountyController,
+        'inputType': TextInputType.text,
+      },
+      {
+        'label': 'BAIRRO DE PARTIDA',
+        'controller': _meetingPointNeighborhoodController,
+        'inputType': TextInputType.text,
+      },
+      {
+        'label': 'RUA DE PARTIDA',
+        'controller': _meetingPointRoadController,
+        'inputType': TextInputType.text,
+      },
+      {
+        'label': 'NUMERO DE PARTIDA',
+        'controller': _meetingPointNumberController,
+        'inputType': TextInputType.number, // Número
+      },
+      {
+        'label': 'COMPLEMENTO DE PARTIDA',
+        'controller': _meetingPointComplementController,
+        'inputType': TextInputType.text,
+      },
+      {'label': 'HORÁRIO DE SAÍDA', 'controller': _departureTimeController, 'inputType': TextInputType.datetime},
+    ];
+
     loadUserData();
   }
 
@@ -53,8 +137,7 @@ class _NewRideFormState extends State<NewRideFormScreen> {
             leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
-                  icon:
-                      const Icon(Icons.arrow_back_ios, color: AppColors.white),
+                  icon: const Icon(Icons.arrow_back_ios, color: AppColors.white),
                   onPressed: () => Navigator.of(context).pop(),
                 );
               },
@@ -125,10 +208,7 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                               ),
                               const Text(
                                 'Carro',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                    color: AppColors.black),
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: AppColors.black),
                               ),
                             ],
                           ),
@@ -161,12 +241,9 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                       ],
                       onPressed: (int index) {
                         setState(() {
-                          for (int buttonIndex = 0;
-                              buttonIndex < isSelected.length;
-                              buttonIndex++) {
+                          for (int buttonIndex = 0; buttonIndex < isSelected.length; buttonIndex++) {
                             if (buttonIndex == index) {
-                              isSelected[buttonIndex] =
-                                  !isSelected[buttonIndex];
+                              isSelected[buttonIndex] = !isSelected[buttonIndex];
                             } else {
                               isSelected[buttonIndex] = false;
                             }
@@ -175,263 +252,95 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Container(
-                    height: 14,
-                    width: 360,
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      'PLACA DO VEÍCULO',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.grey,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: 360,
-                    child: TextField(
-                      controller: _licensePlateController,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.zero,
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppColors.black,
-                            width: 3,
+                  for (var field in inputFields)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 15),
+                        Container(
+                          height: 14,
+                          width: 360,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            field['label'],
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: AppColors.grey,
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
-                    height: 14,
-                    width: 360,
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      'MODELO DO VEÍCULO',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.grey,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: 360,
-                    child: TextField(
-                      controller: _vehicleModelController,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.zero,
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppColors.black,
-                            width: 3,
-                          ),
+                        SizedBox(
+                          height: 40,
+                          width: 360,
+                          child: TextField(
+                              keyboardType: field['inputType'],
+                              controller: field['controller'],
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8), // Bordas retangulares e arredondadas
+                                ),
+                              )),
                         ),
-                      ),
+                        const SizedBox(height: 15),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
-                    height: 14,
-                    width: 360,
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      'COR DO VEÍCULO',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.grey,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: 360,
-                    child: TextField(
-                      controller: _vehicleBrandController,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.zero,
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppColors.black,
-                            width: 3,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
-                    height: 14,
-                    width: 360,
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      'MARCA DO VEÍCULO',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.grey,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: 360,
-                    child: TextField(
-                      controller: _vehicleColorController,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.zero,
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppColors.black,
-                            width: 3,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
-                    height: 14,
-                    width: 360,
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      'PONTO DE ENCONTRO',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.grey,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: 360,
-                    child: TextField(
-                      controller: _meetingPointController,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.zero,
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppColors.black,
-                            width: 3,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
-                    height: 14,
-                    width: 360,
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      'BAIRRO DE DESTINO',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.grey,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: 360,
-                    child: TextField(
-                      controller: _destinationController,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.zero,
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppColors.black,
-                            width: 3,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
-                    height: 14,
-                    width: 360,
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      'HORÁRIO DE SAÍDA',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.grey,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: 360,
-                    child: TextField(
-                      controller: _departureTimeController,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.zero,
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppColors.black,
-                            width: 3,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
-                    height: 14,
-                    width: 360,
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      'QUANTIDADE DE VAGAS DISPONÍVEIS',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.grey,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: 360,
-                    child: TextField(
-                      controller: _availableSeatsController,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.zero,
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppColors.black,
-                            width: 3,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 15),
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: ElevatedButton(
                       onPressed: () async {
+                        for (var label in inputFields) {
+                          if (label['controller'].text.isEmpty) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Erro'),
+                                  content: const Text('Todos os campos são obrigatórios.'),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text('OK'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                            return;
+                          }
+                        }
                         String licensePlate = _licensePlateController.text;
                         String vehicleModel = _vehicleModelController.text;
                         String vehicleColor = _vehicleColorController.text;
                         String vehicleBrand = _vehicleBrandController.text;
-                        String meetingPoint = _meetingPointController.text;
-                        String destination = _destinationController.text;
+                        String destination = _destinationNeighborhoodController.text;
                         String departureTime = _departureTimeController.text;
                         String availableSeats = _availableSeatsController.text;
                         int vehicleType = isSelected[0] ? 0 : 1;
-                        VeiculoDAO.findAll().then((value) => print(value));
-                        Veiculo veiculo = Veiculo(
-                            cor: vehicleColor,
-                            modelo: vehicleModel,
-                            placa: licensePlate,
-                            marca: vehicleBrand,
-                            qtdPassageiros: int.parse(availableSeats),
-                            tipo: vehicleType,
-                            usuarioId: userId);
+                        Veiculo veiculo =
+                            Veiculo(cor: vehicleColor, modelo: vehicleModel, placa: licensePlate, marca: vehicleBrand, qtdPassageiros: int.parse(availableSeats), tipo: vehicleType, usuarioId: userId);
                         await VeiculoDAO.save(veiculo);
-                        VeiculoDAO.findAll().then((value) => print(value));
+                        int? veiculoId = await VeiculoDAO.getVeiculoId(veiculo.placa);
+                        EnderecoDAO.findAll().then((value) => print(value));
+                        Endereco enderecoOrigem = Endereco(
+                            municipio: _meetingPointCountyController.text,
+                            bairro: _meetingPointNeighborhoodController.text,
+                            rua: _meetingPointRoadController.text,
+                            numero: int.tryParse(_meetingPointNumberController.text) ?? 0,
+                            complemento: _meetingPointComplementController.text);
+                        await EnderecoDAO.save(enderecoOrigem);
+                        Endereco enderecoPartida = Endereco(
+                            municipio: _destinationCountyController.text,
+                            bairro: _destinationNeighborhoodController.text,
+                            rua: _destinationRoadController.text,
+                            numero: int.tryParse(_destinationNumberController.text) ?? 0,
+                            complemento: _destinationComplementController.text);
+                        await EnderecoDAO.save(enderecoPartida);
+                        EnderecoDAO.findAll().then((value) => print(value));
+
                         // Navigator.push(
                         //     context,
                         //     MaterialPageRoute(
@@ -441,8 +350,7 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.purple,
                         foregroundColor: AppColors.white,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 60, vertical: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                       ),
                       child: const Text(
                         'Criar',

@@ -1,4 +1,3 @@
-import 'package:juno/src/screens/rides_and_companies/ui/widgets/displacement_tile.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../models/veiculo.dart';
 import '../app_database.dart';
@@ -41,6 +40,22 @@ class VeiculoDAO {
       _qtdPassageiros: veiculo.qtdPassageiros,
     };
     return db.insert(_tablename, veiculoMap);
+  }
+
+  static Future<int?> getVeiculoId(String placa) async {
+    final Database db = await createDatabase();
+    final List<Map<String, dynamic>> result = await db.query(
+      _tablename,
+      columns: [_id],
+      where: '$_placa = ?',
+      whereArgs: [placa],
+    );
+
+    if (result.isNotEmpty) {
+      return result.first[_id];
+    } else {
+      return null;
+    }
   }
 
   static Future<Veiculo?> findById(int? id) async {

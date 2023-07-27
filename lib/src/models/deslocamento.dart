@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Deslocamento {
   int id;
   int? veiculoId;

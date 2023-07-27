@@ -35,13 +35,7 @@ class MyApp extends StatelessWidget {
 }
 
 Future<void> createDefaultData() async {
-  final endereco = Endereco(
-      bairro: 'candeias',
-      id: 1,
-      complemento: 'Casa A',
-      municipio: 'Jaboatão dos Guararapes',
-      numero: 7535,
-      rua: 'rua Padre Nestor de Alencar');
+  final endereco = Endereco(bairro: 'candeias', id: 1, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
   await EnderecoDAO.save(endereco);
   // EnderecoDAO.findAll().then((value) => print(value));
   final curso = Curso(
@@ -55,7 +49,7 @@ Future<void> createDefaultData() async {
   await SigaaDAO.save(sigaa);
   // SigaaDAO.findAll().then((value) => print(value));
   final usuario = User(
-      cpf: '09788296467',
+      cpf: '097.882.964-67',
       id: 1,
       nome: 'Alexandre',
       sigaaId: 1,
@@ -67,7 +61,7 @@ Future<void> createDefaultData() async {
       dataNascimento: '1998-03-30');
   await UserDAO.save(usuario);
   final segundoUsuario = User(
-      cpf: '09788296468',
+      cpf: '097.882.964-68',
       id: 2,
       nome: 'Eliza',
       sigaaId: 1,
@@ -79,64 +73,24 @@ Future<void> createDefaultData() async {
       dataNascimento: '1998-03-30');
   await UserDAO.save(segundoUsuario);
   // UserDAO.findAll().then((value) => print(value));
-  final veiculo = Veiculo(
-      id: 1,
-      cor: 'branco',
-      marca: 'Hyundai',
-      modelo: 'HB20',
-      placa: 'PCM9F00',
-      qtdPassageiros: 4,
-      tipo: 0,
-      usuarioId: 1);
+  final veiculo = Veiculo(id: 1, cor: 'branco', marca: 'Hyundai', modelo: 'HB20', placa: 'PCM9F00', qtdPassageiros: 4, tipo: 0, usuarioId: 1);
   await VeiculoDAO.save(veiculo);
   // VeiculoDAO.findAll().then((value) => print(value));
-  final deslocamento = Deslocamento(
-      destinoId: 1,
-      horaSaida: "13:00",
-      id: 1,
-      origemId: 1,
-      status: 0,
-      vagasDisponiveis: 4,
-      veiculoId: 1);
+  final deslocamento = Deslocamento(destinoId: 1, horaSaida: "13:00", id: 1, origemId: 1, status: 0, vagasDisponiveis: 4, veiculoId: 1);
   DeslocamentoDAO.save(deslocamento);
   // DeslocamentoDAO.findAll().then((value) => print(value));
-  final passageirosDeslocamento =
-      PassageirosDeslocamento(id: 1, usuarioId: 1, deslocamentoId: 1, tipo: 1);
+  final passageirosDeslocamento = PassageirosDeslocamento(id: 1, usuarioId: 1, deslocamentoId: 1, tipo: 1);
   PassageirosDeslocamentoDAO.save(passageirosDeslocamento);
-  final segundoVeiculo = Veiculo(
-      id: 2,
-      cor: 'preto',
-      marca: 'SHINERAY',
-      modelo: 'jet50',
-      placa: 'PCM9F01',
-      qtdPassageiros: 1,
-      tipo: 1,
-      usuarioId: 1);
+  final segundoVeiculo = Veiculo(id: 2, cor: 'preto', marca: 'SHINERAY', modelo: 'jet50', placa: 'PCM9F01', qtdPassageiros: 1, tipo: 1, usuarioId: 1);
   await VeiculoDAO.save(segundoVeiculo);
 
-  final segundoDeslocamento = Deslocamento(
-      destinoId: 1,
-      horaSaida: "14:00",
-      id: 2,
-      origemId: 1,
-      status: 0,
-      vagasDisponiveis: 1,
-      veiculoId: 2);
+  final segundoDeslocamento = Deslocamento(destinoId: 1, horaSaida: "14:00", id: 2, origemId: 1, status: 0, vagasDisponiveis: 1, veiculoId: 2);
   DeslocamentoDAO.save(segundoDeslocamento);
-  final segundoPassageirosDeslocamento =
-      PassageirosDeslocamento(id: 2, usuarioId: 1, deslocamentoId: 2, tipo: 1);
+  final segundoPassageirosDeslocamento = PassageirosDeslocamento(id: 2, usuarioId: 1, deslocamentoId: 2, tipo: 1);
   PassageirosDeslocamentoDAO.save(segundoPassageirosDeslocamento);
-  final terceiroDeslocamento = Deslocamento(
-      destinoId: 1,
-      horaSaida: "14:00",
-      id: 3,
-      origemId: 1,
-      status: 0,
-      vagasDisponiveis: 10,
-      veiculoId: null);
+  final terceiroDeslocamento = Deslocamento(destinoId: 1, horaSaida: "14:00", id: 3, origemId: 1, status: 0, vagasDisponiveis: 10, veiculoId: null);
   DeslocamentoDAO.save(terceiroDeslocamento);
-  final terceiroPassageirosDeslocamento =
-      PassageirosDeslocamento(id: 3, usuarioId: 2, deslocamentoId: 3, tipo: 1);
+  final terceiroPassageirosDeslocamento = PassageirosDeslocamento(id: 3, usuarioId: 2, deslocamentoId: 3, tipo: 1);
   PassageirosDeslocamentoDAO.save(terceiroPassageirosDeslocamento);
   // DeslocamentoDAO.findAll().then((value) => print(value));
   // PassageirosDeslocamentoDAO.findAll().then((value) => print(value));
