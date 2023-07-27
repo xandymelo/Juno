@@ -34,6 +34,24 @@ class EnderecoDAO {
     return db.insert(_tablename, contactMap);
   }
 
+  static Future<int?> getEnderecoId(Endereco endereco) async {
+    final Database db = await createDatabase();
+    final List<Map<String, dynamic>> result = await db.query(
+      _tablename,
+      where: '$_municipio = ? AND $_bairro = ? AND $_rua = ? AND $_numero = ? AND $_complemento = ?',
+      whereArgs: [endereco.municipio, endereco.bairro, endereco.rua, endereco.numero, endereco.complemento],
+      limit: 1,
+    );
+
+    if (result.isNotEmpty) {
+      final Map<String, dynamic> row = result.first;
+      final int id = row[_id];
+      return id;
+    }
+
+    return null;
+  }
+
   static Future<Endereco> findByIndex(int id) async {
     final Database db = await createDatabase();
     final List<Map<String, dynamic>> result = await db.query(
@@ -54,13 +72,7 @@ class EnderecoDAO {
       );
       return contact;
     }
-    return Endereco(
-        bairro: 'bairro',
-        complemento: 'complemento',
-        id: -1,
-        municipio: 'municipio',
-        numero: 1,
-        rua: 'rua');
+    return Endereco(bairro: 'bairro', complemento: 'complemento', id: -1, municipio: 'municipio', numero: 1, rua: 'rua');
   }
 
   static Future<List<Endereco>> findAll() async {

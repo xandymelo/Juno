@@ -210,8 +210,7 @@ class _GeneralTabViewState extends State<GeneralTabView> {
         Expanded(
           child: FutureBuilder<List<Deslocamento>>(
             initialData: const [],
-            future: DeslocamentoDAO.findDeslocamentosByFilters(
-                filter, userId, meusDeslocamentos),
+            future: DeslocamentoDAO.findDeslocamentosByFilters(filter, userId, meusDeslocamentos),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
@@ -256,12 +255,9 @@ class _DeslocamentoItem extends StatelessWidget {
 
   Future<List<dynamic>> _getData() async {
     var endereco = await EnderecoDAO.findByIndex(deslocamento.origemId);
-    var passageiros =
-        await PassageirosDeslocamentoDAO.findByDeslocamentoId(deslocamento.id);
+    var passageiros = await PassageirosDeslocamentoDAO.findByDeslocamentoId(deslocamento.id ?? 0);
     // print(deslocamento.veiculoId);
-    var veiculo = deslocamento.veiculoId == null
-        ? null
-        : await VeiculoDAO.findById(deslocamento.veiculoId);
+    var veiculo = deslocamento.veiculoId == null ? null : await VeiculoDAO.findById(deslocamento.veiculoId);
 
     return [endereco, passageiros, veiculo];
   }
@@ -278,29 +274,21 @@ class _DeslocamentoItem extends StatelessWidget {
           final Veiculo? veiculo = results[2];
 
           return FutureBuilder<User>(
-            future:
-                UserDAO.getUserById(passageiroDeslocamento?.usuarioId as int),
+            future: UserDAO.getUserById(passageiroDeslocamento?.usuarioId as int),
             builder: (BuildContext context, AsyncSnapshot<User> userSnapshot) {
               if (userSnapshot.hasData) {
                 final User user = userSnapshot.data as User;
-                final String locationName =
-                    enderecoOrigem?.municipio ?? "Not Found";
+                final String locationName = enderecoOrigem?.municipio ?? "Not Found";
                 const int maxLength = 10;
-                final String truncatedLocationName =
-                    locationName.length > maxLength
-                        ? "${locationName.substring(0, maxLength)}..."
-                        : locationName;
+                final String truncatedLocationName = locationName.length > maxLength ? "${locationName.substring(0, maxLength)}..." : locationName;
                 return DisplacementTile(
                   displacementModel: DisplacementModel(
                     locationName: truncatedLocationName,
                     personName: user?.nome ?? "deu errado",
-                    personAvatarUrl:
-                        "https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/myfoto.png",
+                    personAvatarUrl: "https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/myfoto.png",
                     hour: deslocamento.horaSaida,
                     vacancies: deslocamento.vagasDisponiveis,
-                    actionType: passageiroDeslocamento.tipo == 0
-                        ? ActionType.manage
-                        : ActionType.edit,
+                    actionType: passageiroDeslocamento.tipo == 0 ? ActionType.manage : ActionType.edit,
                     vehicleType: veiculo == null
                         ? VehicleType.explore
                         : veiculo.tipo == 0

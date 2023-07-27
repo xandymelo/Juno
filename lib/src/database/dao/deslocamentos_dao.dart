@@ -1,6 +1,5 @@
 import 'package:juno/src/database/dao/passageiros_deslocamento_dao.dart';
 import 'package:juno/src/database/dao/veiculo_dao.dart';
-import 'package:juno/src/screens/rides_and_companies/ui/widgets/displacement_tile.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../models/deslocamento.dart';
 import '../../models/passageiros_deslocamento.dart';
@@ -10,14 +9,13 @@ import '../app_database.dart';
 class DeslocamentoDAO {
   static const createTable = '''
     CREATE TABLE `deslocamento` (
-      `Id` INTEGER NOT NULL,
+      `Id` INTEGER PRIMARY KEY AUTOINCREMENT,
       `VeiculoID` INTEGER DEFAULT NULL,
       `HoraSaida` TEXT DEFAULT NULL,
       `Origemid` INTEGER NOT NULL,
       `DestinoId` INTEGER NOT NULL,
       `Status` INTEGER NOT NULL,
       `VagasDisponiveis` INTEGER DEFAULT NULL,
-      PRIMARY KEY (`Id`),
       FOREIGN KEY (`VeiculoID`) REFERENCES `veiculo` (`Id`),
       FOREIGN KEY (`DestinoId`) REFERENCES `endereco` (`id`),
       FOREIGN KEY (`Origemid`) REFERENCES `endereco` (`id`)
@@ -36,7 +34,6 @@ class DeslocamentoDAO {
   static Future<int> save(Deslocamento deslocamento) async {
     final Database db = await createDatabase();
     final Map<String, dynamic> deslocamentoMap = {
-      _id: deslocamento.id,
       _veiculoId: deslocamento.veiculoId,
       _horaSaida: deslocamento.horaSaida,
       _origemId: deslocamento.origemId,
@@ -47,15 +44,38 @@ class DeslocamentoDAO {
     return db.insert(_tablename, deslocamentoMap);
   }
 
-  static Future<List<Deslocamento>> findDeslocamentosByFilters(
-      List<int> tipoVeiculos, int usuarioId, bool meusDeslocamentos) async {
+  static Future<int?> getDeslocamentoId(Deslocamento deslocamento) async {
+    final Database db = await createDatabase();
+    final List<Map<String, dynamic>> result = await db.query(
+      _tablename,
+      where: '$_veiculoId = ? AND $_horaSaida = ? AND $_origemId = ? AND $_destinoId = ? AND $_status = ? AND $_vagasDisponiveis = ?',
+      whereArgs: [
+        deslocamento.veiculoId,
+        deslocamento.horaSaida,
+        deslocamento.origemId,
+        deslocamento.destinoId,
+        deslocamento.status,
+        deslocamento.vagasDisponiveis,
+      ],
+      limit: 1,
+    );
+
+    if (result.isNotEmpty) {
+      final Map<String, dynamic> row = result.first;
+      final int id = row[_id];
+      return id;
+    }
+
+    return null;
+  }
+
+  static Future<List<Deslocamento>> findDeslocamentosByFilters(List<int> tipoVeiculos, int usuarioId, bool meusDeslocamentos) async {
     final Database db = await createDatabase();
     final List<Map<String, dynamic>> result = await db.query(_tablename);
     final List<Deslocamento> deslocamentos = [];
     for (Map<String, dynamic> row in result) {
       final Veiculo? veiculo = await VeiculoDAO.findById(row[_veiculoId]);
-      if ((veiculo != null && tipoVeiculos.contains(veiculo.tipo)) ||
-          (row[_veiculoId] == null && tipoVeiculos.contains(2))) {
+      if ((veiculo != null && tipoVeiculos.contains(veiculo.tipo)) || (row[_veiculoId] == null && tipoVeiculos.contains(2))) {
         final Deslocamento deslocamento = Deslocamento(
           id: row[_id],
           veiculoId: row[_veiculoId],
@@ -67,9 +87,7 @@ class DeslocamentoDAO {
         );
 
         if (meusDeslocamentos) {
-          final PassageirosDeslocamento? passageiroDeslocamento =
-              await PassageirosDeslocamentoDAO.findByDeslocamentoIdAndUserId(
-                  deslocamento.id, usuarioId);
+          final PassageirosDeslocamento? passageiroDeslocamento = await PassageirosDeslocamentoDAO.findByDeslocamentoIdAndUserId(deslocamento.id ?? 0, usuarioId);
           if (passageiroDeslocamento == null) {
             continue;
           }

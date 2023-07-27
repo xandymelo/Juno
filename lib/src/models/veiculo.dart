@@ -1,5 +1,5 @@
 class Veiculo {
-  int id;
+  int? id;
   int usuarioId;
   int tipo;
   String placa;
@@ -9,7 +9,7 @@ class Veiculo {
   int qtdPassageiros;
 
   Veiculo({
-    required this.id,
+    this.id,
     required this.usuarioId,
     required this.tipo,
     required this.placa,
