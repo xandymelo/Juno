@@ -1,5 +1,5 @@
 class Endereco {
-  final int id;
+  final int? id;
   final String municipio;
   final String bairro;
   final String rua;
@@ -7,7 +7,7 @@ class Endereco {
   final String complemento;
 
   Endereco({
-    required this.id,
+    this.id,
     required this.municipio,
     required this.bairro,
     required this.rua,

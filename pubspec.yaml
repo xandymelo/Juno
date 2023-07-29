@@ -33,12 +33,14 @@ dependencies:
   flutter_svg: ^0.22.0
   sqflite: ^2.0.0+4
   sqflite_common_ffi: ^2.0.0+2
+  shared_preferences: ^2.0.8
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   google_fonts: ^4.0.4
+  easy_mask: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -69,9 +71,13 @@ flutter:
     - assets/group_selected.svg
     - assets/star-juno.svg
     - assets/group_unselected.svg
-    # - assets/OnBoarding/BemVinda.svg
-    # - assets/OnBoarding/PeacockLogo.svg
-    # - assets/OnBoarding/VamosComecarImagem.svg
+    - assets/peacock.svg
+    - assets/VamosComecarImagem.svg
+    - assets/Bem-Vinda.svg
+    - assets/CaronasImagem.svg
+    - assets/undraw_order_ride.png
+    - assets/undraw_social.png
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

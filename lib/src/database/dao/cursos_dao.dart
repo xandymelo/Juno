@@ -39,4 +39,30 @@ class CursosDAO {
     }
     return cursos;
   }
+
+  static Future<Curso?> getCursoById(int cursoId) async {
+    final Database db = await createDatabase();
+    final List<Map<String, dynamic>> result = await db.query(_tablename, where: '$_id = ?', whereArgs: [cursoId]);
+    if (result.isNotEmpty) {
+      return Curso(
+        id: result[0][_id],
+        nome: result[0][_nome],
+        turno: result[0][_turno],
+      );
+    }
+    return null;
+  }
+
+  static String mapTurnoToString(int turno) {
+    switch (turno) {
+      case 0:
+        return 'Matutino';
+      case 1:
+        return 'Vespertino';
+      case 2:
+        return 'Noturno';
+      default:
+        return 'N/A';
+    }
+  }
 }

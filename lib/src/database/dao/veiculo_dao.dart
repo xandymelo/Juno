@@ -5,7 +5,7 @@ import '../app_database.dart';
 class VeiculoDAO {
   static const createTable = '''
     CREATE TABLE `veiculo` (
-      `Id` INTEGER NOT NULL,
+      `Id` INTEGER PRIMARY KEY AUTOINCREMENT,
       `UsuarioID` INTEGER NOT NULL,
       `Tipo` INTEGER DEFAULT NULL,
       `Placa` TEXT DEFAULT NULL,
@@ -13,7 +13,6 @@ class VeiculoDAO {
       `Modelo` TEXT DEFAULT NULL,
       `Cor` TEXT DEFAULT NULL,
       `QtdPassageiros` INTEGER NOT NULL,
-      PRIMARY KEY (`Id`),
       FOREIGN KEY (`UsuarioID`) REFERENCES `user` (`Id`)
     )
   ''';
@@ -31,7 +30,7 @@ class VeiculoDAO {
   static Future<int> save(Veiculo veiculo) async {
     final Database db = await createDatabase();
     final Map<String, dynamic> veiculoMap = {
-      _id: veiculo.id,
+      // _id: veiculo.id,
       _usuarioId: veiculo.usuarioId,
       _tipo: veiculo.tipo,
       _placa: veiculo.placa,
@@ -43,7 +42,26 @@ class VeiculoDAO {
     return db.insert(_tablename, veiculoMap);
   }
 
-  static Future<Veiculo?> findById(int id) async {
+  static Future<int?> getVeiculoId(String placa) async {
+    final Database db = await createDatabase();
+    final List<Map<String, dynamic>> result = await db.query(
+      _tablename,
+      columns: [_id],
+      where: '$_placa = ?',
+      whereArgs: [placa],
+    );
+
+    if (result.isNotEmpty) {
+      return result.first[_id];
+    } else {
+      return null;
+    }
+  }
+
+  static Future<Veiculo?> findById(int? id) async {
+    if (id == null) {
+      return null;
+    }
     final Database db = await createDatabase();
     final List<Map<String, dynamic>> result = await db.query(
       _tablename,

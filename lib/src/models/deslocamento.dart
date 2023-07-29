@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-
 class Deslocamento {
-  int id;
-  int veiculoId;
+  int? id;
+  int? veiculoId;
   String horaSaida;
   int origemId;
   int destinoId;
@@ -10,7 +8,7 @@ class Deslocamento {
   int vagasDisponiveis;
 
   Deslocamento({
-    required this.id,
+    this.id,
     required this.veiculoId,
     required this.horaSaida,
     required this.origemId,
