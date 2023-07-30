@@ -4,8 +4,10 @@ import 'package:juno/src/models/cursos.dart';
 import 'package:juno/src/models/sigaa.dart';
 import 'package:juno/src/models/user.dart';
 import 'package:juno/src/screens/Onboarding/VamosComecarScreen.dart';
+import 'package:juno/src/screens/signUp/Address_screen.dart';
 import '../../app/theme/colors.dart';
 import '../../database/dao/cursos_dao.dart';
+
 
 class NextPage extends StatelessWidget {
   final User user;
@@ -129,11 +131,11 @@ class NextPage extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () {
-                              // Proceed to the next page
-                              // Replace the code below with the navigation logic you want
-                              // For example, Navigator.push(...);
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => AddressScreen()),
+                              );
                               print('Proceeding to the next page...');
-                              Navigator.pop(context);
                             },
                             child: Text('Continuar', style: TextStyle(
                       fontSize: 14.0,

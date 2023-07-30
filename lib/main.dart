@@ -37,8 +37,8 @@ class MyApp extends StatelessWidget {
 }
 
 Future<void> createDefaultData() async {
-  final endereco = Endereco(bairro: 'candeias', id: 1, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
-  await EnderecoDAO.save(endereco);
+  //final endereco = Endereco(bairro: 'candeias', id: 1, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  //await EnderecoDAO.save(endereco);
   // EnderecoDAO.findAll().then((value) => print(value));
   final curso = Curso(
     id: 1,

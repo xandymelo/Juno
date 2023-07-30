@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:juno/src/screens/Login/login.dart';
 import 'package:juno/src/screens/signUp/SignUp_screen.dart';
+import 'package:juno/src/database/dao/endereco_dao.dart';
 
 class VamosComecarScreen extends StatelessWidget {
   @override
@@ -48,7 +49,7 @@ class VamosComecarScreen extends StatelessWidget {
             ),
             const SizedBox(height: 25),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const Login()),
