@@ -166,4 +166,24 @@ class UserDAO {
     }
     return users;
   }
+
+  static Future<int> update(User user) async {
+    final db = await createDatabase();
+    return db.update(
+      _tablename,
+      {
+        _sigaaId: user.sigaaId,
+        _enderecoId: user.enderecoId,
+        _nome: user.nome,
+        _sobrenome: user.sobrenome,
+        _cpf: user.cpf,
+        _senha: user.senha,
+        _telefone: user.telefone,
+        _email: user.email,
+        _dataDeNascimento: user.dataNascimento,
+      },
+      where: '$_id = ?',
+      whereArgs: [user.id],
+    );
+  }
 }

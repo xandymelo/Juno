@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:juno/main.dart';
+import 'package:juno/src/database/dao/endereco_dao.dart';
 import 'package:juno/src/models/cursos.dart';
 import 'package:juno/src/models/sigaa.dart';
 import 'package:juno/src/models/user.dart';
@@ -130,10 +131,10 @@ class NextPage extends StatelessWidget {
                                 color: AppColors.darkOrange)),
                           ),
                           TextButton(
-                            onPressed: () {
+                            onPressed: () async {
                               Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(builder: (context) => AddressScreen()),
+                                MaterialPageRoute(builder: (context) => AddressScreen(user: user,)),
                               );
                               print('Proceeding to the next page...');
                             },

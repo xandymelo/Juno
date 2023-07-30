@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:juno/src/database/dao/endereco_dao.dart';
 import 'package:juno/src/models/endereco.dart';
+import 'package:juno/src/models/user.dart';
 import 'package:juno/src/screens/Onboarding/VamosComecarScreen.dart';
 
 import '../../app/theme/colors.dart';
@@ -10,7 +11,9 @@ import 'Confirmation_screen.dart';
 
 
 class AddressScreen extends StatefulWidget {
-  const AddressScreen({super.key});
+  final User user;
+
+  const AddressScreen({required this.user, Key? key}) : super(key: key);
   @override
   _AddressScreenState createState() => _AddressScreenState();
 }
@@ -22,7 +25,7 @@ class _AddressScreenState extends State<AddressScreen> {
   late String _numero;
   late String _complemento;
 
-  Future<void> _saveEndereco() async {
+  Future<void> _saveEndereco(User user) async {
     // Criar uma instância do objeto Endereco com os dados preenchidos pelo usuário
     final endereco = Endereco(
       municipio: _municipio,
@@ -32,10 +35,14 @@ class _AddressScreenState extends State<AddressScreen> {
       complemento: _complemento,
     );
 
+    final enderecoId = await EnderecoDAO.save(endereco);
+    user.enderecoId = enderecoId;
+    await UserDAO.update(user);
     // Salvar o endereço no banco de dados
-    await EnderecoDAO.save(endereco);
     final enderecos = await EnderecoDAO.findAll();
     print(enderecos);
+    final usuarios = await UserDAO.findAll();
+    print(usuarios);
   }
 
 
@@ -155,7 +162,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          await _saveEndereco();
+                          await _saveEndereco(widget.user);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
