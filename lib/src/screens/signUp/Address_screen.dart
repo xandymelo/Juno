@@ -163,12 +163,56 @@ class _AddressScreenState extends State<AddressScreen> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           await _saveEndereco(widget.user);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => VamosComecarScreen(),
-                              ),
-                            );
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('Cadastro concluído',
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.purple),
+                                    textAlign: TextAlign.center),
+                                content: Text('Seu cadastro foi realizado com sucesso. Aperte continuar para realizar o login e acessar as funcionalidades do app', style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.normal,
+                                  color: AppColors.purple,
+                                ),
+                                    textAlign: TextAlign.center),
+                                actions: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('Voltar', style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.normal,
+                                            color: AppColors.darkOrange)),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => VamosComecarScreen(),
+                                                  ),
+                                                );
+                                          print('Proceeding to the next page...');
+                                        },
+                                        child: Text('Continuar', style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.darkOrange)),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                           }
                         },
                       child: const Padding(
