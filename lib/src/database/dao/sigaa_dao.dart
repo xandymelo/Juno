@@ -44,4 +44,28 @@ class SigaaDAO {
     }
     return sigaas;
   }
+
+  static Future<Sigaa?> getSigaaDataByUserId(int userId) async {
+    final Database db = await createDatabase();
+    final List<Map<String, dynamic>> result = await db.query(
+      _tablename,
+      where: '$_id = ?',
+      whereArgs: [userId],
+    );
+
+    if (result.isEmpty) {
+      return null; // Retorna null caso o sigaaId não seja encontrado
+    }
+
+    // Obtenha os dados da tabela sigaa
+    final Map<String, dynamic> row = result.first;
+    final Sigaa sigaaData = Sigaa(
+      id: row[_id],
+      matricula: row[_matricula],
+      cursoId: row[_cursoId],
+      periodo: row[_periodo],
+    );
+
+    return sigaaData;
+  }
 }

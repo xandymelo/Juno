@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juno/src/app/app_initialization.dart';
 import 'package:juno/src/database/app_database.dart';
 import 'package:juno/src/database/dao/cursos_dao.dart';
 import 'package:juno/src/database/dao/deslocamentos_dao.dart';
@@ -17,6 +18,7 @@ import 'package:juno/src/models/veiculo.dart';
 import "package:juno/src/screens/Onboarding/WelcomeScreen.dart";
 
 import 'src/app/app_initialization.dart';
+import 'package:juno/src/screens/signUp/SignUp_screen.dart';
 
 void main() async {
   AppInitialization.init();
@@ -35,8 +37,8 @@ class MyApp extends StatelessWidget {
 }
 
 Future<void> createDefaultData() async {
-  final endereco = Endereco(bairro: 'candeias', id: 1, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
-  await EnderecoDAO.save(endereco);
+  //final endereco = Endereco(bairro: 'candeias', id: 1, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  //await EnderecoDAO.save(endereco);
   // EnderecoDAO.findAll().then((value) => print(value));
   final curso = Curso(
     id: 1,
@@ -95,3 +97,5 @@ Future<void> createDefaultData() async {
   // DeslocamentoDAO.findAll().then((value) => print(value));
   // PassageirosDeslocamentoDAO.findAll().then((value) => print(value));
 }
+
+

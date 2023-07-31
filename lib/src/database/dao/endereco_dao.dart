@@ -92,4 +92,10 @@ class EnderecoDAO {
     }
     return contacts;
   }
+
+  static Future<void> deleteAll() async {
+    final Database db = await createDatabase();
+    await db.delete(_tablename);
+  }
+
 }
