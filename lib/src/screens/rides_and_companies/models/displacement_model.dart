@@ -1,3 +1,4 @@
+import '../../../models/veiculo.dart';
 import '../ui/widgets/displacement_tile.dart';
 
 class DisplacementModel {
@@ -8,14 +9,21 @@ class DisplacementModel {
   final String personName;
   final String personAvatarUrl;
   final int vacancies;
+  final Veiculo? veiculo;
+  final String municipioOrigem;
+  final String municipioDestino;
+  final String CriadorCaronaUserName;
 
-  DisplacementModel({
-    required this.actionType,
-    required this.vehicleType,
-    required this.hour,
-    required this.locationName,
-    required this.personName,
-    required this.personAvatarUrl,
-    required this.vacancies,
-  });
+  DisplacementModel(
+      {required this.actionType,
+      required this.vehicleType,
+      required this.hour,
+      required this.locationName,
+      required this.personName,
+      required this.personAvatarUrl,
+      required this.vacancies,
+      required this.veiculo,
+      required this.municipioOrigem,
+      required this.municipioDestino,
+      required this.CriadorCaronaUserName});
 }

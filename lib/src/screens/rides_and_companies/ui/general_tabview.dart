@@ -12,6 +12,7 @@ import '../../../models/deslocamento.dart';
 import '../../../models/endereco.dart';
 import '../../../models/user.dart';
 import '../../../models/veiculo.dart';
+import '../../../utils/trucated_string.dart';
 import '../models/displacement_model.dart';
 import 'widgets/displacement_tile.dart';
 
@@ -254,12 +255,13 @@ class _DeslocamentoItem extends StatelessWidget {
   _DeslocamentoItem(this.deslocamento);
 
   Future<List<dynamic>> _getData() async {
-    var endereco = await EnderecoDAO.findByIndex(deslocamento.origemId);
+    var enderecoOrigem = await EnderecoDAO.findByIndex(deslocamento.origemId);
+    var enderecoDestino = await EnderecoDAO.findByIndex(deslocamento.destinoId);
     var passageiros = await PassageirosDeslocamentoDAO.findByDeslocamentoId(deslocamento.id ?? 0);
     // print(deslocamento.veiculoId);
     var veiculo = deslocamento.veiculoId == null ? null : await VeiculoDAO.findById(deslocamento.veiculoId);
 
-    return [endereco, passageiros, veiculo];
+    return [enderecoOrigem, enderecoDestino, passageiros, veiculo];
   }
 
   @override
@@ -270,8 +272,9 @@ class _DeslocamentoItem extends StatelessWidget {
         if (snapshot.hasData) {
           final List<dynamic> results = snapshot.data as List<dynamic>;
           final Endereco enderecoOrigem = results[0];
-          final PassageirosDeslocamento passageiroDeslocamento = results[1];
-          final Veiculo? veiculo = results[2];
+          final Endereco enderecoDestino = results[1];
+          final PassageirosDeslocamento passageiroDeslocamento = results[2];
+          final Veiculo? veiculo = results[3];
 
           return FutureBuilder<User>(
             future: UserDAO.getUserById(passageiroDeslocamento?.usuarioId as int),
@@ -282,20 +285,23 @@ class _DeslocamentoItem extends StatelessWidget {
                 const int maxLength = 10;
                 final String truncatedLocationName = locationName.length > maxLength ? "${locationName.substring(0, maxLength)}..." : locationName;
                 return DisplacementTile(
-                  displacementModel: DisplacementModel(
-                    locationName: truncatedLocationName,
-                    personName: user?.nome ?? "deu errado",
-                    personAvatarUrl: "https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/myfoto.png",
-                    hour: deslocamento.horaSaida,
-                    vacancies: deslocamento.vagasDisponiveis,
-                    actionType: passageiroDeslocamento.tipo == 0 ? ActionType.manage : ActionType.edit,
-                    vehicleType: veiculo == null
-                        ? VehicleType.explore
-                        : veiculo.tipo == 0
-                            ? VehicleType.car
-                            : VehicleType.motorcycle,
-                  ),
-                );
+                    displacementModel: DisplacementModel(
+                  locationName: truncatedLocationName,
+                  personName: user?.nome ?? "deu errado",
+                  personAvatarUrl: "https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/myfoto.png",
+                  hour: deslocamento.horaSaida,
+                  vacancies: deslocamento.vagasDisponiveis,
+                  actionType: passageiroDeslocamento.tipo == 0 ? ActionType.manage : ActionType.edit,
+                  vehicleType: veiculo == null
+                      ? VehicleType.explore
+                      : veiculo.tipo == 0
+                          ? VehicleType.car
+                          : VehicleType.motorcycle,
+                  veiculo: veiculo,
+                  municipioDestino: truncateString(enderecoDestino.municipio, 10),
+                  municipioOrigem: truncateString(enderecoOrigem.municipio, 10),
+                  CriadorCaronaUserName: user.nome,
+                ));
               } else {
                 return const CircularProgressIndicator();
               }

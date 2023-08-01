@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:juno/src/screens/rides_and_companies/ui/perfect_displacements_screen.dart';
 import 'package:juno/src/screens/rides_and_companies/ui/new_displacement_screen.dart';
 import 'perfect_displacement_tabview.dart';
 import '../../../app/theme/colors.dart';
@@ -7,8 +6,7 @@ import '../../../utils/state_manager.dart';
 import '../controllers/rides_and_companies_controller.dart';
 import 'general_tabview.dart';
 
-class RidesAndCompaniesScreen
-    extends StateManagerView<RidesAndCompaniesController> {
+class RidesAndCompaniesScreen extends StateManagerView<RidesAndCompaniesController> {
   const RidesAndCompaniesScreen({super.key});
 
   @override
@@ -73,7 +71,7 @@ class RidesAndCompaniesScreen
                               controller.setCurrentPageIndex(1);
                             },
                           )
-                        : PerfectDisplacementsScreen(),
+                        : const GeneralTabView(),
                     const GeneralTabView(),
                   ],
                 ),
@@ -83,10 +81,7 @@ class RidesAndCompaniesScreen
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const NewDisplacementScreen()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const NewDisplacementScreen()));
           },
           shape: const CircleBorder(),
           backgroundColor: AppColors.purple,

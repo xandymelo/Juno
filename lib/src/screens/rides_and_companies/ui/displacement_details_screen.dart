@@ -2,11 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:juno/src/screens/rides_and_companies/ui/new_ride_form_screen.dart';
 
 import '../../../app/theme/colors.dart';
-import '../../../widgets/alert_dialogs.dart';
+import '../../../models/veiculo.dart';
 
-class DisplacementDetailsScreen extends StatelessWidget {
-  const DisplacementDetailsScreen({super.key});
+class DisplacementDetailsScreen extends StatefulWidget {
+  final Veiculo? veiculo;
+  final String municipioOrigem;
+  final String municipioDestino;
+  final String criadorCaronaUserName;
 
+  const DisplacementDetailsScreen({super.key, required this.veiculo, required this.municipioOrigem, required this.municipioDestino, required this.criadorCaronaUserName});
+
+  @override
+  State<DisplacementDetailsScreen> createState() => _DisplacementDetailsScreenState();
+}
+
+class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -40,7 +50,7 @@ class DisplacementDetailsScreen extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "Depart. de Adm.",
+                      widget.municipioOrigem,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -54,7 +64,7 @@ class DisplacementDetailsScreen extends StatelessWidget {
                     ),
                     Container(padding: const EdgeInsets.all(5)),
                     Text(
-                      "Parnamirim",
+                      widget.municipioDestino,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -81,7 +91,7 @@ class DisplacementDetailsScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 7),
                     Text(
-                      "Rafaela Dias",
+                      widget.criadorCaronaUserName,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -106,7 +116,7 @@ class DisplacementDetailsScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "PFG2E17",
+                                widget.veiculo?.placa ?? "Não informado",
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -117,15 +127,15 @@ class DisplacementDetailsScreen extends StatelessWidget {
                           const SizedBox(width: 50),
                           Column(
                             children: [
-                              Text(
+                              const Text(
                                 "Modelo e Cor do Veículo",
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
                               Text(
-                                "Kwid Branco",
+                                widget.veiculo?.modelo ?? "Não informado",
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -267,16 +277,12 @@ class DisplacementDetailsScreen extends StatelessWidget {
                 const SizedBox(height: 120),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const NewRideFormScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const NewRideFormScreen()));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.purple,
                     foregroundColor: AppColors.white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 60, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                   ),
                   child: const Text(
                     'Solicitar vaga',
