@@ -9,8 +9,10 @@ class DisplacementDetailsScreen extends StatefulWidget {
   final String municipioOrigem;
   final String municipioDestino;
   final String criadorCaronaUserName;
+  final String criadorCaronaUserPhotoUrl;
 
-  const DisplacementDetailsScreen({super.key, required this.veiculo, required this.municipioOrigem, required this.municipioDestino, required this.criadorCaronaUserName});
+  const DisplacementDetailsScreen(
+      {super.key, required this.veiculo, required this.municipioOrigem, required this.municipioDestino, required this.criadorCaronaUserName, required this.criadorCaronaUserPhotoUrl});
 
   @override
   State<DisplacementDetailsScreen> createState() => _DisplacementDetailsScreenState();
@@ -86,9 +88,10 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                 Row(
                   children: [
                     CircleAvatar(
-                      radius: 24,
-                      //backgroundImage:,
-                    ),
+                        radius: 24,
+                        backgroundImage: NetworkImage(
+                          widget.criadorCaronaUserPhotoUrl,
+                        )),
                     const SizedBox(width: 7),
                     Text(
                       widget.criadorCaronaUserName,

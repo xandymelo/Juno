@@ -60,7 +60,8 @@ Future<void> createDefaultData() async {
       senha: 'teste123',
       sobrenome: 'Melo',
       telefone: '81997570531',
-      dataNascimento: '1998-03-30');
+      dataNascimento: '1998-03-30',
+      imageUrl: 'https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/quem-somos/alexandre-melo.png');
   await UserDAO.save(usuario);
   final segundoUsuario = User(
       cpf: '097.882.964-68',
@@ -72,7 +73,8 @@ Future<void> createDefaultData() async {
       senha: 'teste123',
       sobrenome: 'Melo',
       telefone: '81997570531',
-      dataNascimento: '1998-03-30');
+      dataNascimento: '1998-03-30',
+      imageUrl: 'https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/quem-somos/ana-wirthmann.jpeg');
   await UserDAO.save(segundoUsuario);
   // UserDAO.findAll().then((value) => print(value));
   final veiculo = Veiculo(id: 1, cor: 'branco', marca: 'Hyundai', modelo: 'HB20', placa: 'PCM9F00', qtdPassageiros: 4, tipo: 0, usuarioId: 1);

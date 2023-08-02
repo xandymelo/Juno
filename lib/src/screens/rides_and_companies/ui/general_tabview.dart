@@ -281,6 +281,7 @@ class _DeslocamentoItem extends StatelessWidget {
             builder: (BuildContext context, AsyncSnapshot<User> userSnapshot) {
               if (userSnapshot.hasData) {
                 final User user = userSnapshot.data as User;
+                print(user);
                 final String locationName = enderecoOrigem?.municipio ?? "Not Found";
                 const int maxLength = 10;
                 final String truncatedLocationName = locationName.length > maxLength ? "${locationName.substring(0, maxLength)}..." : locationName;
@@ -288,7 +289,7 @@ class _DeslocamentoItem extends StatelessWidget {
                     displacementModel: DisplacementModel(
                   locationName: truncatedLocationName,
                   personName: user?.nome ?? "deu errado",
-                  personAvatarUrl: "https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/myfoto.png",
+                  personAvatarUrl: user?.imageUrl ?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
                   hour: deslocamento.horaSaida,
                   vacancies: deslocamento.vagasDisponiveis,
                   actionType: passageiroDeslocamento.tipo == 0 ? ActionType.manage : ActionType.edit,

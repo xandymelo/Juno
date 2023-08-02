@@ -9,6 +9,7 @@ class User {
   String telefone;
   String email;
   String? dataNascimento;
+  String imageUrl;
 
   User({
     required this.id,
@@ -20,6 +21,7 @@ class User {
     required this.senha,
     required this.telefone,
     required this.email,
+    required this.imageUrl,
     this.dataNascimento,
   });
 
@@ -35,6 +37,7 @@ class User {
       telefone: json['Telefone'],
       email: json['Email'],
       dataNascimento: json['Data de Nascimento'],
+      imageUrl: json['ImageUrl'],
     );
   }
 

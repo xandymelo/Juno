@@ -122,6 +122,7 @@ class DisplacementTile extends StatelessWidget {
                                       municipioDestino: displacementModel.municipioDestino,
                                       municipioOrigem: displacementModel.municipioOrigem,
                                       criadorCaronaUserName: displacementModel.CriadorCaronaUserName,
+                                      criadorCaronaUserPhotoUrl: displacementModel.personAvatarUrl,
                                     )));
                       }
                     : () {
@@ -133,6 +134,7 @@ class DisplacementTile extends StatelessWidget {
                                       municipioDestino: displacementModel.municipioDestino,
                                       municipioOrigem: displacementModel.municipioOrigem,
                                       criadorCaronaUserName: displacementModel.CriadorCaronaUserName,
+                                      criadorCaronaUserPhotoUrl: displacementModel.personAvatarUrl,
                                     )));
                       },
                 style: ElevatedButton.styleFrom(

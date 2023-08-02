@@ -15,6 +15,7 @@ class UserDAO {
       `Telefone` TEXT NOT NULL,
       `Email` TEXT NOT NULL,
       `DataDeNascimento` TEXT,
+      `ImageUrl` TEXT,
       PRIMARY KEY (`Id`),
       FOREIGN KEY (`SigaaID`) REFERENCES `sigaa` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
       FOREIGN KEY (`EnderecoId`) REFERENCES `endereco` (`id`)
@@ -32,6 +33,7 @@ class UserDAO {
   static const _telefone = 'Telefone';
   static const _email = 'Email';
   static const _dataDeNascimento = 'DataDeNascimento';
+  static const _imageUrl = 'ImageUrl';
 
   static Future<int> save(User user) async {
     final Database db = await createDatabase();
@@ -46,6 +48,7 @@ class UserDAO {
       _telefone: user.telefone,
       _email: user.email,
       _dataDeNascimento: user.dataNascimento,
+      _imageUrl: user.imageUrl,
     };
     return db.insert(_tablename, userMap);
   }
@@ -88,6 +91,7 @@ class UserDAO {
         telefone: row[_telefone],
         email: row[_email],
         dataNascimento: row[_dataDeNascimento],
+        imageUrl: row[_imageUrl],
       );
       return user;
     } else {
@@ -100,12 +104,12 @@ class UserDAO {
           senha: 'not Found',
           sigaaId: -1,
           sobrenome: 'not Found',
-          telefone: 'not Found');
+          telefone: 'not Found',
+          imageUrl: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
     }
   }
 
-  static Future<bool> verifyCpfAndPasswordExists(
-      String cpf, String password) async {
+  static Future<bool> verifyCpfAndPasswordExists(String cpf, String password) async {
     final Database db = await createDatabase();
 
     final List<Map<String, dynamic>> result = await db.query(
@@ -138,6 +142,7 @@ class UserDAO {
         telefone: row[_telefone],
         email: row[_email],
         dataNascimento: row[_dataDeNascimento],
+        imageUrl: row[_imageUrl],
       );
       return user;
     } else {
@@ -161,6 +166,7 @@ class UserDAO {
         telefone: row[_telefone],
         email: row[_email],
         dataNascimento: row[_dataDeNascimento],
+        imageUrl: row[_imageUrl],
       );
       users.add(user);
     }
