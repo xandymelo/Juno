@@ -6,16 +6,9 @@ class Deslocamento {
   int destinoId;
   int status;
   int vagasDisponiveis;
+  int vagas;
 
-  Deslocamento({
-    this.id,
-    required this.veiculoId,
-    required this.horaSaida,
-    required this.origemId,
-    required this.destinoId,
-    required this.status,
-    required this.vagasDisponiveis,
-  });
+  Deslocamento({this.id, required this.veiculoId, required this.horaSaida, required this.origemId, required this.destinoId, required this.status, required this.vagasDisponiveis, required this.vagas});
 
   factory Deslocamento.fromJson(Map<String, dynamic> json) {
     return Deslocamento(
@@ -26,6 +19,7 @@ class Deslocamento {
       destinoId: json['DestinoId'],
       status: json['Status'],
       vagasDisponiveis: json['VagasDisponiveis'],
+      vagas: json['Vagas'],
     );
   }
 
@@ -38,6 +32,7 @@ class Deslocamento {
       'DestinoId': destinoId,
       'Status': status,
       'VagasDisponiveis': vagasDisponiveis,
+      "vagas": vagas,
     };
   }
 

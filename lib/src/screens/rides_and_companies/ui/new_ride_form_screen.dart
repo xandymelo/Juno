@@ -346,7 +346,13 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                         var destinoId = await EnderecoDAO.getEnderecoId(enderecoDestino);
                         if (origemId != null && destinoId != null) {
                           Deslocamento deslocamento = Deslocamento(
-                              destinoId: destinoId, origemId: origemId, vagasDisponiveis: int.parse(availableSeats), veiculoId: veiculoId, horaSaida: _departureTimeController.text, status: 0);
+                              destinoId: destinoId,
+                              origemId: origemId,
+                              vagasDisponiveis: int.parse(availableSeats),
+                              veiculoId: veiculoId,
+                              horaSaida: _departureTimeController.text,
+                              status: 0,
+                              vagas: int.parse(availableSeats));
                           await DeslocamentoDAO.save(deslocamento);
                           var deslocamentoId = await DeslocamentoDAO.getDeslocamentoId(deslocamento);
                           if (deslocamentoId != null) {

@@ -13,6 +13,9 @@ class DisplacementModel {
   final String municipioOrigem;
   final String municipioDestino;
   final String CriadorCaronaUserName;
+  final int DeslocamentoId;
+  final int QuantidadeVagas;
+  final int QuantidadeVagasDisponiveis;
 
   DisplacementModel(
       {required this.actionType,
@@ -25,5 +28,8 @@ class DisplacementModel {
       required this.veiculo,
       required this.municipioOrigem,
       required this.municipioDestino,
-      required this.CriadorCaronaUserName});
+      required this.CriadorCaronaUserName,
+      required this.DeslocamentoId,
+      required this.QuantidadeVagas,
+      required this.QuantidadeVagasDisponiveis});
 }

@@ -123,6 +123,8 @@ class DisplacementTile extends StatelessWidget {
                                       municipioOrigem: displacementModel.municipioOrigem,
                                       criadorCaronaUserName: displacementModel.CriadorCaronaUserName,
                                       criadorCaronaUserPhotoUrl: displacementModel.personAvatarUrl,
+                                      quantidadeVagas: displacementModel.QuantidadeVagas,
+                                      quantidadeVagasDisponiveis: displacementModel.QuantidadeVagasDisponiveis,
                                     )));
                       }
                     : () {
@@ -135,6 +137,8 @@ class DisplacementTile extends StatelessWidget {
                                       municipioOrigem: displacementModel.municipioOrigem,
                                       criadorCaronaUserName: displacementModel.CriadorCaronaUserName,
                                       criadorCaronaUserPhotoUrl: displacementModel.personAvatarUrl,
+                                      quantidadeVagas: displacementModel.QuantidadeVagas,
+                                      quantidadeVagasDisponiveis: displacementModel.QuantidadeVagasDisponiveis,
                                     )));
                       },
                 style: ElevatedButton.styleFrom(

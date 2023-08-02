@@ -287,22 +287,24 @@ class _DeslocamentoItem extends StatelessWidget {
                 final String truncatedLocationName = locationName.length > maxLength ? "${locationName.substring(0, maxLength)}..." : locationName;
                 return DisplacementTile(
                     displacementModel: DisplacementModel(
-                  locationName: truncatedLocationName,
-                  personName: user?.nome ?? "deu errado",
-                  personAvatarUrl: user?.imageUrl ?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-                  hour: deslocamento.horaSaida,
-                  vacancies: deslocamento.vagasDisponiveis,
-                  actionType: passageiroDeslocamento.tipo == 0 ? ActionType.manage : ActionType.edit,
-                  vehicleType: veiculo == null
-                      ? VehicleType.explore
-                      : veiculo.tipo == 0
-                          ? VehicleType.car
-                          : VehicleType.motorcycle,
-                  veiculo: veiculo,
-                  municipioDestino: truncateString(enderecoDestino.municipio, 10),
-                  municipioOrigem: truncateString(enderecoOrigem.municipio, 10),
-                  CriadorCaronaUserName: user.nome,
-                ));
+                        locationName: truncatedLocationName,
+                        personName: user?.nome ?? "deu errado",
+                        personAvatarUrl: user?.imageUrl ?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+                        hour: deslocamento.horaSaida,
+                        vacancies: deslocamento.vagasDisponiveis,
+                        actionType: passageiroDeslocamento.tipo == 0 ? ActionType.manage : ActionType.edit,
+                        vehicleType: veiculo == null
+                            ? VehicleType.explore
+                            : veiculo.tipo == 0
+                                ? VehicleType.car
+                                : VehicleType.motorcycle,
+                        veiculo: veiculo,
+                        municipioDestino: truncateString(enderecoDestino.municipio, 10),
+                        municipioOrigem: truncateString(enderecoOrigem.municipio, 10),
+                        CriadorCaronaUserName: user.nome,
+                        DeslocamentoId: deslocamento.id ?? 0,
+                        QuantidadeVagas: deslocamento.vagas,
+                        QuantidadeVagasDisponiveis: deslocamento.vagasDisponiveis));
               } else {
                 return const CircularProgressIndicator();
               }

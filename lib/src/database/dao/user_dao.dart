@@ -35,6 +35,34 @@ class UserDAO {
   static const _dataDeNascimento = 'DataDeNascimento';
   static const _imageUrl = 'ImageUrl';
 
+  static Future<List<User>> getUsers(List<int> userIds) async {
+    final Database db = await createDatabase();
+    final List<Map<String, dynamic>> result = await db.query(
+      _tablename,
+      where: '$_id IN (${userIds.map((id) => '?').join(',')})',
+      whereArgs: userIds,
+    );
+
+    final List<User> users = [];
+    for (Map<String, dynamic> row in result) {
+      final User user = User(
+        id: row[_id],
+        sigaaId: row[_sigaaId],
+        enderecoId: row[_enderecoId],
+        nome: row[_nome],
+        sobrenome: row[_sobrenome],
+        cpf: row[_cpf],
+        senha: row[_senha],
+        telefone: row[_telefone],
+        email: row[_email],
+        dataNascimento: row[_dataDeNascimento],
+        imageUrl: row[_imageUrl],
+      );
+      users.add(user);
+    }
+    return users;
+  }
+
   static Future<int> save(User user) async {
     final Database db = await createDatabase();
     final Map<String, dynamic> userMap = {
