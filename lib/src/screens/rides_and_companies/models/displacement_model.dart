@@ -16,6 +16,7 @@ class DisplacementModel {
   final int DeslocamentoId;
   final int QuantidadeVagas;
   final int QuantidadeVagasDisponiveis;
+  final int criadorCaronaId;
 
   DisplacementModel(
       {required this.actionType,
@@ -29,6 +30,7 @@ class DisplacementModel {
       required this.municipioOrigem,
       required this.municipioDestino,
       required this.CriadorCaronaUserName,
+      required this.criadorCaronaId,
       required this.DeslocamentoId,
       required this.QuantidadeVagas,
       required this.QuantidadeVagasDisponiveis});

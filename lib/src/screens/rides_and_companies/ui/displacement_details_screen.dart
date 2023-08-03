@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:juno/src/database/dao/passageiros_deslocamento_dao.dart';
 import 'package:juno/src/models/passageiros_deslocamento.dart';
 import 'package:juno/src/screens/rides_and_companies/ui/new_ride_form_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../app/theme/colors.dart';
 import '../../../database/dao/user_dao.dart';
@@ -12,6 +13,7 @@ class DisplacementDetailsScreen extends StatefulWidget {
   final Veiculo? veiculo;
   final String municipioOrigem;
   final String municipioDestino;
+  final int criadorCaronaId;
   final String criadorCaronaUserName;
   final String criadorCaronaUserPhotoUrl;
   final int? deslocamentoId;
@@ -27,13 +29,31 @@ class DisplacementDetailsScreen extends StatefulWidget {
       required this.criadorCaronaUserPhotoUrl,
       this.deslocamentoId,
       required this.quantidadeVagas,
-      required this.quantidadeVagasDisponiveis});
+      required this.quantidadeVagasDisponiveis,
+      required this.criadorCaronaId});
 
   @override
   State<DisplacementDetailsScreen> createState() => _DisplacementDetailsScreenState();
 }
 
 class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
+  late int userId;
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  void loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? savedUserId = prefs.getInt('userId');
+    if (savedUserId != null) {
+      setState(() {
+        userId = savedUserId;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -304,8 +324,8 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                     foregroundColor: AppColors.white,
                     padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                   ),
-                  child: const Text(
-                    'Solicitar vaga',
+                  child: Text(
+                    userId == widget.criadorCaronaId ? "Cancelar Carona" : 'Solicitar vaga',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,

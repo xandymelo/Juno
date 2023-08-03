@@ -304,7 +304,8 @@ class _DeslocamentoItem extends StatelessWidget {
                         CriadorCaronaUserName: user.nome,
                         DeslocamentoId: deslocamento.id ?? 0,
                         QuantidadeVagas: deslocamento.vagas,
-                        QuantidadeVagasDisponiveis: deslocamento.vagasDisponiveis));
+                        QuantidadeVagasDisponiveis: deslocamento.vagasDisponiveis,
+                        criadorCaronaId: user.id));
               } else {
                 return const CircularProgressIndicator();
               }
