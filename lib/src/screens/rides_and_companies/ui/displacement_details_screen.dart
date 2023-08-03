@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:juno/src/database/dao/passageiros_deslocamento_dao.dart';
 import 'package:juno/src/models/passageiros_deslocamento.dart';
-import 'package:juno/src/screens/rides_and_companies/ui/new_ride_form_screen.dart';
+import 'package:juno/src/screens/rides_and_companies/ui/rides_and_companies_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../app/theme/colors.dart';
+import '../../../database/dao/deslocamentos_dao.dart';
 import '../../../database/dao/user_dao.dart';
 import '../../../models/user.dart';
 import '../../../models/veiculo.dart';
@@ -317,7 +318,40 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                 const SizedBox(height: 120),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const NewRideFormScreen()));
+                    bool isAdmin = userId == widget.criadorCaronaId;
+                    if (isAdmin) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Cancelar Carona"),
+                            content: const Text("Tem certeza que deseja cancelar a carona?"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text("Não"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  print(widget.deslocamentoId);
+                                  DeslocamentoDAO.delete(widget.deslocamentoId ?? 0).then((value) {
+                                    print("deletou");
+                                    DeslocamentoDAO.findAll().then((value) => print(value));
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
+                                    );
+                                  });
+                                },
+                                child: const Text("Sim"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.purple,

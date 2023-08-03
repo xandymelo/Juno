@@ -281,7 +281,6 @@ class _DeslocamentoItem extends StatelessWidget {
             builder: (BuildContext context, AsyncSnapshot<User> userSnapshot) {
               if (userSnapshot.hasData) {
                 final User user = userSnapshot.data as User;
-                print(user);
                 final String locationName = enderecoOrigem?.municipio ?? "Not Found";
                 const int maxLength = 10;
                 final String truncatedLocationName = locationName.length > maxLength ? "${locationName.substring(0, maxLength)}..." : locationName;

@@ -47,6 +47,17 @@ class DeslocamentoDAO {
     return db.insert(_tablename, deslocamentoMap);
   }
 
+  static Future<int> delete(int deslocamentoId) async {
+    print("entrou no delete");
+    print(deslocamentoId);
+    final Database db = await createDatabase();
+    return await db.delete(
+      _tablename,
+      where: '$_id = ?',
+      whereArgs: [deslocamentoId],
+    );
+  }
+
   static Future<int?> getDeslocamentoId(Deslocamento deslocamento) async {
     final Database db = await createDatabase();
     final List<Map<String, dynamic>> result = await db.query(
