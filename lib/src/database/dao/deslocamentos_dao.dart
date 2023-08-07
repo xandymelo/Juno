@@ -16,6 +16,7 @@ class DeslocamentoDAO {
       `DestinoId` INTEGER NOT NULL,
       `Status` INTEGER NOT NULL,
       `VagasDisponiveis` INTEGER DEFAULT NULL,
+      `Vagas` INTEGER DEFAULT NULL,
       FOREIGN KEY (`VeiculoID`) REFERENCES `veiculo` (`Id`),
       FOREIGN KEY (`DestinoId`) REFERENCES `endereco` (`id`),
       FOREIGN KEY (`Origemid`) REFERENCES `endereco` (`id`)
@@ -30,6 +31,7 @@ class DeslocamentoDAO {
   static const _destinoId = 'DestinoId';
   static const _status = 'Status';
   static const _vagasDisponiveis = 'VagasDisponiveis';
+  static const _vagas = 'Vagas';
 
   static Future<int> save(Deslocamento deslocamento) async {
     final Database db = await createDatabase();
@@ -40,8 +42,20 @@ class DeslocamentoDAO {
       _destinoId: deslocamento.destinoId,
       _status: deslocamento.status,
       _vagasDisponiveis: deslocamento.vagasDisponiveis,
+      _vagas: deslocamento.vagas,
     };
     return db.insert(_tablename, deslocamentoMap);
+  }
+
+  static Future<int> delete(int deslocamentoId) async {
+    print("entrou no delete");
+    print(deslocamentoId);
+    final Database db = await createDatabase();
+    return await db.delete(
+      _tablename,
+      where: '$_id = ?',
+      whereArgs: [deslocamentoId],
+    );
   }
 
   static Future<int?> getDeslocamentoId(Deslocamento deslocamento) async {
@@ -56,6 +70,7 @@ class DeslocamentoDAO {
         deslocamento.destinoId,
         deslocamento.status,
         deslocamento.vagasDisponiveis,
+        deslocamento.vagas,
       ],
       limit: 1,
     );
@@ -84,6 +99,7 @@ class DeslocamentoDAO {
           destinoId: row[_destinoId],
           status: row[_status],
           vagasDisponiveis: row[_vagasDisponiveis],
+          vagas: row[_vagas],
         );
 
         if (meusDeslocamentos) {
@@ -111,6 +127,7 @@ class DeslocamentoDAO {
         destinoId: row[_destinoId],
         status: row[_status],
         vagasDisponiveis: row[_vagasDisponiveis],
+        vagas: row[_vagas],
       );
       deslocamentos.add(deslocamento);
     }

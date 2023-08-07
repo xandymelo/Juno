@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:juno/src/models/endereco.dart';
 import 'package:juno/src/screens/rides_and_companies/models/displacement_model.dart';
 
 import '../../../../app/theme/colors.dart';
@@ -51,10 +50,7 @@ enum VehicleType {
 }
 
 class DisplacementTile extends StatelessWidget {
-  const DisplacementTile({
-    super.key,
-    required this.displacementModel,
-  });
+  const DisplacementTile({super.key, required this.displacementModel});
 
   final DisplacementModel displacementModel;
 
@@ -116,17 +112,42 @@ class DisplacementTile extends StatelessWidget {
           Column(
             children: [
               ElevatedButton(
-                onPressed: 
-                  displacementModel.actionType != ActionType.details
-                    ? () {}
-                    : () {Navigator.push(context, MaterialPageRoute(builder: (context) => const DisplacementDetailsScreen()));},
+                onPressed: displacementModel.actionType != ActionType.details
+                    ? () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DisplacementDetailsScreen(
+                                      veiculo: displacementModel.veiculo,
+                                      municipioDestino: displacementModel.municipioDestino,
+                                      municipioOrigem: displacementModel.municipioOrigem,
+                                      criadorCaronaUserName: displacementModel.CriadorCaronaUserName,
+                                      criadorCaronaUserPhotoUrl: displacementModel.personAvatarUrl,
+                                      quantidadeVagas: displacementModel.QuantidadeVagas,
+                                      quantidadeVagasDisponiveis: displacementModel.QuantidadeVagasDisponiveis,
+                                      criadorCaronaId: displacementModel.criadorCaronaId,
+                                      deslocamentoId: displacementModel.DeslocamentoId,
+                                    )));
+                      }
+                    : () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DisplacementDetailsScreen(
+                                      veiculo: displacementModel.veiculo,
+                                      municipioDestino: displacementModel.municipioDestino,
+                                      municipioOrigem: displacementModel.municipioOrigem,
+                                      criadorCaronaUserName: displacementModel.CriadorCaronaUserName,
+                                      criadorCaronaUserPhotoUrl: displacementModel.personAvatarUrl,
+                                      quantidadeVagas: displacementModel.QuantidadeVagas,
+                                      quantidadeVagasDisponiveis: displacementModel.QuantidadeVagasDisponiveis,
+                                      criadorCaronaId: displacementModel.criadorCaronaId,
+                                      deslocamentoId: displacementModel.DeslocamentoId,
+                                    )));
+                      },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: AppColors.white,
-                  backgroundColor:
-                      displacementModel.actionType != ActionType.details
-                          ? AppColors.lightPurple
-                          : AppColors.purple,
-                  
+                  backgroundColor: displacementModel.actionType != ActionType.details ? AppColors.lightPurple : AppColors.purple,
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   minimumSize: const Size(100, 35),
                 ),

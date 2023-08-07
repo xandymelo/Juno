@@ -1,11 +1,59 @@
 import 'package:flutter/material.dart';
-import 'package:juno/src/screens/rides_and_companies/ui/new_ride_form_screen.dart';
+import 'package:juno/src/database/dao/passageiros_deslocamento_dao.dart';
+import 'package:juno/src/models/passageiros_deslocamento.dart';
+import 'package:juno/src/screens/rides_and_companies/ui/rides_and_companies_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../app/theme/colors.dart';
-import '../../../widgets/alert_dialogs.dart';
+import '../../../database/dao/deslocamentos_dao.dart';
+import '../../../database/dao/user_dao.dart';
+import '../../../models/user.dart';
+import '../../../models/veiculo.dart';
 
-class DisplacementDetailsScreen extends StatelessWidget {
-  const DisplacementDetailsScreen({super.key});
+class DisplacementDetailsScreen extends StatefulWidget {
+  final Veiculo? veiculo;
+  final String municipioOrigem;
+  final String municipioDestino;
+  final int criadorCaronaId;
+  final String criadorCaronaUserName;
+  final String criadorCaronaUserPhotoUrl;
+  final int? deslocamentoId;
+  final int quantidadeVagas;
+  final int quantidadeVagasDisponiveis;
+
+  const DisplacementDetailsScreen(
+      {super.key,
+      required this.veiculo,
+      required this.municipioOrigem,
+      required this.municipioDestino,
+      required this.criadorCaronaUserName,
+      required this.criadorCaronaUserPhotoUrl,
+      this.deslocamentoId,
+      required this.quantidadeVagas,
+      required this.quantidadeVagasDisponiveis,
+      required this.criadorCaronaId});
+
+  @override
+  State<DisplacementDetailsScreen> createState() => _DisplacementDetailsScreenState();
+}
+
+class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
+  late int userId;
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  void loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? savedUserId = prefs.getInt('userId');
+    if (savedUserId != null) {
+      setState(() {
+        userId = savedUserId;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +88,7 @@ class DisplacementDetailsScreen extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "Depart. de Adm.",
+                      widget.municipioOrigem,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -54,7 +102,7 @@ class DisplacementDetailsScreen extends StatelessWidget {
                     ),
                     Container(padding: const EdgeInsets.all(5)),
                     Text(
-                      "Parnamirim",
+                      widget.municipioDestino,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -76,12 +124,13 @@ class DisplacementDetailsScreen extends StatelessWidget {
                 Row(
                   children: [
                     CircleAvatar(
-                      radius: 24,
-                      //backgroundImage:,
-                    ),
+                        radius: 24,
+                        backgroundImage: NetworkImage(
+                          widget.criadorCaronaUserPhotoUrl,
+                        )),
                     const SizedBox(width: 7),
                     Text(
-                      "Rafaela Dias",
+                      widget.criadorCaronaUserName,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -106,7 +155,7 @@ class DisplacementDetailsScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "PFG2E17",
+                                widget.veiculo?.placa ?? "Não informado",
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -117,15 +166,15 @@ class DisplacementDetailsScreen extends StatelessWidget {
                           const SizedBox(width: 50),
                           Column(
                             children: [
-                              Text(
+                              const Text(
                                 "Modelo e Cor do Veículo",
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
                               Text(
-                                "Kwid Branco",
+                                widget.veiculo?.modelo ?? "Não informado",
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -192,98 +241,135 @@ class DisplacementDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "2/4 VAGAS OCUPADAS",
+                  (widget.quantidadeVagas - widget.quantidadeVagasDisponiveis).toString() + "/" + widget.quantidadeVagas.toString() + " VAGAS OCUPADAS",
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 const SizedBox(height: 28),
-                Container(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 24,
-                            //backgroundImage:,
-                          ),
-                          const SizedBox(width: 7),
-                          Text(
-                            "Hadassa\nSilveira",
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(width: 40),
-                          CircleAvatar(
-                            radius: 24,
-                            //backgroundImage:,
-                          ),
-                          const SizedBox(width: 7),
-                          Text(
-                            "Flávia\nCorreia",
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 24,
-                            //backgroundImage:,
-                          ),
-                          const SizedBox(width: 7),
-                          Text(
-                            "Marina\nOliveira",
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(width: 40),
-                          CircleAvatar(
-                            radius: 24,
-                            //backgroundImage:,
-                          ),
-                          const SizedBox(width: 7),
-                          Text(
-                            "Victoria\nNascimento",
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                FutureBuilder<List<PassageirosDeslocamento>>(
+                  future: PassageirosDeslocamentoDAO.getPassageiroDeslocamentoByDeslocamentoId(widget.deslocamentoId ?? 0),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Text("Erro ao carregar dados."));
+                    } else {
+                      List<PassageirosDeslocamento>? people = snapshot.data;
+                      final List<int> userIds = people?.map((passageirosDeslocamento) => passageirosDeslocamento.usuarioId)?.toList() ?? [];
+
+                      return FutureBuilder<List<User>>(
+                        // Use o resultado do primeiro FutureBuilder aqui para obter os dados para o segundo FutureBuilder
+                        future: UserDAO.getUsers(userIds),
+                        builder: (context, otherSnapshot) {
+                          if (otherSnapshot.connectionState == ConnectionState.waiting) {
+                            return const Center(child: CircularProgressIndicator());
+                          } else if (otherSnapshot.hasError) {
+                            return const Center(child: Text("Erro ao carregar outros dados."));
+                          } else {
+                            List<User>? users = otherSnapshot.data;
+
+                            return Container(
+                              width: 500,
+                              height: 500,
+                              child: GridView.builder(
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 10.0,
+                                  mainAxisSpacing: 10.0,
+                                ),
+                                itemCount: users?.length ?? 0,
+                                itemBuilder: (context, index) {
+                                  return Row(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 24,
+                                        backgroundImage: NetworkImage(users![index].imageUrl),
+                                      ),
+                                      const SizedBox(width: 7),
+                                      Text(
+                                        users[index].nome,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    }
+                  },
                 ),
                 const SizedBox(height: 120),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const NewRideFormScreen()));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.purple,
-                    foregroundColor: AppColors.white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 60, vertical: 15),
-                  ),
-                  child: const Text(
-                    'Solicitar vaga',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                Container(
+                  height: 50,
+                  width: 200,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      bool isAdmin = userId == widget.criadorCaronaId;
+                      if (isAdmin) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Cancelar Carona"),
+                              content: const Text("Tem certeza que deseja cancelar a carona?"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Não"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    print(widget.deslocamentoId);
+                                    DeslocamentoDAO.delete(widget.deslocamentoId ?? 0).then((value) {
+                                      print("deletou");
+                                      DeslocamentoDAO.findAll().then((value) => print(value));
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
+                                      );
+                                    });
+                                  },
+                                  child: const Text("Sim"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        PassageirosDeslocamentoDAO.save(PassageirosDeslocamento(
+                          usuarioId: userId,
+                          deslocamentoId: widget.deslocamentoId ?? 0,
+                          tipo: 0,
+                        )).then((value) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
+                          );
+                        });
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.purple,
+                      foregroundColor: AppColors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                    ),
+                    child: Text(
+                      userId == widget.criadorCaronaId ? "Cancelar Carona" : 'Solicitar vaga',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
