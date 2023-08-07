@@ -270,44 +270,35 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                           } else {
                             List<User>? users = otherSnapshot.data;
 
-                            // Agora você tem acesso a ambos os resultados dos futuros e pode construir o layout com base neles.
-                            return Column(
-                              children: [
-                                for (int i = 0; i < (users?.length ?? 0); i += 2)
-                                  Row(
+                            return Container(
+                              width: 500,
+                              height: 500,
+                              child: GridView.builder(
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 10.0,
+                                  mainAxisSpacing: 10.0,
+                                ),
+                                itemCount: users?.length ?? 0,
+                                itemBuilder: (context, index) {
+                                  return Row(
                                     children: [
-                                      if (users != null && users.length > i)
-                                        CircleAvatar(
-                                          radius: 24,
-                                          backgroundImage: NetworkImage(users[i].imageUrl),
-                                        ),
+                                      CircleAvatar(
+                                        radius: 24,
+                                        backgroundImage: NetworkImage(users![index].imageUrl),
+                                      ),
                                       const SizedBox(width: 7),
-                                      if (users != null && users.length > i)
-                                        Text(
-                                          users[i].nome,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                      Text(
+                                        users[index].nome,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
                                         ),
-                                      const SizedBox(width: 40),
-                                      if (users != null && i + 1 < (users != null ? users.length : 0))
-                                        CircleAvatar(
-                                          radius: 24,
-                                          backgroundImage: NetworkImage(users[i + 1].imageUrl),
-                                        ),
-                                      const SizedBox(width: 7),
-                                      if (users != null && i + 1 < (users != null ? users.length : 0))
-                                        Text(
-                                          users[i + 1].nome,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
+                                      ),
                                     ],
-                                  ),
-                              ],
+                                  );
+                                },
+                              ),
                             );
                           }
                         },
@@ -316,54 +307,69 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                   },
                 ),
                 const SizedBox(height: 120),
-                ElevatedButton(
-                  onPressed: () {
-                    bool isAdmin = userId == widget.criadorCaronaId;
-                    if (isAdmin) {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text("Cancelar Carona"),
-                            content: const Text("Tem certeza que deseja cancelar a carona?"),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text("Não"),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  print(widget.deslocamentoId);
-                                  DeslocamentoDAO.delete(widget.deslocamentoId ?? 0).then((value) {
-                                    print("deletou");
-                                    DeslocamentoDAO.findAll().then((value) => print(value));
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
-                                    );
-                                  });
-                                },
-                                child: const Text("Sim"),
-                              ),
-                            ],
+                Container(
+                  height: 50,
+                  width: 200,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      bool isAdmin = userId == widget.criadorCaronaId;
+                      if (isAdmin) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Cancelar Carona"),
+                              content: const Text("Tem certeza que deseja cancelar a carona?"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Não"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    print(widget.deslocamentoId);
+                                    DeslocamentoDAO.delete(widget.deslocamentoId ?? 0).then((value) {
+                                      print("deletou");
+                                      DeslocamentoDAO.findAll().then((value) => print(value));
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
+                                      );
+                                    });
+                                  },
+                                  child: const Text("Sim"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        PassageirosDeslocamentoDAO.save(PassageirosDeslocamento(
+                          usuarioId: userId,
+                          deslocamentoId: widget.deslocamentoId ?? 0,
+                          tipo: 0,
+                        )).then((value) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
                           );
-                        },
-                      );
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.purple,
-                    foregroundColor: AppColors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-                  ),
-                  child: Text(
-                    userId == widget.criadorCaronaId ? "Cancelar Carona" : 'Solicitar vaga',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                        });
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.purple,
+                      foregroundColor: AppColors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                    ),
+                    child: Text(
+                      userId == widget.criadorCaronaId ? "Cancelar Carona" : 'Solicitar vaga',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
