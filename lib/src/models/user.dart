@@ -10,7 +10,7 @@ class User {
   String email;
   String? dataNascimento;
   String imageUrl;
-  final bool hasAccount;
+  bool hasAccount;
 
   User({
     required this.id,
@@ -23,8 +23,8 @@ class User {
     required this.telefone,
     required this.email,
     required this.imageUrl,
+    required this.hasAccount,
     this.dataNascimento,
-    this.hasAccount = false
   });
 
   factory User.fromJson(Map<String, dynamic> json) {

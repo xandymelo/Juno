@@ -59,6 +59,7 @@ class UserDAO {
         email: row[_email],
         dataNascimento: row[_dataDeNascimento],
         imageUrl: row[_imageUrl],
+        hasAccount: row[_hasAccount],
       );
       users.add(user);
     }
@@ -147,7 +148,7 @@ class UserDAO {
 
     final List<Map<String, dynamic>> result = await db.query(
       _tablename,
-      where: '$_cpf = ? AND $_senha = ?',
+      where: '$_cpf = ? AND $_senha = ? AND $_hasAccount = 1',
       whereArgs: [cpf, password],
     );
 
@@ -251,5 +252,4 @@ class UserDAO {
       whereArgs: [userId],
     );
   }
-
 }
