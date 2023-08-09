@@ -16,6 +16,7 @@ class UserDAO {
       `Email` TEXT NOT NULL,
       `DataDeNascimento` TEXT,
       `ImageUrl` TEXT,
+      `HasAccount` INTEGER NOT NULL,
       PRIMARY KEY (`Id`),
       FOREIGN KEY (`SigaaID`) REFERENCES `sigaa` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
       FOREIGN KEY (`EnderecoId`) REFERENCES `endereco` (`id`)
@@ -34,6 +35,7 @@ class UserDAO {
   static const _email = 'Email';
   static const _dataDeNascimento = 'DataDeNascimento';
   static const _imageUrl = 'ImageUrl';
+  static const _hasAccount = 'HasAccount';
 
   static Future<List<User>> getUsers(List<int> userIds) async {
     final Database db = await createDatabase();
@@ -77,6 +79,7 @@ class UserDAO {
       _email: user.email,
       _dataDeNascimento: user.dataNascimento,
       _imageUrl: user.imageUrl,
+      _hasAccount: user.hasAccount ? 1 : 0, // Convert bool to integer (1 or 0)
     };
     return db.insert(_tablename, userMap);
   }
@@ -120,6 +123,7 @@ class UserDAO {
         email: row[_email],
         dataNascimento: row[_dataDeNascimento],
         imageUrl: row[_imageUrl],
+        hasAccount: row[_hasAccount],
       );
       return user;
     } else {
@@ -133,7 +137,8 @@ class UserDAO {
           sigaaId: -1,
           sobrenome: 'not Found',
           telefone: 'not Found',
-          imageUrl: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
+          imageUrl: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+          hasAccount: false);
     }
   }
 
@@ -171,6 +176,7 @@ class UserDAO {
         email: row[_email],
         dataNascimento: row[_dataDeNascimento],
         imageUrl: row[_imageUrl],
+        hasAccount: row[_hasAccount] == 1,
       );
       return user;
     } else {
@@ -195,6 +201,7 @@ class UserDAO {
         email: row[_email],
         dataNascimento: row[_dataDeNascimento],
         imageUrl: row[_imageUrl],
+        hasAccount: row[_hasAccount],
       );
       users.add(user);
     }
@@ -220,4 +227,29 @@ class UserDAO {
       whereArgs: [user.id],
     );
   }
+
+  static Future<int> updateHasAccount(int userId, bool hasAccount) async {
+    final db = await createDatabase();
+    return db.update(
+      _tablename,
+      {
+        _hasAccount: hasAccount ? 1 : 0, // Convert bool to integer (1 or 0)
+      },
+      where: '$_id = ?',
+      whereArgs: [userId],
+    );
+  }
+
+  static Future<int> updatePassword(int userId, String newPassword) async {
+    final db = await createDatabase();
+    return db.update(
+      _tablename,
+      {
+        _senha: newPassword,
+      },
+      where: '$_id = ?',
+      whereArgs: [userId],
+    );
+  }
+
 }

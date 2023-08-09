@@ -10,6 +10,7 @@ class User {
   String email;
   String? dataNascimento;
   String imageUrl;
+  final bool hasAccount;
 
   User({
     required this.id,
@@ -23,6 +24,7 @@ class User {
     required this.email,
     required this.imageUrl,
     this.dataNascimento,
+    this.hasAccount = false
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,7 @@ class User {
       email: json['Email'],
       dataNascimento: json['Data de Nascimento'],
       imageUrl: json['ImageUrl'],
+      hasAccount: json['HasAccount'] ?? false,
     );
   }
 
@@ -53,11 +56,12 @@ class User {
       'Telefone': telefone,
       'Email': email,
       'DataDeNascimento': dataNascimento,
+      'HasAccount': hasAccount,
     };
   }
 
   @override
   String toString() {
-    return 'User(id: $id, SigaaID: $sigaaId, EndereccoID: $enderecoId, Nome: $nome, Sobrenome: $sobrenome, Cpf: $cpf, Senha: $senha, Telefone: $telefone, Email: $email, Data de Nascimento: $dataNascimento)';
+    return 'User(id: $id, SigaaID: $sigaaId, EndereccoID: $enderecoId, Nome: $nome, Sobrenome: $sobrenome, Cpf: $cpf, Senha: $senha, Telefone: $telefone, Email: $email, Data de Nascimento: $dataNascimento, HasAccount: $hasAccount)';
   }
 }

@@ -6,8 +6,6 @@ import 'package:juno/src/screens/Onboarding/VamosComecarScreen.dart';
 
 import '../../app/theme/colors.dart';
 import '../../database/dao/user_dao.dart';
-import '../../database/dao/sigaa_dao.dart';
-import 'Confirmation_screen.dart';
 
 
 class AddressScreen extends StatefulWidget {
