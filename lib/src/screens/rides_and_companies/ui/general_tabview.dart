@@ -279,8 +279,10 @@ class _DeslocamentoItem extends StatelessWidget {
           return FutureBuilder<User>(
             future: UserDAO.getUserById(passageiroDeslocamento?.usuarioId as int),
             builder: (BuildContext context, AsyncSnapshot<User> userSnapshot) {
+              print(userSnapshot.error);
               if (userSnapshot.hasData) {
                 final User user = userSnapshot.data as User;
+
                 final String locationName = enderecoOrigem?.municipio ?? "Not Found";
                 const int maxLength = 10;
                 final String truncatedLocationName = locationName.length > maxLength ? "${locationName.substring(0, maxLength)}..." : locationName;

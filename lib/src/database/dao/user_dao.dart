@@ -104,12 +104,14 @@ class UserDAO {
   }
 
   static Future<User> getUserById(int userId) async {
+    print(userId);
     final Database db = await createDatabase();
     final List<Map<String, dynamic>> result = await db.query(
       _tablename,
       where: '$_id = ?',
       whereArgs: [userId],
     );
+    print(result.isNotEmpty);
     if (result.isNotEmpty) {
       final Map<String, dynamic> row = result.first;
       final User user = User(
@@ -124,7 +126,7 @@ class UserDAO {
         email: row[_email],
         dataNascimento: row[_dataDeNascimento],
         imageUrl: row[_imageUrl],
-        hasAccount: row[_hasAccount],
+        hasAccount: row[_hasAccount] == 1 ? true : false,
       );
       return user;
     } else {
