@@ -49,7 +49,7 @@ class _AddressScreenState extends State<AddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
+        child: ListView(
           children: [
             const Padding(
               padding: EdgeInsets.only(top: 150.0, bottom: 50.0),

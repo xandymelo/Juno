@@ -25,7 +25,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
+        child: ListView(
           children: [
             const Padding(
               padding: EdgeInsets.only(top: 150.0, bottom: 50.0),
@@ -150,18 +150,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           } else {
                             if (!user.hasAccount) {
                               _hasaccount = user.hasAccount;
-                              _name = user.nome;
-                              _email = user.email;
-                              print('Nome: $_name');
                               print('Tem conta: $_hasaccount');
-                              print('Email: $_email');
-                              print('Senha escolhida: $_password');
 
                               await UserDAO.updateHasAccount(user.id, true);
 
                               await UserDAO.updatePassword(user.id, _password);
+
                               final user2 = await UserDAO.getUserByCPF(_cpf);
                               print(user2);
+
                               final sigaaData =
                                   await SigaaDAO.getSigaaDataByUserId(
                                       user.sigaaId);
