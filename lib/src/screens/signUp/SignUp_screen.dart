@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:easy_mask/easy_mask.dart';
 import '../../app/theme/colors.dart';
 import '../../database/dao/user_dao.dart';
 import '../../database/dao/sigaa_dao.dart';
 import 'Confirmation_screen.dart';
+import 'package:flutter/services.dart';
+
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -14,12 +16,11 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
-  late String _name;
-  late String _email;
-  late String _matricula;
   late bool _hasaccount;
   late String _password;
+  late String _matricula;
   late String _cpf = '';
+  final _cpfController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,20 +58,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    // TextFormField(
-                    //   decoration: InputDecoration(labelText: 'Nome'),
-                    //   validator: (value) {
-                    //     if (value!.isEmpty) {
-                    //       return 'Por favor, digite o nome';
-                    //     }
-                    //     return null;
-                    //   },
-                    //   onSaved: (value) {
-                    //     _name = value!;
-                    //   },
-                    // ),
                     TextFormField(
-                      decoration: InputDecoration(labelText: 'CPF'),
+                      inputFormatters: [LengthLimitingTextInputFormatter(14),
+                        TextInputMask(mask: '999.999.999-99')],
+                      controller: _cpfController,
+                      decoration: const InputDecoration(
+                        labelText: 'CPF',
+                        hintText: '000.000.000-00',
+                      ),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Por favor, digite somente números';
@@ -81,18 +76,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         _cpf = value!;
                       },
                     ),
-                    // TextFormField(
-                    //   decoration: InputDecoration(labelText: 'Email'),
-                    //   validator: (value) {
-                    //     if (value!.isEmpty) {
-                    //       return 'Por favor, digite o email';
-                    //     }
-                    //     return null;
-                    //   },
-                    //   onSaved: (value) {
-                    //     _email = value!;
-                    //   },
-                    //),
                     TextFormField(
                       decoration: InputDecoration(labelText: 'Matrícula'),
                       validator: (value) {
@@ -123,8 +106,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ),
             ),
-            Expanded(
-              child: Align(
+            Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 20.0),
@@ -151,6 +133,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             if (!user.hasAccount) {
                               _hasaccount = user.hasAccount;
                               print('Tem conta: $_hasaccount');
+                              print('cpf: $_cpf');
 
                               await UserDAO.updateHasAccount(user.id, true);
 
@@ -198,7 +181,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                     ),
                   )),
-            ),
           ],
         ),
       ),
