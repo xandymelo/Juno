@@ -39,6 +39,7 @@ class DisplacementDetailsScreen extends StatefulWidget {
 
 class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
   late int userId = 0;
+  late bool isInDeslocamento = false;
   @override
   void initState() {
     super.initState();
@@ -254,7 +255,7 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasError) {
-                      return const Center(child: Text("Erro ao carregar dados."));
+                      return const Center(child: Text("Erro no getPassageiros"));
                     } else {
                       List<PassageirosDeslocamento>? people = snapshot.data;
                       final List<int> userIds = people?.map((passageirosDeslocamento) => passageirosDeslocamento.usuarioId)?.toList() ?? [];
@@ -266,13 +267,15 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                           if (otherSnapshot.connectionState == ConnectionState.waiting) {
                             return const Center(child: CircularProgressIndicator());
                           } else if (otherSnapshot.hasError) {
-                            return const Center(child: Text("Erro ao carregar outros dados."));
+                            return Center(child: Text("Erro no getUsers" + otherSnapshot.error.toString()));
                           } else {
                             List<User>? users = otherSnapshot.data;
 
+                            isInDeslocamento = users?.any((user) => user.id == userId) ?? false;
+                            print(isInDeslocamento.toString() + " isInDeslocamento");
                             return Container(
-                              width: 500,
-                              height: 150,
+                              width: 300,
+                              height: 300,
                               child: GridView.builder(
                                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
@@ -344,16 +347,25 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                           },
                         );
                       } else {
-                        PassageirosDeslocamentoDAO.save(PassageirosDeslocamento(
-                          usuarioId: userId,
-                          deslocamentoId: widget.deslocamentoId ?? 0,
-                          tipo: 0,
-                        )).then((value) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
-                          );
-                        });
+                        if (isInDeslocamento) {
+                          PassageirosDeslocamentoDAO.deleteByDeslocamentoIdAndUserId(widget.deslocamentoId ?? 0, userId).then((value) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
+                            );
+                          });
+                        } else {
+                          PassageirosDeslocamentoDAO.save(PassageirosDeslocamento(
+                            usuarioId: userId,
+                            deslocamentoId: widget.deslocamentoId ?? 0,
+                            tipo: 0,
+                          )).then((value) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
+                            );
+                          });
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -362,7 +374,11 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                     ),
                     child: Text(
-                      userId == widget.criadorCaronaId ? "Cancelar Carona" : 'Solicitar vaga',
+                      userId == widget.criadorCaronaId
+                          ? "Cancelar"
+                          : isInDeslocamento
+                              ? "Sair"
+                              : 'Solicitar',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,

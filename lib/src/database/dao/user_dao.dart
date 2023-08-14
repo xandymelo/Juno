@@ -59,7 +59,7 @@ class UserDAO {
         email: row[_email],
         dataNascimento: row[_dataDeNascimento],
         imageUrl: row[_imageUrl],
-        hasAccount: row[_hasAccount],
+        hasAccount: row[_hasAccount] == 1 ? true : false,
       );
       users.add(user);
     }
