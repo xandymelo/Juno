@@ -40,7 +40,6 @@ class _GeneralTabViewState extends State<GeneralTabView> {
     if (savedUserId != null) {
       setState(() {
         userId = savedUserId;
-        // print(userId);
       });
     }
   }
@@ -258,7 +257,6 @@ class _DeslocamentoItem extends StatelessWidget {
     var enderecoOrigem = await EnderecoDAO.findByIndex(deslocamento.origemId);
     var enderecoDestino = await EnderecoDAO.findByIndex(deslocamento.destinoId);
     var passageiros = await PassageirosDeslocamentoDAO.findByDeslocamentoId(deslocamento.id ?? 0);
-    // print(deslocamento.veiculoId);
     var veiculo = deslocamento.veiculoId == null ? null : await VeiculoDAO.findById(deslocamento.veiculoId);
 
     return [enderecoOrigem, enderecoDestino, passageiros, veiculo];
@@ -279,7 +277,6 @@ class _DeslocamentoItem extends StatelessWidget {
           return FutureBuilder<User>(
             future: UserDAO.getUserById(passageiroDeslocamento?.usuarioId as int),
             builder: (BuildContext context, AsyncSnapshot<User> userSnapshot) {
-              print(userSnapshot.error);
               if (userSnapshot.hasData) {
                 final User user = userSnapshot.data as User;
 

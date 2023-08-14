@@ -126,7 +126,6 @@ class _NewRideFormState extends State<NewRideFormScreen> {
     if (savedUserId != null) {
       setState(() {
         userId = savedUserId;
-        // print(userId);
       });
     }
   }

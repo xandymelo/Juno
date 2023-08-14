@@ -38,7 +38,7 @@ class DisplacementDetailsScreen extends StatefulWidget {
 }
 
 class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
-  late int userId;
+  late int userId = 0;
   @override
   void initState() {
     super.initState();
@@ -329,9 +329,7 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    print(widget.deslocamentoId);
                                     DeslocamentoDAO.delete(widget.deslocamentoId ?? 0).then((value) {
-                                      print("deletou");
                                       DeslocamentoDAO.findAll().then((value) => print(value));
                                       Navigator.pushReplacement(
                                         context,
