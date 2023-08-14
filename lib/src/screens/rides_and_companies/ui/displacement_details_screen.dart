@@ -272,7 +272,7 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
 
                             return Container(
                               width: 500,
-                              height: 500,
+                              height: 150,
                               child: GridView.builder(
                                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
@@ -306,7 +306,7 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                     }
                   },
                 ),
-                const SizedBox(height: 120),
+                const SizedBox(height: 10),
                 Container(
                   height: 50,
                   width: 200,
