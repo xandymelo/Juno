@@ -19,9 +19,9 @@ class DisplacementDetailsScreen extends StatefulWidget {
   final String criadorCaronaUserPhotoUrl;
   final int? deslocamentoId;
   final int quantidadeVagas;
-  final int quantidadeVagasDisponiveis;
+  late int quantidadeVagasDisponiveis;
 
-  const DisplacementDetailsScreen(
+  DisplacementDetailsScreen(
       {super.key,
       required this.veiculo,
       required this.municipioOrigem,
@@ -40,6 +40,7 @@ class DisplacementDetailsScreen extends StatefulWidget {
 class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
   late int userId = 0;
   late bool isInDeslocamento = false;
+  late List<User> users;
   @override
   void initState() {
     super.initState();
@@ -52,6 +53,12 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
     if (savedUserId != null) {
       setState(() {
         userId = savedUserId;
+      });
+    }
+    var usersIds = await PassageirosDeslocamentoDAO.getPassageiroDeslocamentoByDeslocamentoId(widget.deslocamentoId ?? 0);
+    if (usersIds.any((passageirosDeslocamento) => passageirosDeslocamento.usuarioId == userId)) {
+      setState(() {
+        isInDeslocamento = true;
       });
     }
   }
@@ -270,9 +277,9 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                             return Center(child: Text("Erro no getUsers" + otherSnapshot.error.toString()));
                           } else {
                             List<User>? users = otherSnapshot.data;
-
-                            isInDeslocamento = users?.any((user) => user.id == userId) ?? false;
-                            print(isInDeslocamento.toString() + " isInDeslocamento");
+                            if (users?.any((user) => user.id == userId) == true) {
+                              isInDeslocamento = true;
+                            }
                             return Container(
                               width: 300,
                               height: 300,
@@ -333,7 +340,6 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                                 TextButton(
                                   onPressed: () {
                                     DeslocamentoDAO.delete(widget.deslocamentoId ?? 0).then((value) {
-                                      DeslocamentoDAO.findAll().then((value) => print(value));
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
@@ -348,23 +354,62 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                         );
                       } else {
                         if (isInDeslocamento) {
-                          PassageirosDeslocamentoDAO.deleteByDeslocamentoIdAndUserId(widget.deslocamentoId ?? 0, userId).then((value) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
-                            );
-                          });
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Sair da Carona"),
+                                content: const Text("Tem certeza que deseja deixar de participar da Carona?"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Não"),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      PassageirosDeslocamentoDAO.deleteByDeslocamentoIdAndUserId(widget.deslocamentoId ?? 0, userId).then((value) {
+                                        setState(() {
+                                          widget.quantidadeVagasDisponiveis++;
+                                          isInDeslocamento = false;
+                                        });
+                                        Navigator.of(context).pop();
+                                      });
+                                    },
+                                    child: const Text("Sim"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         } else {
-                          PassageirosDeslocamentoDAO.save(PassageirosDeslocamento(
-                            usuarioId: userId,
-                            deslocamentoId: widget.deslocamentoId ?? 0,
-                            tipo: 0,
-                          )).then((value) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
-                            );
-                          });
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              PassageirosDeslocamentoDAO.save(PassageirosDeslocamento(
+                                usuarioId: userId,
+                                deslocamentoId: widget.deslocamentoId ?? 0,
+                                tipo: 0,
+                              ));
+                              return AlertDialog(
+                                title: const Text("Sair da Carona"),
+                                content: const Text("Você está participando do deslocamento!"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isInDeslocamento = true;
+                                        widget.quantidadeVagasDisponiveis--;
+                                      });
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Ok"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         }
                       }
                     },
