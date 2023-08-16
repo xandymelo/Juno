@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:juno/src/database/dao/passageiros_deslocamento_dao.dart';
 import 'package:juno/src/models/passageiros_deslocamento.dart';
 import 'package:juno/src/screens/rides_and_companies/ui/rides_and_companies_screen.dart';
+import 'package:juno/src/screens/rides_and_companies/ui/widgets/displacement_tile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../app/theme/colors.dart';
@@ -20,6 +21,7 @@ class DisplacementDetailsScreen extends StatefulWidget {
   final int? deslocamentoId;
   final int quantidadeVagas;
   late int quantidadeVagasDisponiveis;
+  final VehicleType vehicleType;
 
   DisplacementDetailsScreen(
       {super.key,
@@ -31,7 +33,8 @@ class DisplacementDetailsScreen extends StatefulWidget {
       this.deslocamentoId,
       required this.quantidadeVagas,
       required this.quantidadeVagasDisponiveis,
-      required this.criadorCaronaId});
+      required this.criadorCaronaId,
+      required this.vehicleType});
 
   @override
   State<DisplacementDetailsScreen> createState() => _DisplacementDetailsScreenState();
@@ -119,10 +122,14 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                     const SizedBox(width: 10),
                     CircleAvatar(
                       radius: 14,
-                      backgroundColor: AppColors.yellow,
+                      backgroundColor: widget.vehicleType == VehicleType.car ? AppColors.yellow : Colors.red,
                       child: Icon(
                         size: 18,
-                        Icons.directions_car,
+                        widget.vehicleType == VehicleType.car
+                            ? Icons.directions_car
+                            : widget.vehicleType == VehicleType.motorcycle
+                                ? Icons.motorcycle
+                                : Icons.explore,
                         color: AppColors.white,
                       ),
                     ),
