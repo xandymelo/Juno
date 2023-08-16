@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:juno/src/database/dao/passageiros_deslocamento_dao.dart';
 import 'package:juno/src/models/passageiros_deslocamento.dart';
 import 'package:juno/src/screens/rides_and_companies/ui/rides_and_companies_screen.dart';
+import 'package:juno/src/screens/rides_and_companies/ui/widgets/displacement_tile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../app/theme/colors.dart';
@@ -19,9 +20,10 @@ class DisplacementDetailsScreen extends StatefulWidget {
   final String criadorCaronaUserPhotoUrl;
   final int? deslocamentoId;
   final int quantidadeVagas;
-  final int quantidadeVagasDisponiveis;
+  late int quantidadeVagasDisponiveis;
+  final VehicleType vehicleType;
 
-  const DisplacementDetailsScreen(
+  DisplacementDetailsScreen(
       {super.key,
       required this.veiculo,
       required this.municipioOrigem,
@@ -31,7 +33,8 @@ class DisplacementDetailsScreen extends StatefulWidget {
       this.deslocamentoId,
       required this.quantidadeVagas,
       required this.quantidadeVagasDisponiveis,
-      required this.criadorCaronaId});
+      required this.criadorCaronaId,
+      required this.vehicleType});
 
   @override
   State<DisplacementDetailsScreen> createState() => _DisplacementDetailsScreenState();
@@ -39,6 +42,8 @@ class DisplacementDetailsScreen extends StatefulWidget {
 
 class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
   late int userId = 0;
+  late bool isInDeslocamento = false;
+  late List<User> users;
   @override
   void initState() {
     super.initState();
@@ -51,6 +56,12 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
     if (savedUserId != null) {
       setState(() {
         userId = savedUserId;
+      });
+    }
+    var usersIds = await PassageirosDeslocamentoDAO.getPassageiroDeslocamentoByDeslocamentoId(widget.deslocamentoId ?? 0);
+    if (usersIds.any((passageirosDeslocamento) => passageirosDeslocamento.usuarioId == userId)) {
+      setState(() {
+        isInDeslocamento = true;
       });
     }
   }
@@ -111,10 +122,14 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                     const SizedBox(width: 10),
                     CircleAvatar(
                       radius: 14,
-                      backgroundColor: AppColors.yellow,
+                      backgroundColor: widget.vehicleType == VehicleType.car ? AppColors.yellow : Colors.red,
                       child: Icon(
                         size: 18,
-                        Icons.directions_car,
+                        widget.vehicleType == VehicleType.car
+                            ? Icons.directions_car
+                            : widget.vehicleType == VehicleType.motorcycle
+                                ? Icons.motorcycle
+                                : Icons.explore,
                         color: AppColors.white,
                       ),
                     ),
@@ -254,7 +269,7 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasError) {
-                      return const Center(child: Text("Erro ao carregar dados."));
+                      return const Center(child: Text("Erro no getPassageiros"));
                     } else {
                       List<PassageirosDeslocamento>? people = snapshot.data;
                       final List<int> userIds = people?.map((passageirosDeslocamento) => passageirosDeslocamento.usuarioId)?.toList() ?? [];
@@ -266,13 +281,15 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                           if (otherSnapshot.connectionState == ConnectionState.waiting) {
                             return const Center(child: CircularProgressIndicator());
                           } else if (otherSnapshot.hasError) {
-                            return const Center(child: Text("Erro ao carregar outros dados."));
+                            return Center(child: Text("Erro no getUsers" + otherSnapshot.error.toString()));
                           } else {
                             List<User>? users = otherSnapshot.data;
-
+                            if (users?.any((user) => user.id == userId) == true) {
+                              isInDeslocamento = true;
+                            }
                             return Container(
-                              width: 500,
-                              height: 150,
+                              width: 300,
+                              height: 300,
                               child: GridView.builder(
                                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
@@ -330,7 +347,6 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                                 TextButton(
                                   onPressed: () {
                                     DeslocamentoDAO.delete(widget.deslocamentoId ?? 0).then((value) {
-                                      DeslocamentoDAO.findAll().then((value) => print(value));
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
@@ -344,16 +360,64 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                           },
                         );
                       } else {
-                        PassageirosDeslocamentoDAO.save(PassageirosDeslocamento(
-                          usuarioId: userId,
-                          deslocamentoId: widget.deslocamentoId ?? 0,
-                          tipo: 0,
-                        )).then((value) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
+                        if (isInDeslocamento) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Sair da Carona"),
+                                content: const Text("Tem certeza que deseja deixar de participar da Carona?"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Não"),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      PassageirosDeslocamentoDAO.deleteByDeslocamentoIdAndUserId(widget.deslocamentoId ?? 0, userId).then((value) {
+                                        setState(() {
+                                          widget.quantidadeVagasDisponiveis++;
+                                          isInDeslocamento = false;
+                                        });
+                                        Navigator.of(context).pop();
+                                      });
+                                    },
+                                    child: const Text("Sim"),
+                                  ),
+                                ],
+                              );
+                            },
                           );
-                        });
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              PassageirosDeslocamentoDAO.save(PassageirosDeslocamento(
+                                usuarioId: userId,
+                                deslocamentoId: widget.deslocamentoId ?? 0,
+                                tipo: 0,
+                              ));
+                              return AlertDialog(
+                                title: const Text("Sair da Carona"),
+                                content: const Text("Você está participando do deslocamento!"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isInDeslocamento = true;
+                                        widget.quantidadeVagasDisponiveis--;
+                                      });
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Ok"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -362,7 +426,11 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                     ),
                     child: Text(
-                      userId == widget.criadorCaronaId ? "Cancelar Carona" : 'Solicitar vaga',
+                      userId == widget.criadorCaronaId
+                          ? "Cancelar"
+                          : isInDeslocamento
+                              ? "Sair"
+                              : 'Solicitar',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,

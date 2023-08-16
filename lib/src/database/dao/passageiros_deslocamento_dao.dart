@@ -51,6 +51,15 @@ class PassageirosDeslocamentoDAO {
     return passageirosDeslocamentos;
   }
 
+  static Future<int> deleteByDeslocamentoIdAndUserId(int deslocamentoId, int userId) async {
+    final Database db = await createDatabase();
+    return await db.delete(
+      _tablename,
+      where: '$_deslocamentoId = ? AND $_usuarioId = ?',
+      whereArgs: [deslocamentoId, userId],
+    );
+  }
+
   static Future<PassageirosDeslocamento?> findByDeslocamentoIdAndUserId(int deslocamentoId, int usuarioId) async {
     final Database db = await createDatabase();
     final List<Map<String, dynamic>> result = await db.query(
