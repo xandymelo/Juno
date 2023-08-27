@@ -1,10 +1,12 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from sqlalchemy.sql import text
-import databases
+# import os
+# os.chdir("C:\Users\xandy\github\Juno\H3\API")
+from H3.H3_PythonScript import encontrarCaronas, encontrarCoordenadas
 
 Juno = FastAPI()
 
-DATABASE_URL = "mysql+mysqlconnector://root:abilio2012@localhost:3306/junodwpopulado"
+# DATABASE_URL = "mysql+mysqlconnector://root:abilio2012@localhost:3306/junodwpopulado"
 
 # database = databases.Database(DATABASE_URL)
 
@@ -22,8 +24,9 @@ def home():
 
 @Juno.get("/bairrosAoRedor/{bairroPartida}/{bairroDestino}")
 def bairros_ao_redor(bairroPartida: str, bairroDestino: str):
-    # infoLocais = encontrarCoordenadas(bairroPartida, bairroDestino)
-    return "API Juno"
+    info_locais = encontrarCoordenadas(bairroPartida, bairroDestino)
+    lista_bairros_proximos, lista_bairros_proximos_ordenados = encontrarCaronas(info_locais)
+    return lista_bairros_proximos_ordenados
 
 # @Juno.get("/alunos")
 # async def read_alunos():
