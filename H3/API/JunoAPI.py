@@ -20,9 +20,9 @@ DATABASE_URL = "mysql+mysqlconnector://root:abilio2012@localhost:3306/junodwpopu
 def home():
     return "API Juno"
 
-@Juno.get("/bairrosAoRedor/{bairro}")
-def bairros_ao_redor(bairro: str):
-    #chamar a funcão do H3 que retorna os bairros ao redor
+@Juno.get("/bairrosAoRedor/{bairroPartida}/{bairroDestino}")
+def bairros_ao_redor(bairroPartida: str, bairroDestino: str):
+    # infoLocais = encontrarCoordenadas(bairroPartida, bairroDestino)
     return "API Juno"
 
 # @Juno.get("/alunos")
