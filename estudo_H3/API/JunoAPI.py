@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from sqlalchemy.sql import text
+from estudo_H3.H3_PythonScript import encontrarCoordenadas
 # import os
 # os.chdir("C:\Users\xandy\github\Juno\H3\API")
-from H3.H3_PythonScript import encontrarCaronas, encontrarCoordenadas
+# from H3.H3_PythonScript import encontrarCaronas, encontrarCoordenadas
 
 Juno = FastAPI()
 
@@ -10,13 +10,13 @@ Juno = FastAPI()
 
 # database = databases.Database(DATABASE_URL)
 
-# @Juno.on_event("startup")
-# async def startup():
-#     await database.connect()
+@Juno.on_event("startup")
+def startup():
+    return "começou"
 
-# @Juno.on_event("shutdown")
-# async def shutdown():
-#      await database.disconnect()
+@Juno.on_event("shutdown")
+def shutdown():
+     return "acabou"
 
 @Juno.get("/")
 def home():
