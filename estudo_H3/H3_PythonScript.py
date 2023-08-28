@@ -54,9 +54,9 @@ def ajustar_tamanho_hexagonos(e):
 mapa.add_child(folium.features.MacroElement().add_to(mapa))
 mapa.get_root().html.add_child(folium.Element('<script>{map_name}.on("zoomend", function(e) {{ ajustar_tamanho_hexagonos(e); }});</script>'.format(map_name=mapa.get_name())))
 
-caminho_pasta = "H3" 
+# caminho_pasta = "H3" 
 
-os.chdir(caminho_pasta)
+# os.chdir(caminho_pasta)
 
 with open('bairros_recife.geojson', encoding='utf-8') as f:
     data = json.load(f)
