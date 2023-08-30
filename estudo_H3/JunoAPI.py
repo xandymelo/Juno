@@ -1,25 +1,25 @@
 from fastapi import FastAPI
 from H3_PythonScript import encontrarCaronas, encontrarCoordenadas
 
-Juno = FastAPI()
+JunoAPI = FastAPI()
 
 # DATABASE_URL = "mysql+mysqlconnector://root:abilio2012@localhost:3306/junodwpopulado"
 
 # database = databases.Database(DATABASE_URL)
 
-@Juno.on_event("startup")
+@JunoAPI.on_event("startup")
 def startup():
     return "começou"
 
-@Juno.on_event("shutdown")
+@JunoAPI.on_event("shutdown")
 def shutdown():
      return "acabou"
 
-@Juno.get("/")
+@JunoAPI.get("/")
 def home():
     return "API Juno"
 
-@Juno.get("/bairrosAoRedor/{bairroPartida}/{bairroDestino}")
+@JunoAPI.get("/bairrosAoRedor/{bairroPartida}/{bairroDestino}")
 def bairros_ao_redor(bairroPartida: str, bairroDestino: str):
     info_locais = encontrarCoordenadas(bairroPartida, bairroDestino)
     lista_bairros_proximos, lista_bairros_proximos_ordenados = encontrarCaronas(info_locais)
