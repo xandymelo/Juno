@@ -7,7 +7,6 @@ import 'package:juno/src/screens/Onboarding/VamosComecarScreen.dart';
 import '../../app/theme/colors.dart';
 import '../../database/dao/user_dao.dart';
 
-
 class AddressScreen extends StatefulWidget {
   final User user;
 
@@ -15,6 +14,7 @@ class AddressScreen extends StatefulWidget {
   @override
   _AddressScreenState createState() => _AddressScreenState();
 }
+
 class _AddressScreenState extends State<AddressScreen> {
   final _formKey = GlobalKey<FormState>();
   late String _bairro;
@@ -37,15 +37,13 @@ class _AddressScreenState extends State<AddressScreen> {
     user.enderecoId = enderecoId;
     await UserDAO.update(user);
     // Salvar o endereço no banco de dados
-    final enderecos = await EnderecoDAO.findAll();
-    print(enderecos);
-    final usuarios = await UserDAO.findAll();
-    print(usuarios);
+    // final enderecos = await EnderecoDAO.findAll();
+    // print(enderecos);
+    // final usuarios = await UserDAO.findAll();
+    // print(usuarios);
   }
 
-
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -74,7 +72,6 @@ class _AddressScreenState extends State<AddressScreen> {
                 ],
               ),
             ),
-
             Padding(
               padding: EdgeInsets.all(16.0),
               child: Form(
@@ -158,6 +155,7 @@ class _AddressScreenState extends State<AddressScreen> {
                         elevation: 0, // Remove a sombra
                       ),
                       onPressed: () async {
+                        print(_formKey.currentState!.validate());
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           await _saveEndereco(widget.user);
@@ -165,17 +163,13 @@ class _AddressScreenState extends State<AddressScreen> {
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                title: Text('Cadastro concluído',
+                                title: Text('Cadastro concluído', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: AppColors.purple), textAlign: TextAlign.center),
+                                content: Text('Seu cadastro foi realizado com sucesso. Aperte continuar para realizar o login e acessar as funcionalidades do app',
                                     style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.purple),
-                                    textAlign: TextAlign.center),
-                                content: Text('Seu cadastro foi realizado com sucesso. Aperte continuar para realizar o login e acessar as funcionalidades do app', style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.normal,
-                                  color: AppColors.purple,
-                                ),
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppColors.purple,
+                                    ),
                                     textAlign: TextAlign.center),
                                 actions: [
                                   Row(
@@ -185,25 +179,19 @@ class _AddressScreenState extends State<AddressScreen> {
                                         onPressed: () {
                                           Navigator.pop(context);
                                         },
-                                        child: Text('Voltar', style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.normal,
-                                            color: AppColors.darkOrange)),
+                                        child: Text('Voltar', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal, color: AppColors.darkOrange)),
                                       ),
                                       TextButton(
                                         onPressed: () async {
                                           Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => VamosComecarScreen(),
-                                                  ),
-                                                );
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => VamosComecarScreen(),
+                                            ),
+                                          );
                                           print('Proceeding to the next page...');
                                         },
-                                        child: Text('Continuar', style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.darkOrange)),
+                                        child: Text('Continuar', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold, color: AppColors.darkOrange)),
                                       ),
                                     ],
                                   ),
@@ -211,8 +199,8 @@ class _AddressScreenState extends State<AddressScreen> {
                               );
                             },
                           );
-                          }
-                        },
+                        }
+                      },
                       child: const Padding(
                         padding: EdgeInsets.only(top: 8, bottom: 8, left: 35, right: 35),
                         child: Text(

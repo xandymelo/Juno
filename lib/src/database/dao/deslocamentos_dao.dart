@@ -48,8 +48,6 @@ class DeslocamentoDAO {
   }
 
   static Future<int> delete(int deslocamentoId) async {
-    print("entrou no delete");
-    print(deslocamentoId);
     final Database db = await createDatabase();
     return await db.delete(
       _tablename,
@@ -62,7 +60,7 @@ class DeslocamentoDAO {
     final Database db = await createDatabase();
     final List<Map<String, dynamic>> result = await db.query(
       _tablename,
-      where: '$_veiculoId = ? AND $_horaSaida = ? AND $_origemId = ? AND $_destinoId = ? AND $_status = ? AND $_vagasDisponiveis = ?',
+      where: '$_veiculoId = ? AND $_horaSaida = ? AND $_origemId = ? AND $_destinoId = ? AND $_status = ? AND $_vagasDisponiveis = ? AND $_vagas = ?',
       whereArgs: [
         deslocamento.veiculoId,
         deslocamento.horaSaida,
