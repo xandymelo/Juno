@@ -211,25 +211,27 @@ def encontrarCaronas(infoLocais):
     # Retornar a lista de bairros próximos desordenada e a lista de bairros próximos ordenada
     return bairros_na_area, bairro_na_area_ord
 
-# Solicitar o nome do bairro de partida
-partidaLocal = input("Digite o nome do bairro de partida da corrida: ").upper()
 
-# Solicitar o nome do bairro de destino
-destinoLocal = input("Digite o nome do bairro de destino da corrida: ").upper()
+if (__name__ == "__main__"):
+    # Solicitar o nome do bairro de partida
+    partidaLocal = input("Digite o nome do bairro de partida da corrida: ").upper()
 
-#Guardar as informações dos pontos de partida e chegada
-infoLocais = encontrarCoordenadas(partidaLocal, destinoLocal)
+    # Solicitar o nome do bairro de destino
+    destinoLocal = input("Digite o nome do bairro de destino da corrida: ").upper()
 
-# Exemplo de uso: Ao pressionar o botão "encontrarCaronas"
-listaBairrosProx, listaBairrosProxOrd = encontrarCaronas(infoLocais)
+    #Guardar as informações dos pontos de partida e chegada
+    infoLocais = encontrarCoordenadas(partidaLocal, destinoLocal)
 
-# Imprimir os bairros próximos ao local de destino
-print("Bairros na Área: ")
-print(listaBairrosProx)
+    # Exemplo de uso: Ao pressionar o botão "encontrarCaronas"
+    listaBairrosProx, listaBairrosProxOrd = encontrarCaronas(infoLocais)
 
-# Imprimir os bairros próximos ao local de destino do mais próximo ao mais distante
-print("Bairros na Área (MAIS PRÓXIMO AO MAIS DISTANTE): ")
-print(listaBairrosProxOrd)
+    # Imprimir os bairros próximos ao local de destino
+    print("Bairros na Área: ")
+    print(listaBairrosProx)
+
+    # Imprimir os bairros próximos ao local de destino do mais próximo ao mais distante
+    print("Bairros na Área (MAIS PRÓXIMO AO MAIS DISTANTE): ")
+    print(listaBairrosProxOrd)
 
 #Apresenta o mapa
 #display (mapa)
