@@ -9,10 +9,10 @@ import 'package:juno/src/screens/signUp/Address_screen.dart';
 import '../../app/theme/colors.dart';
 import '../../database/dao/cursos_dao.dart';
 
-
 class NextPage extends StatelessWidget {
   final User user;
-  final Sigaa? sigaaData; // Make sigaaData nullable by adding a '?' after 'Sigaa'
+  final Sigaa?
+      sigaaData; // Make sigaaData nullable by adding a '?' after 'Sigaa'
 
   NextPage({required this.user, this.sigaaData}); // Make sigaaData optional
 
@@ -22,36 +22,66 @@ class NextPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 150.0, bottom: 50.0),
-              child: Column(
-                children: [
-                  Text(
-                    'Cadastre-se',
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.red,
-                    ),
-                  ),
-                  Text(
-                    'Confirme seus dados acadêmicos',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
+            Container(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VamosComecarScreen()),
+                  );
+                },
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.arrow_back_ios,
+                      size: 12,
                       color: AppColors.purple,
                     ),
-                  ),
-                ],
+                    Text(
+                      'Voltar',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: AppColors.purple,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
+            const SizedBox(height: 30),
+            const Column(
+              children: [
+                Text(
+                  'Cadastre-se',
+                  style: TextStyle(
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.red,
+                  ),
+                ),
+                Text(
+                  'Confirme seus dados acadêmicos',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.purple,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
             Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
                   ListTile(
                     title: Text('Matricula'),
-                    subtitle: Text(sigaaData!.matricula.toString(), style: TextStyle(fontSize: 16.0)),
+                    subtitle: Text(sigaaData!.matricula.toString(),
+                        style: TextStyle(fontSize: 16.0)),
                   ),
                   Divider(thickness: 1.0, color: AppColors.black),
                   FutureBuilder<Curso?>(
@@ -61,20 +91,21 @@ class NextPage extends StatelessWidget {
                         return CircularProgressIndicator();
                       } else if (snapshot.hasData) {
                         Curso? curso = snapshot.data;
-                        String turnoString = CursosDAO.mapTurnoToString(curso?.turno ?? 0);
+                        String turnoString =
+                            CursosDAO.mapTurnoToString(curso?.turno ?? 0);
                         return Column(
                           children: [
                             ListTile(
                               title: Text('Curso'),
-                              subtitle: Text('${curso?.nome ?? "N/A"}', style: TextStyle(fontSize: 16.0)),
-                              ),
-
+                              subtitle: Text('${curso?.nome ?? "N/A"}',
+                                  style: TextStyle(fontSize: 16.0)),
+                            ),
                             Divider(thickness: 1.0, color: AppColors.black),
-
                             ListTile(
                               title: Text('Turno'),
-                              subtitle: Text('$turnoString', style: TextStyle(fontSize: 16.0)),
-                              ),
+                              subtitle: Text('$turnoString',
+                                  style: TextStyle(fontSize: 16.0)),
+                            ),
                           ],
                         );
                       } else {
@@ -85,18 +116,17 @@ class NextPage extends StatelessWidget {
                   Divider(thickness: 1.0, color: AppColors.black),
                   ListTile(
                     title: Text('Periodo'),
-                    subtitle: Text(sigaaData!.periodo.toString(), style: TextStyle(fontSize: 16.0)),
+                    subtitle: Text(sigaaData!.periodo.toString(),
+                        style: TextStyle(fontSize: 16.0)),
                   ),
+                  Divider(thickness: 1.0, color: AppColors.black),
                 ],
               ),
             ),
+            const SizedBox(height: 100),
             Padding(
-              padding:  EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0),
               child: TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: AppColors.red, // Define a cor de fundo como vermelho
-                  elevation: 0, // Remove a sombra
-                ),
                 onPressed: () async {
                   showDialog(
                     context: context,
@@ -104,62 +134,81 @@ class NextPage extends StatelessWidget {
                       return AlertDialog(
                         title: Text('Queremos te conhecer melhor!',
                             style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.purple),
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.purple),
                             textAlign: TextAlign.center),
-                        content: Text('A adição de alguns dados irá proporcionar uma melhor experiência dentro do aplicativo', style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.purple,
-                        ),
+                        content: Text(
+                            'A adição de alguns dados irá proporcionar uma melhor experiência dentro do aplicativo',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.normal,
+                              color: AppColors.purple,
+                            ),
                             textAlign: TextAlign.center),
                         actions: [
-                        Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => VamosComecarScreen()),
-                              );
-                            },
-                            child: Text('Lembre-me mais tarde', style: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.normal,
-                                color: AppColors.darkOrange)),
-                          ),
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => AddressScreen(user: user,)),
-                              );
-                              print('Proceeding to the next page...');
-                            },
-                            child: Text('Continuar', style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.darkOrange)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            VamosComecarScreen()),
+                                  );
+                                },
+                                child: Text('Lembre-me mais tarde',
+                                    style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.normal,
+                                        color: AppColors.darkOrange)),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddressScreen(
+                                              user: user,
+                                            )),
+                                  );
+                                  print('Proceeding to the next page...');
+                                },
+                                child: Text('Continuar',
+                                    style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.darkOrange)),
+                              ),
+                            ],
                           ),
                         ],
-                      ),
-                      ],
                       );
                     },
                   );
                 },
-                child: const Padding(
-                  padding: EdgeInsets.only(top: 8, bottom: 8, left: 35, right: 35),
-                  child: Text(
-                    'Confirmar',
-                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold), // Define a cor do texto como branco
+                style: TextButton.styleFrom(
+                  backgroundColor: AppColors.darkOrange,
+                  foregroundColor: AppColors.white,
+                  padding: const EdgeInsets.fromLTRB(50, 9, 50, 9),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32),
                   ),
                 ),
-              ),),
+                child: const Text(
+                  "Continuar",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
           ],
-      ),),
+        ),
+      ),
     );
   }
 }

@@ -19,6 +19,7 @@ class VamosComecarScreen extends StatelessWidget {
                 size: 205,
                 // color: Color.fromRGBO(62, 0, 71, 0.984),
               ),
+              const SizedBox(height: 35),
               const Text(
                 'Vamos',
                 style: TextStyle(

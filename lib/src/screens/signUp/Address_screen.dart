@@ -7,7 +7,6 @@ import 'package:juno/src/screens/Onboarding/VamosComecarScreen.dart';
 import '../../app/theme/colors.dart';
 import '../../database/dao/user_dao.dart';
 
-
 class AddressScreen extends StatefulWidget {
   final User user;
 
@@ -15,6 +14,7 @@ class AddressScreen extends StatefulWidget {
   @override
   _AddressScreenState createState() => _AddressScreenState();
 }
+
 class _AddressScreenState extends State<AddressScreen> {
   final _formKey = GlobalKey<FormState>();
   late String _bairro;
@@ -43,40 +43,62 @@ class _AddressScreenState extends State<AddressScreen> {
     print(usuarios);
   }
 
-
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ListView(
+      body: SingleChildScrollView(
+        child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 150.0, bottom: 50.0),
-              child: Column(
-                children: [
-                  Text(
-                    'Endereço',
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.red,
-                    ),
-                  ),
-                  Text(
-                    'Adicione seu endereço',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
+            Container(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.arrow_back_ios,
+                      size: 12,
                       color: AppColors.purple,
                     ),
-                  ),
-                ],
+                    Text(
+                      'Voltar',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: AppColors.purple,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-
+            const SizedBox(height: 30),
+            const Column(
+              children: [
+                Text(
+                  'Endereço',
+                  style: TextStyle(
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.red,
+                  ),
+                ),
+                Text(
+                  'Adicione seu endereço',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.purple,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
             Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -147,81 +169,87 @@ class _AddressScreenState extends State<AddressScreen> {
                 ),
               ),
             ),
-            Expanded(
-              child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: AppColors.red, // Define a cor de fundo como vermelho
-                        elevation: 0, // Remove a sombra
-                      ),
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          await _saveEndereco(widget.user);
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text('Cadastro concluído',
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.purple),
-                                    textAlign: TextAlign.center),
-                                content: Text('Seu cadastro foi realizado com sucesso. Aperte continuar para realizar o login e acessar as funcionalidades do app', style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.normal,
-                                  color: AppColors.purple,
+            const SizedBox(height: 100),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: TextButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    await _saveEndereco(widget.user);
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('Cadastro concluído',
+                              style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.purple),
+                              textAlign: TextAlign.center),
+                          content: Text(
+                              'Seu cadastro foi realizado com sucesso. Aperte continuar para realizar o login e acessar as funcionalidades do app',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.normal,
+                                color: AppColors.purple,
+                              ),
+                              textAlign: TextAlign.center),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Voltar',
+                                      style: TextStyle(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.normal,
+                                          color: AppColors.darkOrange)),
                                 ),
-                                    textAlign: TextAlign.center),
-                                actions: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text('Voltar', style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.normal,
-                                            color: AppColors.darkOrange)),
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            VamosComecarScreen(),
                                       ),
-                                      TextButton(
-                                        onPressed: () async {
-                                          Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => VamosComecarScreen(),
-                                                  ),
-                                                );
-                                          print('Proceeding to the next page...');
-                                        },
-                                        child: Text('Continuar', style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.darkOrange)),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                          }
-                        },
-                      child: const Padding(
-                        padding: EdgeInsets.only(top: 8, bottom: 8, left: 35, right: 35),
-                        child: Text(
-                          'Finalizar cadastro',
-                          style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold), // Define a cor do texto como branco
-                        ),
-                      ),
-                    ),
-                  )),
+                                    );
+                                    print('Proceeding to the next page...');
+                                  },
+                                  child: Text('Continuar',
+                                      style: TextStyle(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.darkOrange)),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: AppColors.darkOrange,
+                  foregroundColor: AppColors.white,
+                  padding: const EdgeInsets.fromLTRB(50, 9, 50, 9),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32),
+                  ),
+                ),
+                child: const Text(
+                  "Finalizar",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
