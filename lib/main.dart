@@ -15,7 +15,7 @@ import 'package:juno/src/models/passageiros_deslocamento.dart';
 import 'package:juno/src/models/sigaa.dart';
 import 'package:juno/src/models/user.dart';
 import 'package:juno/src/models/veiculo.dart';
-import "package:juno/src/screens/Onboarding/WelcomeScreen.dart";
+import 'package:juno/src/screens/Onboarding/LogoScreen.dart';
 
 void main() async {
   AppInitialization.init();
@@ -29,7 +29,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: WelcomeScreen());
+    return MaterialApp(home: LogoScreen());
   }
 }
 

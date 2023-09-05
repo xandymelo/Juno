@@ -77,9 +77,9 @@ flutter:
     - assets/CaronasImagem.svg
     - assets/undraw_order_ride.png
     - assets/undraw_social.png
-
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+    - assets/onboarding_emergency_button.svg
+    - assets/onboarding_forum.svg
+    - assets/onboarding_map.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

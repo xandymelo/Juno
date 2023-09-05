@@ -92,7 +92,7 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
           ),
         ),
         body: Container(
-          margin: EdgeInsets.fromLTRB(24, 18, 24, 18),
+          margin: const EdgeInsets.fromLTRB(24, 18, 24, 18),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -106,7 +106,7 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                       ),
                     ),
                     const SizedBox(width: 5),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_rounded,
                       size: 16,
                       color: AppColors.black,
