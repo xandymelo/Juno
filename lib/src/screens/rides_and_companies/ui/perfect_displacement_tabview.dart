@@ -120,7 +120,8 @@ class PerfectDisplacementTabView extends StatelessWidget {
                   }
                   controller.setCurrentPageIndex(1);
                 } catch (e) {
-                  print('Erro ao fazer a requisição: $e');
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.remove("bairros");
                 }
               },
               style: FilledButton.styleFrom(
