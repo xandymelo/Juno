@@ -18,23 +18,28 @@ class DisplacementDetailsScreen extends StatefulWidget {
   final int criadorCaronaId;
   final String criadorCaronaUserName;
   final String criadorCaronaUserPhotoUrl;
+  final String horario;
+  final String telefone;
   final int? deslocamentoId;
   final int quantidadeVagas;
   late int quantidadeVagasDisponiveis;
   final VehicleType vehicleType;
 
-  DisplacementDetailsScreen(
-      {super.key,
-      required this.veiculo,
-      required this.municipioOrigem,
-      required this.municipioDestino,
-      required this.criadorCaronaUserName,
-      required this.criadorCaronaUserPhotoUrl,
-      required this.deslocamentoId,
-      required this.quantidadeVagas,
-      required this.quantidadeVagasDisponiveis,
-      required this.criadorCaronaId,
-      required this.vehicleType});
+  DisplacementDetailsScreen({
+    super.key,
+    required this.veiculo,
+    required this.municipioOrigem,
+    required this.municipioDestino,
+    required this.criadorCaronaUserName,
+    required this.criadorCaronaUserPhotoUrl,
+    required this.deslocamentoId,
+    required this.quantidadeVagas,
+    required this.quantidadeVagasDisponiveis,
+    required this.criadorCaronaId,
+    required this.vehicleType,
+    required this.horario,
+    required this.telefone,
+  });
 
   @override
   State<DisplacementDetailsScreen> createState() =>
@@ -163,8 +168,8 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                   shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio:  MediaQuery.of(context).size.width /
-                      (MediaQuery.of(context).size.height / 7)),
+                      childAspectRatio: MediaQuery.of(context).size.width /
+                          (MediaQuery.of(context).size.height / 7)),
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -313,8 +318,10 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
-                                  childAspectRatio:  MediaQuery.of(context).size.width /
-                                                    (MediaQuery.of(context).size.height / 4),
+                                  childAspectRatio: MediaQuery.of(context)
+                                          .size
+                                          .width /
+                                      (MediaQuery.of(context).size.height / 4),
                                   crossAxisSpacing: 10.0,
                                   mainAxisSpacing: 10.0,
                                 ),
