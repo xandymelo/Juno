@@ -77,7 +77,7 @@ Future<void> createDefaultData() async {
       email: ' roberya.brito@outlook.com.br',
       senha: 'teste123',
       sobrenome: 'Brito',
-      telefone: '81997570531',
+      telefone: '81997535421',
       dataNascimento: '1998-03-30',
       imageUrl: 'https://i.ibb.co/qNSSN87/fotor-ai-20230905202730.jpg',
       hasAccount: true);
@@ -91,7 +91,7 @@ Future<void> createDefaultData() async {
       email: 'mariaeliza@outlook.com.br',
       senha: 'senhasegura123',
       sobrenome: 'Melo',
-      telefone: '81997570531',
+      telefone: '81999856337',
       dataNascimento: '2000-03-20',
       imageUrl: 'https://i.ibb.co/r3bJZDR/profile1.jpg',
       hasAccount: true);
@@ -105,7 +105,7 @@ Future<void> createDefaultData() async {
       email: 'talitapereira@outlook.com.br',
       senha: 'minhasenhasecreta123',
       sobrenome: 'Pereira',
-      telefone: '81997570531',
+      telefone: '81999752132',
       dataNascimento: '1997-04-30',
       imageUrl: 'https://i.ibb.co/5WDcVfv/profile-picture1.jpg',
       hasAccount: true);
@@ -120,10 +120,25 @@ Future<void> createDefaultData() async {
       senha: 'teste123',
       sobrenome: 'Gouveia',
       telefone: '81997570531',
-      dataNascimento: '1998-03-14',
-      imageUrl: 'https://i.ibb.co/r3bJZDR/profile1.jpg',
+      dataNascimento: '1998-03-22',
+      imageUrl: 'https://i.ibb.co/2vf0htD/Whats-App-Image-2023-09-05-at-20-59-12.jpg',
       hasAccount: true);
   await UserDAO.save(quartoUsuario);
+    final quintoUsuario = User(
+      cpf: '987.541.975-85',
+      id: 5,
+      nome: 'Yasmin',
+      sigaaId: 5,
+      enderecoId: 5,
+      email: 'yasmin.alves@outlook.com.br',
+      senha: 'senhamegasecreta22',
+      sobrenome: 'Alves',
+      telefone: '81999859875',
+      dataNascimento: '1999-06-18',
+      imageUrl: 'https://i.ibb.co/2Kx0Pns/Whats-App-Image-2023-09-05-at-20-55-48.jpg',
+      hasAccount: true);
+  await UserDAO.save(quintoUsuario);
+
   // UserDAO.findAll().then((value) => print(value));
   // VeiculoDAO.findAll().then((value) => print(value));
 
@@ -173,7 +188,7 @@ Future<void> createDefaultData() async {
   PassageirosDeslocamentoDAO.save(segundoPassageirosDeslocamento3);
   final terceiroPassageirosDeslocamento = PassageirosDeslocamento(id: 3, usuarioId: 3, deslocamentoId: 3, tipo: 1);
   PassageirosDeslocamentoDAO.save(terceiroPassageirosDeslocamento);
-  final quartoPassageirosDeslocamento = PassageirosDeslocamento(id: 4, usuarioId: 4, deslocamentoId: 4, tipo: 1);
+  final quartoPassageirosDeslocamento = PassageirosDeslocamento(id: 4, usuarioId: 5, deslocamentoId: 4, tipo: 1);
   PassageirosDeslocamentoDAO.save(quartoPassageirosDeslocamento);
   final quintoPassageirosDeslocamento = PassageirosDeslocamento(id: 5, usuarioId: 4, deslocamentoId: 5, tipo: 1);
   PassageirosDeslocamentoDAO.save(quintoPassageirosDeslocamento);
@@ -183,11 +198,11 @@ Future<void> createDefaultData() async {
   PassageirosDeslocamentoDAO.save(setimoPassageirosDeslocamento);
   final oitavoPassageirosDeslocamento = PassageirosDeslocamento(id: 8, usuarioId: 1, deslocamentoId: 8, tipo: 1);
   PassageirosDeslocamentoDAO.save(oitavoPassageirosDeslocamento);
-  final nonaPassageirosDeslocamento = PassageirosDeslocamento(id: 9, usuarioId: 1, deslocamentoId: 3, tipo: 1);
+  final nonaPassageirosDeslocamento = PassageirosDeslocamento(id: 9, usuarioId: 5, deslocamentoId: 9, tipo: 1);
   PassageirosDeslocamentoDAO.save(nonaPassageirosDeslocamento);
-  final decimaPassageirosDeslocamento = PassageirosDeslocamento(id: 10, usuarioId: 3, deslocamentoId: 2, tipo: 1);
+  final decimaPassageirosDeslocamento = PassageirosDeslocamento(id: 10, usuarioId: 3, deslocamentoId: 10, tipo: 1);
   PassageirosDeslocamentoDAO.save(decimaPassageirosDeslocamento);
-  final decimaprimeiraPassageirosDeslocamento = PassageirosDeslocamento(id: 11, usuarioId: 2, deslocamentoId: 4, tipo: 1);
+  final decimaprimeiraPassageirosDeslocamento = PassageirosDeslocamento(id: 11, usuarioId: 2, deslocamentoId: 11, tipo: 1);
   PassageirosDeslocamentoDAO.save(decimaprimeiraPassageirosDeslocamento);
 
   // DeslocamentoDAO.findAll().then((value) => print(value));
