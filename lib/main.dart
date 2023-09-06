@@ -68,7 +68,7 @@ Future<void> createDefaultData() async {
       nome: 'Roberta',
       sigaaId: 1,
       enderecoId: 1,
-      email: ' roberya.brito@outlook.com.br',
+      email: 'roberya.brito@outlook.com.br',
       senha: 'teste123',
       sobrenome: 'Brito',
       telefone: '81997570531',
@@ -90,7 +90,7 @@ Future<void> createDefaultData() async {
       imageUrl: 'https://i.ibb.co/r3bJZDR/profile1.jpg',
       hasAccount: true);
   await UserDAO.save(segundoUsuario);
-    final terceiroUsuario = User(
+  final terceiroUsuario = User(
       cpf: '155.865.975-68',
       id: 3,
       nome: 'Talita',
@@ -104,7 +104,7 @@ Future<void> createDefaultData() async {
       imageUrl: 'https://i.ibb.co/5WDcVfv/profile-picture1.jpg',
       hasAccount: true);
   await UserDAO.save(terceiroUsuario);
-    final quartoUsuario = User(
+  final quartoUsuario = User(
       cpf: '875.954.354-68',
       id: 4,
       nome: 'Morgana',
@@ -134,17 +134,17 @@ Future<void> createDefaultData() async {
   DeslocamentoDAO.save(deslocamento);
   final segundoDeslocamento = Deslocamento(destinoId: 2, horaSaida: "14:00", id: 2, origemId: 4, status: 0, vagasDisponiveis: 1, veiculoId: 2, vagas: 1);
   DeslocamentoDAO.save(segundoDeslocamento);
- final terceiroDeslocamento = Deslocamento(destinoId: 3, horaSaida: "14:00", id: 3, origemId: 5, status: 0, vagasDisponiveis: 4, veiculoId: 3, vagas: 4);
+  final terceiroDeslocamento = Deslocamento(destinoId: 3, horaSaida: "14:00", id: 3, origemId: 5, status: 0, vagasDisponiveis: 4, veiculoId: 3, vagas: 4);
   DeslocamentoDAO.save(terceiroDeslocamento);
- final quartoDeslocamento = Deslocamento(destinoId: 4, horaSaida: "21:00", id: 4, origemId: 6, status: 0, vagasDisponiveis: 4, veiculoId: 1, vagas: 4);
+  final quartoDeslocamento = Deslocamento(destinoId: 4, horaSaida: "21:00", id: 4, origemId: 6, status: 0, vagasDisponiveis: 4, veiculoId: 1, vagas: 4);
   DeslocamentoDAO.save(quartoDeslocamento);
- final quintoDeslocamento = Deslocamento(destinoId: 5, horaSaida: "12:00", id: 5, origemId: 7, status: 0, vagasDisponiveis: 4, veiculoId: 2, vagas: 4);
+  final quintoDeslocamento = Deslocamento(destinoId: 5, horaSaida: "12:00", id: 5, origemId: 7, status: 0, vagasDisponiveis: 4, veiculoId: 2, vagas: 4);
   DeslocamentoDAO.save(quintoDeslocamento);
- final sextoDeslocamento = Deslocamento(destinoId: 6, horaSaida: "11:00", id: 6, origemId: 8, status: 0, vagasDisponiveis: 4, veiculoId: 3, vagas: 4);
+  final sextoDeslocamento = Deslocamento(destinoId: 6, horaSaida: "11:00", id: 6, origemId: 8, status: 0, vagasDisponiveis: 4, veiculoId: 3, vagas: 4);
   DeslocamentoDAO.save(sextoDeslocamento);
-final setimoDeslocamento = Deslocamento(destinoId: 7, horaSaida: "13:00", id: 7, origemId: 2, status: 0, vagasDisponiveis: 4, veiculoId: 1, vagas: 4);
+  final setimoDeslocamento = Deslocamento(destinoId: 7, horaSaida: "13:00", id: 7, origemId: 2, status: 0, vagasDisponiveis: 4, veiculoId: 1, vagas: 4);
   DeslocamentoDAO.save(setimoDeslocamento);
-final oitavoDeslocamento = Deslocamento(destinoId: 8, horaSaida: "08:00", id: 8, origemId: 1, status: 0, vagasDisponiveis: 4, veiculoId: 2, vagas: 4);
+  final oitavoDeslocamento = Deslocamento(destinoId: 8, horaSaida: "08:00", id: 8, origemId: 1, status: 0, vagasDisponiveis: 4, veiculoId: 2, vagas: 4);
   DeslocamentoDAO.save(oitavoDeslocamento);
 
   final passageirosDeslocamento = PassageirosDeslocamento(id: 1, usuarioId: 1, deslocamentoId: 1, tipo: 1);

@@ -116,7 +116,7 @@ class DeslocamentoDAO {
         }
 
         // Verifique se a partida ou a origem está em um dos bairros especificados, se a lista de bairros for fornecida.
-        if (bairros == null || bairros.contains(origem?.bairro) || bairros.contains(destino?.bairro)) {
+        if (bairros == null || bairros.contains(destino?.bairro)) {
           deslocamentos.add(deslocamento);
         }
       }
