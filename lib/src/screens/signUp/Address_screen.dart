@@ -32,15 +32,9 @@ class _AddressScreenState extends State<AddressScreen> {
       numero: int.parse(_numero),
       complemento: _complemento,
     );
-
     final enderecoId = await EnderecoDAO.save(endereco);
     user.enderecoId = enderecoId;
     await UserDAO.update(user);
-    // Salvar o endereço no banco de dados
-    final enderecos = await EnderecoDAO.findAll();
-    print(enderecos);
-    final usuarios = await UserDAO.findAll();
-    print(usuarios);
   }
 
   @override
@@ -181,14 +175,8 @@ class _AddressScreenState extends State<AddressScreen> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text('Cadastro concluído',
-                              style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.purple),
-                              textAlign: TextAlign.center),
-                          content: Text(
-                              'Seu cadastro foi realizado com sucesso. Aperte continuar para realizar o login e acessar as funcionalidades do app',
+                          title: Text('Cadastro concluído', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: AppColors.purple), textAlign: TextAlign.center),
+                          content: Text('Seu cadastro foi realizado com sucesso. Aperte continuar para realizar o login e acessar as funcionalidades do app',
                               style: TextStyle(
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.normal,
@@ -203,28 +191,19 @@ class _AddressScreenState extends State<AddressScreen> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: Text('Voltar',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.normal,
-                                          color: AppColors.darkOrange)),
+                                  child: Text('Voltar', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal, color: AppColors.darkOrange)),
                                 ),
                                 TextButton(
                                   onPressed: () async {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            VamosComecarScreen(),
+                                        builder: (context) => VamosComecarScreen(),
                                       ),
                                     );
                                     print('Proceeding to the next page...');
                                   },
-                                  child: Text('Continuar',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.darkOrange)),
+                                  child: Text('Continuar', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold, color: AppColors.darkOrange)),
                                 ),
                               ],
                             ),
