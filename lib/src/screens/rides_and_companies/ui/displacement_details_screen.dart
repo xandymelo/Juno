@@ -256,7 +256,7 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                   ),
                 ),
                 Text(
-                  (widget.quantidadeVagas - widget.quantidadeVagasDisponiveis).toString() + "/" + widget.quantidadeVagas.toString() + " VAGAS OCUPADAS",
+                  (widget.quantidadeVagas).toString() + " VAGAS",
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
