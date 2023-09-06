@@ -36,6 +36,11 @@ class MyApp extends StatelessWidget {
 Future<void> createDefaultData() async {
   final endereco = Endereco(bairro: 'candeias', id: 1, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
   await EnderecoDAO.save(endereco);
+  final endereco2 = Endereco(bairro: 'candeias', id: 2, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco2);
+  final endereco3 = Endereco(bairro: 'candeias', id: 2, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco3);
+
   // EnderecoDAO.findAll().then((value) => print(value));
   final curso = Curso(
     id: 1,
@@ -59,7 +64,7 @@ Future<void> createDefaultData() async {
       telefone: '81997570531',
       dataNascimento: '1998-03-30',
       imageUrl: 'https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/quem-somos/alexandre-melo.png',
-      hasAccount: true);
+      hasAccount: false);
   await UserDAO.save(usuario);
   final segundoUsuario = User(
       cpf: '097.882.964-68',
@@ -95,6 +100,29 @@ Future<void> createDefaultData() async {
   DeslocamentoDAO.save(terceiroDeslocamento);
   final terceiroPassageirosDeslocamento = PassageirosDeslocamento(id: 3, usuarioId: 2, deslocamentoId: 3, tipo: 1);
   PassageirosDeslocamentoDAO.save(terceiroPassageirosDeslocamento);
+
+  // mais exemplos de deslocamento
+  final quartoDeslocamento = Deslocamento(destinoId: 1, horaSaida: "14:00", id: 4, origemId: 1, status: 0, vagasDisponiveis: 10, veiculoId: 2, vagas: 10);
+  DeslocamentoDAO.save(quartoDeslocamento);
+  final quartoPassageirosDeslocamento = PassageirosDeslocamento(id: 2, usuarioId: 2, deslocamentoId: 4, tipo: 1);
+  PassageirosDeslocamentoDAO.save(quartoPassageirosDeslocamento);
+  final quintoDeslocamento = Deslocamento(destinoId: 1, horaSaida: "14:00", id: 5, origemId: 1, status: 0, vagasDisponiveis: 10, veiculoId: 2, vagas: 10);
+  DeslocamentoDAO.save(quintoDeslocamento);
+  final quintoPassageirosDeslocamento = PassageirosDeslocamento(id: 2, usuarioId: 2, deslocamentoId: 5, tipo: 1);
+  PassageirosDeslocamentoDAO.save(quintoPassageirosDeslocamento);
+  final sextoDeslocamento = Deslocamento(destinoId: 1, horaSaida: "14:00", id: 6, origemId: 1, status: 0, vagasDisponiveis: 10, veiculoId: 2, vagas: 10);
+  DeslocamentoDAO.save(sextoDeslocamento);
+  final sextoPassageirosDeslocamento = PassageirosDeslocamento(id: 2, usuarioId: 2, deslocamentoId: 6, tipo: 1);
+  PassageirosDeslocamentoDAO.save(sextoPassageirosDeslocamento);
+  final setimoDeslocamento = Deslocamento(destinoId: 1, horaSaida: "14:00", id: 7, origemId: 1, status: 0, vagasDisponiveis: 10, veiculoId: 2, vagas: 10);
+  DeslocamentoDAO.save(setimoDeslocamento);
+  final setimoPassageirosDeslocamento = PassageirosDeslocamento(id: 2, usuarioId: 2, deslocamentoId: 7, tipo: 1);
+  PassageirosDeslocamentoDAO.save(setimoPassageirosDeslocamento);
+  final oitavoDeslocamento = Deslocamento(destinoId: 1, horaSaida: "14:00", id: 8, origemId: 1, status: 0, vagasDisponiveis: 10, veiculoId: 2, vagas: 10);
+  DeslocamentoDAO.save(oitavoDeslocamento);
+  final oitavoPassageirosDeslocamento = PassageirosDeslocamento(id: 2, usuarioId: 2, deslocamentoId: 8, tipo: 1);
+  PassageirosDeslocamentoDAO.save(oitavoPassageirosDeslocamento);
+
   // DeslocamentoDAO.findAll().then((value) => print(value));
   // PassageirosDeslocamentoDAO.findAll().then((value) => print(value));
 }
