@@ -71,8 +71,12 @@ class RidesAndCompaniesScreen extends StateManagerView<RidesAndCompaniesControll
                               controller.setCurrentPageIndex(1);
                             },
                           )
-                        : const GeneralTabView(),
-                    const GeneralTabView(),
+                        : const GeneralTabView(
+                            bairrosList: null,
+                          ),
+                    const GeneralTabView(
+                      bairrosList: null,
+                    ),
                   ],
                 ),
               ),

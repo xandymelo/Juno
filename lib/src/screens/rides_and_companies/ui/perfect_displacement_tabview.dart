@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:juno/src/screens/rides_and_companies/controllers/rides_and_companies_controller.dart';
 import 'package:juno/src/utils/state_manager.dart';
 
 import '../../../app/theme/colors.dart';
+import '../../../services/h3_service.dart';
+import 'general_tabview.dart';
 
 class PerfectDisplacementTabView extends StatelessWidget {
   PerfectDisplacementTabView({Key? key, required this.onSearch}) : super(key: key);
@@ -41,7 +45,7 @@ class PerfectDisplacementTabView extends StatelessWidget {
             ),
             const SizedBox(height: 40),
             TextField(
-              controller: controller.meetingPoint,
+              controller: controller.departureNeighborhood,
               decoration: const InputDecoration(
                 contentPadding: EdgeInsets.zero,
                 focusedBorder: UnderlineInputBorder(
@@ -50,7 +54,7 @@ class PerfectDisplacementTabView extends StatelessWidget {
                     width: 2,
                   ),
                 ),
-                labelText: 'Ponto de encontro',
+                labelText: 'Bairro de partida',
                 labelStyle: TextStyle(
                   color: AppColors.grey,
                 ),
@@ -58,10 +62,10 @@ class PerfectDisplacementTabView extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             TextField(
-              controller: controller.destionation,
+              controller: controller.destionationNeighborhood,
               decoration: const InputDecoration(
                 contentPadding: EdgeInsets.zero,
-                labelText: 'Destino (Local da UFRPE ou Bairro)',
+                labelText: 'Bairro de destino',
                 labelStyle: TextStyle(
                   color: AppColors.grey,
                 ),
@@ -93,8 +97,26 @@ class PerfectDisplacementTabView extends StatelessWidget {
             ),
             const SizedBox(height: 50),
             FilledButton(
-              onPressed: () {
-                onSearch.call();
+              onPressed: () async {
+                final String bairroPartida = controller.departureNeighborhood.text;
+                final String bairroDestino = controller.destionationNeighborhood.text;
+
+                try {
+                  final responseData = await fetchData(bairroPartida, bairroDestino);
+                  final response = json.decode(responseData);
+                  final List<String> bairrosList = [];
+
+                  for (var item in response) {
+                    if (item.isNotEmpty) {
+                      final String bairro = item[0].toString();
+                      bairrosList.add(bairro);
+                    }
+                  }
+                  print('Dados recebidos: $response');
+                  controller.setCurrentPageIndex(1);
+                } catch (e) {
+                  print('Erro ao fazer a requisição: $e');
+                }
               },
               style: FilledButton.styleFrom(
                 backgroundColor: AppColors.purple,

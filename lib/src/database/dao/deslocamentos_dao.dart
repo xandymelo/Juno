@@ -2,9 +2,11 @@ import 'package:juno/src/database/dao/passageiros_deslocamento_dao.dart';
 import 'package:juno/src/database/dao/veiculo_dao.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../models/deslocamento.dart';
+import '../../models/endereco.dart';
 import '../../models/passageiros_deslocamento.dart';
 import '../../models/veiculo.dart';
 import '../app_database.dart';
+import 'endereco_dao.dart';
 
 class DeslocamentoDAO {
   static const createTable = '''
@@ -82,12 +84,18 @@ class DeslocamentoDAO {
     return null;
   }
 
-  static Future<List<Deslocamento>> findDeslocamentosByFilters(List<int> tipoVeiculos, int usuarioId, bool meusDeslocamentos) async {
+  static Future<List<Deslocamento>> findDeslocamentosByFilters(List<int> tipoVeiculos, int usuarioId, bool meusDeslocamentos, {List<String>? bairros}) async {
+    print(bairros);
     final Database db = await createDatabase();
     final List<Map<String, dynamic>> result = await db.query(_tablename);
     final List<Deslocamento> deslocamentos = [];
     for (Map<String, dynamic> row in result) {
       final Veiculo? veiculo = await VeiculoDAO.findById(row[_veiculoId]);
+
+      // Recupere os endereços de origem e destino com base em origemId e destinoId
+      final Endereco? origem = await EnderecoDAO.findByIndex(row[_origemId]);
+      final Endereco? destino = await EnderecoDAO.findByIndex(row[_destinoId]);
+
       if ((veiculo != null && tipoVeiculos.contains(veiculo.tipo)) || (row[_veiculoId] == null && tipoVeiculos.contains(2))) {
         final Deslocamento deslocamento = Deslocamento(
           id: row[_id],
@@ -106,7 +114,11 @@ class DeslocamentoDAO {
             continue;
           }
         }
-        deslocamentos.add(deslocamento);
+
+        // Verifique se a partida ou a origem está em um dos bairros especificados, se a lista de bairros for fornecida.
+        if (bairros == null || bairros.contains(origem?.bairro) || bairros.contains(destino?.bairro)) {
+          deslocamentos.add(deslocamento);
+        }
       }
     }
     return deslocamentos;

@@ -17,13 +17,15 @@ import '../models/displacement_model.dart';
 import 'widgets/displacement_tile.dart';
 
 class GeneralTabView extends StatefulWidget {
-  const GeneralTabView({Key? key}) : super(key: key);
+  final List<String>? bairrosList;
+  const GeneralTabView({Key? key, required this.bairrosList}) : super(key: key);
 
   @override
   State<GeneralTabView> createState() => _GeneralTabViewState();
 }
 
 class _GeneralTabViewState extends State<GeneralTabView> {
+  final List<String>? bairrosList = null;
   List<int> filter = [0, 1, 2];
   bool meusDeslocamentos = false;
   int userId = 0;
@@ -210,7 +212,7 @@ class _GeneralTabViewState extends State<GeneralTabView> {
         Expanded(
           child: FutureBuilder<List<Deslocamento>>(
             initialData: const [],
-            future: DeslocamentoDAO.findDeslocamentosByFilters(filter, userId, meusDeslocamentos),
+            future: DeslocamentoDAO.findDeslocamentosByFilters(filter, userId, meusDeslocamentos, bairros: bairrosList),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
