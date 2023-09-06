@@ -1,8 +1,10 @@
 import 'package:http/http.dart' as http;
 
+import 'config.dart';
+
 Future<String> fetchData(String bairroPartida, String bairroDestino) async {
   final Uri uri = Uri.http(
-    '127.0.0.1:8000',
+    AppConfig.serverIp,
     '/bairrosAoRedor/$bairroPartida/$bairroDestino',
   );
 
