@@ -15,7 +15,7 @@ import 'package:juno/src/models/passageiros_deslocamento.dart';
 import 'package:juno/src/models/sigaa.dart';
 import 'package:juno/src/models/user.dart';
 import 'package:juno/src/models/veiculo.dart';
-import 'package:juno/src/screens/Onboarding/LogoScreen.dart';
+import "package:juno/src/screens/Onboarding/WelcomeScreen.dart";
 
 void main() async {
   AppInitialization.init();
@@ -29,13 +29,28 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: LogoScreen());
+    return MaterialApp(home: WelcomeScreen());
   }
 }
 
 Future<void> createDefaultData() async {
   final endereco = Endereco(bairro: 'candeias', id: 1, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
   await EnderecoDAO.save(endereco);
+  final endereco2 = Endereco(bairro: 'PRADO', id: 2, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco2);
+  final endereco3 = Endereco(bairro: 'TORROES', id: 3, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco3);
+  final endereco4 = Endereco(bairro: 'candeias', id: 4, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco4);
+  final endereco5 = Endereco(bairro: 'candeias', id: 5, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco5);
+  final endereco6 = Endereco(bairro: 'candeias', id: 6, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco6);
+  final endereco7 = Endereco(bairro: 'candeias', id: 7, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco7);
+  final endereco8 = Endereco(bairro: 'candeias', id: 8, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco8);
+
   // EnderecoDAO.findAll().then((value) => print(value));
   final curso = Curso(
     id: 1,
@@ -50,29 +65,29 @@ Future<void> createDefaultData() async {
   final usuario = User(
       cpf: '097.882.964-67',
       id: 1,
-      nome: 'Roberta',
+      nome: 'Alexandre',
       sigaaId: 1,
       enderecoId: 1,
-      email: 'robertamelo@outlook.com.br',
+      email: 'xandymelo@outlook.com.br',
       senha: 'teste123',
       sobrenome: 'Melo',
       telefone: '81997570531',
       dataNascimento: '1998-03-30',
-      imageUrl: 'https://i.ibb.co/qNSSN87/fotor-ai-20230905202730.jpg',
+      imageUrl: 'https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/quem-somos/alexandre-melo.png',
       hasAccount: true);
   await UserDAO.save(usuario);
   final segundoUsuario = User(
       cpf: '097.882.964-68',
       id: 2,
-      nome: 'Maria Eliza',
-      sigaaId: 2,
-      enderecoId: 2,
+      nome: 'Eliza',
+      sigaaId: 1,
+      enderecoId: 1,
       email: 'mariaeliza@outlook.com.br',
       senha: 'teste123',
-      sobrenome: 'Barbosa',
+      sobrenome: 'Melo',
       telefone: '81997570531',
       dataNascimento: '1998-03-30',
-      imageUrl: 'https://i.ibb.co/r3bJZDR/profile1.jpg',
+      imageUrl: 'https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/quem-somos/ana-wirthmann.jpeg',
       hasAccount: false);
   await UserDAO.save(segundoUsuario);
   // UserDAO.findAll().then((value) => print(value));
@@ -91,11 +106,32 @@ Future<void> createDefaultData() async {
   DeslocamentoDAO.save(segundoDeslocamento);
   final segundoPassageirosDeslocamento = PassageirosDeslocamento(id: 2, usuarioId: 1, deslocamentoId: 2, tipo: 1);
   PassageirosDeslocamentoDAO.save(segundoPassageirosDeslocamento);
-
   final terceiroDeslocamento = Deslocamento(destinoId: 1, horaSaida: "14:00", id: 3, origemId: 1, status: 0, vagasDisponiveis: 10, veiculoId: null, vagas: 10);
   DeslocamentoDAO.save(terceiroDeslocamento);
   final terceiroPassageirosDeslocamento = PassageirosDeslocamento(id: 3, usuarioId: 2, deslocamentoId: 3, tipo: 1);
   PassageirosDeslocamentoDAO.save(terceiroPassageirosDeslocamento);
+
+  // mais exemplos de deslocamento
+  final quartoDeslocamento = Deslocamento(destinoId: 1, horaSaida: "14:00", id: 4, origemId: 1, status: 0, vagasDisponiveis: 10, veiculoId: 2, vagas: 10);
+  DeslocamentoDAO.save(quartoDeslocamento);
+  final quartoPassageirosDeslocamento = PassageirosDeslocamento(id: 4, usuarioId: 2, deslocamentoId: 4, tipo: 1);
+  PassageirosDeslocamentoDAO.save(quartoPassageirosDeslocamento);
+  final quintoDeslocamento = Deslocamento(destinoId: 1, horaSaida: "14:00", id: 5, origemId: 1, status: 0, vagasDisponiveis: 10, veiculoId: 2, vagas: 10);
+  DeslocamentoDAO.save(quintoDeslocamento);
+  final quintoPassageirosDeslocamento = PassageirosDeslocamento(id: 5, usuarioId: 2, deslocamentoId: 5, tipo: 1);
+  PassageirosDeslocamentoDAO.save(quintoPassageirosDeslocamento);
+  final sextoDeslocamento = Deslocamento(destinoId: 1, horaSaida: "14:00", id: 6, origemId: 1, status: 0, vagasDisponiveis: 10, veiculoId: 2, vagas: 10);
+  DeslocamentoDAO.save(sextoDeslocamento);
+  final sextoPassageirosDeslocamento = PassageirosDeslocamento(id: 6, usuarioId: 2, deslocamentoId: 6, tipo: 1);
+  PassageirosDeslocamentoDAO.save(sextoPassageirosDeslocamento);
+  final setimoDeslocamento = Deslocamento(destinoId: 2, horaSaida: "14:00", id: 7, origemId: 3, status: 0, vagasDisponiveis: 10, veiculoId: 2, vagas: 10);
+  DeslocamentoDAO.save(setimoDeslocamento);
+  final setimoPassageirosDeslocamento = PassageirosDeslocamento(id: 7, usuarioId: 2, deslocamentoId: 7, tipo: 1);
+  PassageirosDeslocamentoDAO.save(setimoPassageirosDeslocamento);
+  final oitavoDeslocamento = Deslocamento(destinoId: 2, horaSaida: "14:00", id: 8, origemId: 3, status: 0, vagasDisponiveis: 10, veiculoId: 2, vagas: 10);
+  DeslocamentoDAO.save(oitavoDeslocamento);
+  final oitavoPassageirosDeslocamento = PassageirosDeslocamento(id: 8, usuarioId: 2, deslocamentoId: 8, tipo: 1);
+  PassageirosDeslocamentoDAO.save(oitavoPassageirosDeslocamento);
 
   // DeslocamentoDAO.findAll().then((value) => print(value));
   // PassageirosDeslocamentoDAO.findAll().then((value) => print(value));

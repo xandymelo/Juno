@@ -24,6 +24,7 @@ class GeneralTabView extends StatefulWidget {
 }
 
 class _GeneralTabViewState extends State<GeneralTabView> {
+  List<String>? bairrosList = null;
   List<int> filter = [0, 1, 2];
   bool meusDeslocamentos = false;
   int userId = 0;
@@ -37,6 +38,7 @@ class _GeneralTabViewState extends State<GeneralTabView> {
   void loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? savedUserId = prefs.getInt('userId');
+    bairrosList = prefs.getStringList('bairros');
     if (savedUserId != null) {
       setState(() {
         userId = savedUserId;
@@ -210,7 +212,7 @@ class _GeneralTabViewState extends State<GeneralTabView> {
         Expanded(
           child: FutureBuilder<List<Deslocamento>>(
             initialData: const [],
-            future: DeslocamentoDAO.findDeslocamentosByFilters(filter, userId, meusDeslocamentos),
+            future: DeslocamentoDAO.findDeslocamentosByFilters(filter, userId, meusDeslocamentos, bairros: bairrosList),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
@@ -280,7 +282,7 @@ class _DeslocamentoItem extends StatelessWidget {
               if (userSnapshot.hasData) {
                 final User user = userSnapshot.data as User;
 
-                final String locationName = enderecoOrigem?.municipio ?? "Not Found";
+                final String locationName = enderecoOrigem?.bairro ?? "Not Found";
                 const int maxLength = 10;
                 final String truncatedLocationName = locationName.length > maxLength ? "${locationName.substring(0, maxLength)}..." : locationName;
                 return DisplacementTile(
@@ -297,13 +299,14 @@ class _DeslocamentoItem extends StatelessWidget {
                                 ? VehicleType.car
                                 : VehicleType.motorcycle,
                         veiculo: veiculo,
-                        municipioDestino: truncateString(enderecoDestino.municipio, 10),
-                        municipioOrigem: truncateString(enderecoOrigem.municipio, 10),
+                        municipioDestino: truncateString(enderecoDestino.bairro, 10),
+                        municipioOrigem: truncateString(enderecoOrigem.bairro, 10),
                         CriadorCaronaUserName: user.nome,
                         DeslocamentoId: deslocamento.id ?? 0,
                         QuantidadeVagas: deslocamento.vagas,
                         QuantidadeVagasDisponiveis: deslocamento.vagasDisponiveis,
-                        criadorCaronaId: user.id));
+                        criadorCaronaId: user.id,
+                        phone: user.telefone));
               } else {
                 return const CircularProgressIndicator();
               }

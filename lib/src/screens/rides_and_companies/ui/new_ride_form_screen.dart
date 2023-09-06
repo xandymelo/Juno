@@ -355,10 +355,10 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                           await DeslocamentoDAO.save(deslocamento);
                           var deslocamentoId = await DeslocamentoDAO.getDeslocamentoId(deslocamento);
                           if (deslocamentoId != null) {
-                            PassageirosDeslocamentoDAO.findAll().then((value) => print(value));
+                            // PassageirosDeslocamentoDAO.findAll().then((value) => print(value));
                             PassageirosDeslocamento passageiroDeslocamento = PassageirosDeslocamento(usuarioId: userId, deslocamentoId: deslocamentoId, tipo: 1);
                             PassageirosDeslocamentoDAO.save(passageiroDeslocamento);
-                            PassageirosDeslocamentoDAO.findAll().then((value) => print(value));
+                            // PassageirosDeslocamentoDAO.findAll().then((value) => print(value));
                             Navigator.push(context, MaterialPageRoute(builder: (context) => const RidesAndCompaniesScreen()));
                           }
                         }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:juno/src/screens/rides_and_companies/ui/new_displacement_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'perfect_displacement_tabview.dart';
 import '../../../app/theme/colors.dart';
 import '../../../utils/state_manager.dart';
@@ -67,11 +68,11 @@ class RidesAndCompaniesScreen extends StateManagerView<RidesAndCompaniesControll
                   children: [
                     controller.currentPageIndex == 0
                         ? PerfectDisplacementTabView(
-                            onSearch: () {
+                            onSearch: () async {
                               controller.setCurrentPageIndex(1);
                             },
                           )
-                        : const GeneralTabView(),
+                        : GeneralTabView(),
                     const GeneralTabView(),
                   ],
                 ),

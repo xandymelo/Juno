@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../utils/state_manager.dart';
 
 class RidesAndCompaniesController extends StateManagerController {
-  final TextEditingController meetingPoint = TextEditingController();
-  final TextEditingController destionation = TextEditingController();
+  final TextEditingController departureNeighborhood = TextEditingController();
+  final TextEditingController destionationNeighborhood = TextEditingController();
   final TextEditingController departureTime = TextEditingController();
+  List<String>? bairros = null;
 
   int currentPageIndex = 0;
 
