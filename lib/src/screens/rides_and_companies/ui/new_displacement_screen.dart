@@ -33,59 +33,74 @@ class NewDisplacementScreen extends StatelessWidget {
           ),
         ),
         body: Center (
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/undraw_order_ride.png',
-                scale: 1.5,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/undraw_order_ride.png',
+                  scale: 1.5,
                 ),
-              Container(
-                padding: const EdgeInsets.all(33),
-                child: ElevatedButton(
-                  onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const NewRideFormScreen()));},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.purple,
-                    foregroundColor: AppColors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-                  ),
-                  child: const Text(
-                    'Criar nova carona',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                Container(
+                  padding: const EdgeInsets.all(33),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const NewRideFormScreen()));
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.purple,
+                      foregroundColor: AppColors.white,
+                      padding: const EdgeInsets.fromLTRB(50, 9, 50, 9),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32),
+                      ),
+                    ),
+                    child: const Text(
+                      'Criar nova carona',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.all(40),
-              ),
-              Image.asset(
-                'assets/undraw_social.png',
-                scale: 1.5,
+                Container(
+                  padding: EdgeInsets.all(40),
                 ),
-              Container(
-                padding: const EdgeInsets.all(33),
-                child: ElevatedButton(
-                  onPressed: () {showAlertDialog(context);},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.purple,
-                    foregroundColor: AppColors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 15),
-                  ),
-                  child: const Text(
-                    'Criar nova companhia',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                Image.asset(
+                  'assets/undraw_social.png',
+                  scale: 1.5,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(33),
+                  child: TextButton(
+                    onPressed: () {
+                      showAlertDialog(context);
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.purple,
+                      foregroundColor: AppColors.white,
+                      padding: const EdgeInsets.fromLTRB(40, 9, 40, 9),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32),
+                      ),
+                    ),
+                    child: const Text(
+                      'Criar nova companhia',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
-              ),              
-            ],
+              ],
+            ),
           ),
         ),
       ),

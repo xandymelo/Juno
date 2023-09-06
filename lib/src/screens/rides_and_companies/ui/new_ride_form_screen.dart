@@ -363,11 +363,14 @@ class _NewRideFormState extends State<NewRideFormScreen> {
                           }
                         }
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.purple,
-                        foregroundColor: AppColors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.purple,
+                      foregroundColor: AppColors.white,
+                      padding: const EdgeInsets.fromLTRB(50, 9, 50, 9),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32),
                       ),
+                    ),
                       child: const Text(
                         'Criar',
                         textAlign: TextAlign.center,

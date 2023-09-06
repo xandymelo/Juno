@@ -111,7 +111,7 @@ class DisplacementTile extends StatelessWidget {
           ),
           Column(
             children: [
-              ElevatedButton(
+              TextButton(
                 onPressed: displacementModel.actionType != ActionType.details
                     ? () {
                         Navigator.push(
@@ -147,12 +147,14 @@ class DisplacementTile extends StatelessWidget {
                                       vehicleType: displacementModel.vehicleType,
                                     )));
                       },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: AppColors.white,
-                  backgroundColor: displacementModel.actionType != ActionType.details ? AppColors.lightPurple : AppColors.purple,
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  minimumSize: const Size(100, 35),
-                ),
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.purple,
+                      foregroundColor: AppColors.white,
+                      padding: const EdgeInsets.fromLTRB(30, 9, 30, 9),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32),
+                      ),
+                    ),
                 child: Text(
                   displacementModel.actionType.name,
                   style: const TextStyle(

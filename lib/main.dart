@@ -58,21 +58,21 @@ Future<void> createDefaultData() async {
       sobrenome: 'Melo',
       telefone: '81997570531',
       dataNascimento: '1998-03-30',
-      imageUrl: 'https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/quem-somos/alexandre-melo.png',
+      imageUrl: 'https://i.ibb.co/qNSSN87/fotor-ai-20230905202730.jpg',
       hasAccount: true);
   await UserDAO.save(usuario);
   final segundoUsuario = User(
       cpf: '097.882.964-68',
       id: 2,
-      nome: 'Eliza',
-      sigaaId: 1,
-      enderecoId: 1,
+      nome: 'Maria Eliza',
+      sigaaId: 2,
+      enderecoId: 2,
       email: 'mariaeliza@outlook.com.br',
       senha: 'teste123',
       sobrenome: 'Barbosa',
       telefone: '81997570531',
       dataNascimento: '1998-03-30',
-      imageUrl: 'https://comidainvisivelstorage.blob.core.windows.net/comidainvisivelpublic/quem-somos/ana-wirthmann.jpeg',
+      imageUrl: 'https://i.ibb.co/r3bJZDR/profile1.jpg',
       hasAccount: false);
   await UserDAO.save(segundoUsuario);
   // UserDAO.findAll().then((value) => print(value));
@@ -91,10 +91,12 @@ Future<void> createDefaultData() async {
   DeslocamentoDAO.save(segundoDeslocamento);
   final segundoPassageirosDeslocamento = PassageirosDeslocamento(id: 2, usuarioId: 1, deslocamentoId: 2, tipo: 1);
   PassageirosDeslocamentoDAO.save(segundoPassageirosDeslocamento);
+
   final terceiroDeslocamento = Deslocamento(destinoId: 1, horaSaida: "14:00", id: 3, origemId: 1, status: 0, vagasDisponiveis: 10, veiculoId: null, vagas: 10);
   DeslocamentoDAO.save(terceiroDeslocamento);
   final terceiroPassageirosDeslocamento = PassageirosDeslocamento(id: 3, usuarioId: 2, deslocamentoId: 3, tipo: 1);
   PassageirosDeslocamentoDAO.save(terceiroPassageirosDeslocamento);
+
   // DeslocamentoDAO.findAll().then((value) => print(value));
   // PassageirosDeslocamentoDAO.findAll().then((value) => print(value));
 }

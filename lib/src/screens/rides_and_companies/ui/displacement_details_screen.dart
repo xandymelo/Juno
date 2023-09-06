@@ -30,14 +30,15 @@ class DisplacementDetailsScreen extends StatefulWidget {
       required this.municipioDestino,
       required this.criadorCaronaUserName,
       required this.criadorCaronaUserPhotoUrl,
-      this.deslocamentoId,
+      required this.deslocamentoId,
       required this.quantidadeVagas,
       required this.quantidadeVagasDisponiveis,
       required this.criadorCaronaId,
       required this.vehicleType});
 
   @override
-  State<DisplacementDetailsScreen> createState() => _DisplacementDetailsScreenState();
+  State<DisplacementDetailsScreen> createState() =>
+      _DisplacementDetailsScreenState();
 }
 
 class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
@@ -58,8 +59,10 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
         userId = savedUserId;
       });
     }
-    var usersIds = await PassageirosDeslocamentoDAO.getPassageiroDeslocamentoByDeslocamentoId(widget.deslocamentoId ?? 0);
-    if (usersIds.any((passageirosDeslocamento) => passageirosDeslocamento.usuarioId == userId)) {
+    var usersIds = await PassageirosDeslocamentoDAO
+        .getPassageiroDeslocamentoByDeslocamentoId(widget.deslocamentoId ?? 0);
+    if (usersIds.any((passageirosDeslocamento) =>
+        passageirosDeslocamento.usuarioId == userId)) {
       setState(() {
         isInDeslocamento = true;
       });
@@ -122,7 +125,9 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                     const SizedBox(width: 10),
                     CircleAvatar(
                       radius: 14,
-                      backgroundColor: widget.vehicleType == VehicleType.car ? AppColors.yellow : Colors.red,
+                      backgroundColor: widget.vehicleType == VehicleType.car
+                          ? AppColors.yellow
+                          : Colors.red,
                       child: Icon(
                         size: 18,
                         widget.vehicleType == VehicleType.car
@@ -135,7 +140,7 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     CircleAvatar(
@@ -143,7 +148,7 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                         backgroundImage: NetworkImage(
                           widget.criadorCaronaUserPhotoUrl,
                         )),
-                    const SizedBox(width: 7),
+                    const SizedBox(width: 12),
                     Text(
                       widget.criadorCaronaUserName,
                       style: const TextStyle(
@@ -153,100 +158,98 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
-                Container(
-                  child: Column(
-                    children: [
-                      Row(
-                        //mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                "Placa do Veículo",
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Text(
-                                widget.veiculo?.placa ?? "Não informado",
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 50),
-                          Column(
-                            children: [
-                              const Text(
-                                "Modelo e Cor do Veículo",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Text(
-                                widget.veiculo?.modelo ?? "Não informado",
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 14),
-                      Row(
-                        //mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                "Horário de Saída",
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Text(
-                                "18:30",
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 50),
-                          Column(
-                            children: [
-                              Text(
-                                "Telefone de Contato",
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Text(
-                                "81 995428753",
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
                 const SizedBox(height: 30),
-                Divider(),
+                GridView(
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio:  MediaQuery.of(context).size.width /
+                      (MediaQuery.of(context).size.height / 7)),
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Placa do Veículo",
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.grey,
+                          ),
+                        ),
+                        Text(
+                          widget.veiculo?.placa ?? "Não informado",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Modelo e Cor do Veículo",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.grey,
+                          ),
+                        ),
+                        Text(
+                          widget.veiculo?.modelo ?? "Não informado",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Horário de Saída",
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.grey,
+                          ),
+                        ),
+                        Text(
+                          "18:30",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Telefone de Contato",
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.grey,
+                          ),
+                        ),
+                        Text(
+                          "81 995428753",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Divider(thickness: 2),
                 const SizedBox(height: 20),
                 Text(
                   "Passageiras",
@@ -256,43 +259,62 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                   ),
                 ),
                 Text(
-                  (widget.quantidadeVagas - widget.quantidadeVagasDisponiveis).toString() + "/" + widget.quantidadeVagas.toString() + " VAGAS OCUPADAS",
+                  (widget.quantidadeVagas - widget.quantidadeVagasDisponiveis)
+                          .toString() +
+                      "/" +
+                      widget.quantidadeVagas.toString() +
+                      " VAGAS OCUPADAS",
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                const SizedBox(height: 28),
+                const SizedBox(height: 10),
                 FutureBuilder<List<PassageirosDeslocamento>>(
-                  future: PassageirosDeslocamentoDAO.getPassageiroDeslocamentoByDeslocamentoId(widget.deslocamentoId ?? 0),
+                  future: PassageirosDeslocamentoDAO
+                      .getPassageiroDeslocamentoByDeslocamentoId(
+                          widget.deslocamentoId ?? 0),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasError) {
-                      return const Center(child: Text("Erro no getPassageiros"));
+                      return const Center(
+                          child: Text("Erro no getPassageiros"));
                     } else {
                       List<PassageirosDeslocamento>? people = snapshot.data;
-                      final List<int> userIds = people?.map((passageirosDeslocamento) => passageirosDeslocamento.usuarioId)?.toList() ?? [];
+                      final List<int> userIds = people
+                              ?.map((passageirosDeslocamento) =>
+                                  passageirosDeslocamento.usuarioId)
+                              ?.toList() ??
+                          [];
 
                       return FutureBuilder<List<User>>(
                         // Use o resultado do primeiro FutureBuilder aqui para obter os dados para o segundo FutureBuilder
                         future: UserDAO.getUsers(userIds),
                         builder: (context, otherSnapshot) {
-                          if (otherSnapshot.connectionState == ConnectionState.waiting) {
-                            return const Center(child: CircularProgressIndicator());
+                          if (otherSnapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
                           } else if (otherSnapshot.hasError) {
-                            return Center(child: Text("Erro no getUsers" + otherSnapshot.error.toString()));
+                            return Center(
+                                child: Text("Erro no getUsers" +
+                                    otherSnapshot.error.toString()));
                           } else {
                             List<User>? users = otherSnapshot.data;
-                            if (users?.any((user) => user.id == userId) == true) {
+                            if (users?.any((user) => user.id == userId) ==
+                                true) {
                               isInDeslocamento = true;
                             }
                             return Container(
                               width: 300,
-                              height: 300,
+                              height: 200,
                               child: GridView.builder(
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
+                                  childAspectRatio:  MediaQuery.of(context).size.width /
+                                                    (MediaQuery.of(context).size.height / 4),
                                   crossAxisSpacing: 10.0,
                                   mainAxisSpacing: 10.0,
                                 ),
@@ -302,7 +324,8 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                                     children: [
                                       CircleAvatar(
                                         radius: 24,
-                                        backgroundImage: NetworkImage(users![index].imageUrl),
+                                        backgroundImage: NetworkImage(
+                                            users![index].imageUrl),
                                       ),
                                       const SizedBox(width: 7),
                                       Text(
@@ -324,10 +347,9 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                   },
                 ),
                 const SizedBox(height: 10),
-                Container(
-                  height: 50,
-                  width: 200,
-                  child: ElevatedButton(
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: TextButton(
                     onPressed: () {
                       bool isAdmin = userId == widget.criadorCaronaId;
                       if (isAdmin) {
@@ -336,7 +358,8 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: const Text("Cancelar Carona"),
-                              content: const Text("Tem certeza que deseja cancelar a carona?"),
+                              content: const Text(
+                                  "Tem certeza que deseja cancelar a carona?"),
                               actions: [
                                 TextButton(
                                   onPressed: () {
@@ -346,10 +369,14 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    DeslocamentoDAO.delete(widget.deslocamentoId ?? 0).then((value) {
+                                    DeslocamentoDAO.delete(
+                                            widget.deslocamentoId ?? 0)
+                                        .then((value) {
                                       Navigator.pushReplacement(
                                         context,
-                                        MaterialPageRoute(builder: (context) => RidesAndCompaniesScreen()),
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                RidesAndCompaniesScreen()),
                                       );
                                     });
                                   },
@@ -366,7 +393,8 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: const Text("Sair da Carona"),
-                                content: const Text("Tem certeza que deseja deixar de participar da Carona?"),
+                                content: const Text(
+                                    "Tem certeza que deseja deixar de participar da Carona?"),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
@@ -376,7 +404,11 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      PassageirosDeslocamentoDAO.deleteByDeslocamentoIdAndUserId(widget.deslocamentoId ?? 0, userId).then((value) {
+                                      PassageirosDeslocamentoDAO
+                                              .deleteByDeslocamentoIdAndUserId(
+                                                  widget.deslocamentoId ?? 0,
+                                                  userId)
+                                          .then((value) {
                                         setState(() {
                                           widget.quantidadeVagasDisponiveis++;
                                           isInDeslocamento = false;
@@ -394,14 +426,16 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              PassageirosDeslocamentoDAO.save(PassageirosDeslocamento(
+                              PassageirosDeslocamentoDAO.save(
+                                  PassageirosDeslocamento(
                                 usuarioId: userId,
                                 deslocamentoId: widget.deslocamentoId ?? 0,
                                 tipo: 0,
                               ));
                               return AlertDialog(
-                                title: const Text("Sair da Carona"),
-                                content: const Text("Você está participando do deslocamento!"),
+                                title: const Text("Entrar na Carona"),
+                                content: const Text(
+                                    "Você está participando do deslocamento!"),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
@@ -420,10 +454,13 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                         }
                       }
                     },
-                    style: ElevatedButton.styleFrom(
+                    style: TextButton.styleFrom(
                       backgroundColor: AppColors.purple,
                       foregroundColor: AppColors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                      padding: const EdgeInsets.fromLTRB(50, 9, 50, 9),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32),
+                      ),
                     ),
                     child: Text(
                       userId == widget.criadorCaronaId
