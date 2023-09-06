@@ -125,10 +125,14 @@ Future<void> createDefaultData() async {
 
   final veiculo = Veiculo(id: 1, cor: 'Branco', marca: 'Hyundai', modelo: 'HB20', placa: 'PCM9F00', qtdPassageiros: 4, tipo: 0, usuarioId: 1);
   await VeiculoDAO.save(veiculo);
-  final segundoVeiculo = Veiculo(id: 2, cor: 'Preto', marca: 'Volkswagen', modelo: 'Gol', placa: 'YGD9F23', qtdPassageiros: 4, tipo: 0, usuarioId: 1);
+  final segundoVeiculo = Veiculo(id: 2, cor: 'Preto', marca: 'Volkswagen', modelo: 'Gol', placa: 'YGD9F23', qtdPassageiros: 4, tipo: 0, usuarioId: 2);
   await VeiculoDAO.save(segundoVeiculo);
-  final terceiroVeiculo = Veiculo(id: 2, cor: 'Prata', marca: 'Fiat', modelo: 'Uno', placa: 'TDS9T32', qtdPassageiros: 4, tipo: 0, usuarioId: 1);
+  final terceiroVeiculo = Veiculo(id: 3, cor: 'Prata', marca: 'Fiat', modelo: 'Uno', placa: 'TDS9T32', qtdPassageiros: 4, tipo: 0, usuarioId: 3);
   await VeiculoDAO.save(terceiroVeiculo);
+  final quartaVeiculo = Veiculo(id: 4, cor: 'Vermelha', marca: 'Honda', modelo: 'CG 160 Titan', placa: 'RFS9T42', qtdPassageiros: 1, tipo: 0, usuarioId: 4);
+  await VeiculoDAO.save(quartaVeiculo);
+  final quintaVeiculo = Veiculo(id: 5, cor: 'Azul', marca: 'Honda', modelo: 'XRE 300', placa: 'RFS9T42', qtdPassageiros: 1, tipo: 0, usuarioId: 4);
+  await VeiculoDAO.save(quintaVeiculo);
 
   final deslocamento = Deslocamento(destinoId: 1, horaSaida: "13:00", id: 1, origemId: 2, status: 0, vagasDisponiveis: 4, veiculoId: 1, vagas: 4);
   DeslocamentoDAO.save(deslocamento);
@@ -136,11 +140,11 @@ Future<void> createDefaultData() async {
   DeslocamentoDAO.save(segundoDeslocamento);
   final terceiroDeslocamento = Deslocamento(destinoId: 3, horaSaida: "14:00", id: 3, origemId: 5, status: 0, vagasDisponiveis: 4, veiculoId: 3, vagas: 4);
   DeslocamentoDAO.save(terceiroDeslocamento);
-  final quartoDeslocamento = Deslocamento(destinoId: 4, horaSaida: "21:00", id: 4, origemId: 6, status: 0, vagasDisponiveis: 4, veiculoId: 1, vagas: 4);
+  final quartoDeslocamento = Deslocamento(destinoId: 4, horaSaida: "21:00", id: 4, origemId: 6, status: 0, vagasDisponiveis: 2, veiculoId: 4, vagas: 2);
   DeslocamentoDAO.save(quartoDeslocamento);
   final quintoDeslocamento = Deslocamento(destinoId: 5, horaSaida: "12:00", id: 5, origemId: 7, status: 0, vagasDisponiveis: 4, veiculoId: 2, vagas: 4);
   DeslocamentoDAO.save(quintoDeslocamento);
-  final sextoDeslocamento = Deslocamento(destinoId: 6, horaSaida: "11:00", id: 6, origemId: 8, status: 0, vagasDisponiveis: 4, veiculoId: 3, vagas: 4);
+  final sextoDeslocamento = Deslocamento(destinoId: 6, horaSaida: "11:00", id: 6, origemId: 8, status: 0, vagasDisponiveis: 2, veiculoId: 5, vagas: 2);
   DeslocamentoDAO.save(sextoDeslocamento);
   final setimoDeslocamento = Deslocamento(destinoId: 7, horaSaida: "13:00", id: 7, origemId: 2, status: 0, vagasDisponiveis: 4, veiculoId: 1, vagas: 4);
   DeslocamentoDAO.save(setimoDeslocamento);
