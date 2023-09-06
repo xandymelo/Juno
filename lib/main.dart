@@ -40,6 +40,16 @@ Future<void> createDefaultData() async {
   await EnderecoDAO.save(endereco2);
   final endereco3 = Endereco(bairro: 'TORROES', id: 3, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
   await EnderecoDAO.save(endereco3);
+  final endereco4 = Endereco(bairro: 'candeias', id: 4, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco4);
+  final endereco5 = Endereco(bairro: 'candeias', id: 5, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco5);
+  final endereco6 = Endereco(bairro: 'candeias', id: 6, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco6);
+  final endereco7 = Endereco(bairro: 'candeias', id: 7, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco7);
+  final endereco8 = Endereco(bairro: 'candeias', id: 8, complemento: 'Casa A', municipio: 'Jaboatão dos Guararapes', numero: 7535, rua: 'rua Padre Nestor de Alencar');
+  await EnderecoDAO.save(endereco8);
 
   // EnderecoDAO.findAll().then((value) => print(value));
   final curso = Curso(
