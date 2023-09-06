@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:juno/src/screens/rides_and_companies/controllers/rides_and_companies_controller.dart';
 import 'package:juno/src/utils/state_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../app/theme/colors.dart';
 import '../../../services/h3_service.dart';
@@ -113,6 +114,10 @@ class PerfectDisplacementTabView extends StatelessWidget {
                     }
                   }
                   print('Dados recebidos: $response');
+                  final prefs = await SharedPreferences.getInstance();
+                  if (bairrosList.length > 0) {
+                    await prefs.setStringList('bairros', bairrosList);
+                  }
                   controller.setCurrentPageIndex(1);
                 } catch (e) {
                   print('Erro ao fazer a requisição: $e');

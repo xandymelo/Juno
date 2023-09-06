@@ -128,6 +128,8 @@ class DisplacementTile extends StatelessWidget {
                                       criadorCaronaId: displacementModel.criadorCaronaId,
                                       deslocamentoId: displacementModel.DeslocamentoId,
                                       vehicleType: displacementModel.vehicleType,
+                                      horario: displacementModel.hour,
+                                      telefone: displacementModel.phone,
                                     )));
                       }
                     : () {
@@ -145,6 +147,8 @@ class DisplacementTile extends StatelessWidget {
                                       criadorCaronaId: displacementModel.criadorCaronaId,
                                       deslocamentoId: displacementModel.DeslocamentoId,
                                       vehicleType: displacementModel.vehicleType,
+                                      horario: displacementModel.hour,
+                                      telefone: displacementModel.phone,
                                     )));
                       },
                 style: ElevatedButton.styleFrom(

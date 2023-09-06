@@ -6,6 +6,7 @@ class RidesAndCompaniesController extends StateManagerController {
   final TextEditingController departureNeighborhood = TextEditingController();
   final TextEditingController destionationNeighborhood = TextEditingController();
   final TextEditingController departureTime = TextEditingController();
+  List<String>? bairros = null;
 
   int currentPageIndex = 0;
 

@@ -20,6 +20,8 @@ class DisplacementDetailsScreen extends StatefulWidget {
   final String criadorCaronaUserPhotoUrl;
   final int? deslocamentoId;
   final int quantidadeVagas;
+  final String horario;
+  final String telefone;
   late int quantidadeVagasDisponiveis;
   final VehicleType vehicleType;
 
@@ -34,7 +36,9 @@ class DisplacementDetailsScreen extends StatefulWidget {
       required this.quantidadeVagas,
       required this.quantidadeVagasDisponiveis,
       required this.criadorCaronaId,
-      required this.vehicleType});
+      required this.vehicleType,
+      required this.horario,
+      required this.telefone});
 
   @override
   State<DisplacementDetailsScreen> createState() => _DisplacementDetailsScreenState();
@@ -213,7 +217,7 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                                 ),
                               ),
                               Text(
-                                "18:30",
+                                widget.horario,
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -232,7 +236,7 @@ class _DisplacementDetailsScreenState extends State<DisplacementDetailsScreen> {
                                 ),
                               ),
                               Text(
-                                "81 995428753",
+                                widget.telefone,
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,

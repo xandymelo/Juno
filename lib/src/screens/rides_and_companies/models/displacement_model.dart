@@ -17,6 +17,7 @@ class DisplacementModel {
   final int QuantidadeVagas;
   final int QuantidadeVagasDisponiveis;
   final int criadorCaronaId;
+  final String phone;
 
   DisplacementModel(
       {required this.actionType,
@@ -33,5 +34,6 @@ class DisplacementModel {
       required this.criadorCaronaId,
       required this.DeslocamentoId,
       required this.QuantidadeVagas,
-      required this.QuantidadeVagasDisponiveis});
+      required this.QuantidadeVagasDisponiveis,
+      required this.phone});
 }

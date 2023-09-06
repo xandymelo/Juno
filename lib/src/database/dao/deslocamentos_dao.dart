@@ -85,7 +85,7 @@ class DeslocamentoDAO {
   }
 
   static Future<List<Deslocamento>> findDeslocamentosByFilters(List<int> tipoVeiculos, int usuarioId, bool meusDeslocamentos, {List<String>? bairros}) async {
-    print(bairros);
+    print("bairros: ${bairros}");
     final Database db = await createDatabase();
     final List<Map<String, dynamic>> result = await db.query(_tablename);
     final List<Deslocamento> deslocamentos = [];
