@@ -136,6 +136,7 @@ class _LoginState extends State<Login> {
                       'Entrar',
                       style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                     ),
+
                   ),
                   style: ElevatedButton.styleFrom(
                     primary: AppColors.red,
