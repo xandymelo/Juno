@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:juno/src/screens/EmConstrucao/EmConstrucaoScreen.dart';
+import 'package:juno/src/screens/Forum/Forum.dart';
 import 'package:juno/src/screens/rides_and_companies/ui/rides_and_companies_screen.dart';
 import 'package:juno/src/utils/state_manager.dart';
 
 import '../../../app/theme/colors.dart';
+import '../../Mapa/Mapa.dart';
 import '../controllers/navigation_controller.dart';
 import '../models/screen_model.dart';
 
@@ -27,13 +28,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
           icon: Icons.group_outlined,
         ),
         ScreenModel(
-          screen: const EmConstrucaoScreen(),
+          screen: const ForumScreen(),
           label: 'Fórum',
           activeIcon: Icons.forum,
           icon: Icons.forum_outlined,
         ),
         ScreenModel(
-          screen: const EmConstrucaoScreen(),
+          screen: const MapaScreen(),
           label: 'Mapa',
           activeIcon: Icons.location_on,
           icon: Icons.location_on_outlined,
